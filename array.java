@@ -98,8 +98,231 @@ public class array {
 		};
 		measureSortComparison(input3, matrix);
 		measureSortComparison(input4, matrix);
+		int[][] input5 = {{1,2,2,5,4},
+				          {3,1,3,3,2},
+				          {5,2,3,4,4},
+				          {2,4,4,5,1},
+				          {4,1,5,3,5}
+		};
+		rotateArray(input5);
+		int[] input6 = new int[25];
+		for(int i=0; i<25; i++) {
+			input6[i] = i+1;
+		}
+		diagSum(printMaze(input6));
+		String[][] input7 = {
+				{"M", "B"},
+				{"M", "C"},
+				{"M", "K"},
+				{"B", "E"},
+				{"C", "F"},
+				{"C", "G"},
+				{"C", "H"},
+				{"K", "I"},
+				{"K", "J"},
+				{"E", "D"},
+				{"F", "L"},
+				{"F", "A"},
+				{"H", "N"},
+				{"H", "O"},
+				{"J", "P"},
+				{"J", "Q"}
+		};
+		List<String> categories = Arrays.asList("F","N");
+		getTopCategory(input7, categories);
+		String categoryStr = "J";
+		getNumberOfSubcategories(input7, categoryStr);
+	}
+	public static String getTopCategory(String[][] input, List<String> categories) {
+		String topCategory = "";
+		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		for(int i=0; i<input.length; i++) {
+			String parent = input[i][0];
+			String child = input[i][1];
+			if(tMap.containsKey(parent)) {
+				List<String> childs = tMap.get(parent);
+				childs.add(child);
+				tMap.put(parent, childs);
+			} else {
+				List<String> childs = new ArrayList<String>();
+				childs.add(child);
+				tMap.put(parent, childs);
+			}
+		}
+		List<String> hierarchy = new ArrayList<String>();
+		List<String> tHierarchy = new ArrayList<String>();
+		int index = -1;
+		boolean bFirst = false;
+		for(String inputCategory:categories) {
+			if(!bFirst) {
+				for(String key:tMap.keySet()) {
+					List<String> values = tMap.get(key);
+					if(values.contains(inputCategory)) {
+						hierarchy.add(key);
+						String parent = getParent(tMap, key);
+						while(!parent.isEmpty()) {
+							hierarchy.add(0, parent);
+							parent = getParent(tMap, parent);
+						}
+						break;
+					}
+				}
+				bFirst = true;
+			} else {
+				for(String key:tMap.keySet()) {
+					List<String> values = tMap.get(key);
+					if(values.contains(inputCategory)) {
+						tHierarchy.add(key);
+						String parent = getParent(tMap, key);
+						while(!parent.isEmpty()) {
+							tHierarchy.add(0, parent);
+							parent = getParent(tMap, parent);
+						}
+						for(String tParent:tHierarchy) {
+							for(int i=0; i<hierarchy.size(); i++) {
+								String oParent = hierarchy.get(i);
+								if(oParent.equals(tParent)) {
+									if(index < i) {
+										index = i;
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(index > -1) {
+			topCategory = hierarchy.get(index);
+		}
+		System.out.println("topCategory: "+topCategory);
+		return topCategory;
 	}
 
+	public static int getNumberOfSubcategories(String[][] input, String categoryStr) {
+		int numberOfSubcategories = 0;
+		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		for(int i=0; i<input.length; i++) {
+			String parent = input[i][0];
+			String child = input[i][1];
+			if(tMap.containsKey(parent)) {
+				List<String> childs = tMap.get(parent);
+				childs.add(child);
+				tMap.put(parent, childs);
+			} else {
+				List<String> childs = new ArrayList<String>();
+				childs.add(child);
+				tMap.put(parent, childs);
+			}
+		}
+		for(String key:tMap.keySet()) {
+			List<String> values = tMap.get(key);
+			if(values.contains(categoryStr)) {
+				String parent = getParent(tMap, categoryStr);
+				List<String> children = new ArrayList<String>();
+				getChildren(tMap, parent, children);
+				System.out.println(children);
+				numberOfSubcategories = children.size();
+				break;
+			}
+		}
+		System.out.println("numberOfSubcategories: "+numberOfSubcategories);
+		return numberOfSubcategories;
+	}
+	public static String getParent(Map<String, List<String>> tMap, String child) {
+		String parent = "";
+		for(String key:tMap.keySet()) {
+			List<String> childs = tMap.get(key);
+			if(childs.contains(child)) {
+				parent = key;
+				break;
+			}
+		}
+		return parent;
+	}
+	
+	public static List<String> getChilds(Map<String, List<String>> tMap, String parent) {
+		List<String> childs = new ArrayList<String>();
+		if(tMap.containsKey(parent)) {
+			childs = tMap.get(parent);
+		}
+		return childs;
+	}
+	public static void getChildren(Map<String, List<String>> tMap, String parent, List<String> children) {
+		List<String> tChildren = getChilds(tMap, parent);
+		if(tChildren.size() > 0) {
+			children.addAll(tChildren);
+			for(String tChildParents:tChildren) {
+				getChildren(tMap, tChildParents, children);
+			}
+		}
+	}
+	public static int diagSum(int[][] input) {
+		int i=0, j=0, sum=0, k=0;
+		for(i=0; i<input.length; i++) {
+			for(j=0; j<input[0].length; j++) {
+				if(i==j) {
+					sum += input[i][j];
+					System.out.println(sum+", "+input[i][j]);
+					
+				}
+			}
+		}
+		System.out.println("sum:"+sum);
+		return sum;
+	}
+
+	public static int[][] printMaze(int[] input) {
+		int[][] result = new int[5][5];
+		int i=0, j=0, idx=0;
+		for(i=0; i<5; i++) {
+			if(i%2 == 0) {
+				for(j=0; j<5; j++) {
+					result[i][j] = input[idx];
+					idx++;
+				}
+			} else {
+				for(j=4; j>=0; j--) {
+					result[i][j] = input[idx];
+					idx++;
+				}
+			}
+		}
+		for(i=0; i<5; i++) {
+			for(j=0; j<5; j++) {
+				System.out.print(result[i][j]+" ");
+			}
+			System.out.println();
+		}
+		return result;
+	}
+	public static int[][] rotateArray(int[][] input) {
+		int row = input.length;
+		int col = input[0].length;
+		int i=0, j=0;
+		int[][] result = new int[row][col];
+		for(i=0; i<row; i++) {
+			System.arraycopy(input[i], 0, result[i], 0, row);
+		}
+
+		for(i=0; i<row; i++) {
+			for(j=0; j<col; j++) {
+				if( i == 0 || i == row-1 || j == 0 ||  j == col-1 ) {
+					result[j][col-1-i] = input[i][j];
+				}
+//				System.out.print(result[i][j]+" ");
+			}
+//			System.out.println();
+		}
+		for(i=0; i<row; i++) {
+			for(j=0; j<col; j++) {
+				System.out.print(result[i][j]+" ");
+			}
+			System.out.println();
+		}
+		return result;
+	}
 	public static int measureSortComparison(String input, int[][] similarityMatrix) {
 		int i=0, j=0, sum=0;
 		int start_a=0, len=0, max=0, k=0, fir_idx=0, sec_idx=0;
