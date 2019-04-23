@@ -8,7 +8,7 @@ public class array {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		/*
+		
 		String[][] matrix = {{"B", "H", "E", "Z", "R", "B", "U", "O", "C", "Z"},
 							 {"L", "S", "L", "Z", "K", "E", "O", "B", "S", "A"},
 							 {"A", "Y", "P", "M", "D", "E", "D", "A", "Q", "Y"},
@@ -20,6 +20,7 @@ public class array {
 							 {"K", "V", "O", "E", "S", "I", "T", "B", "C", "B"},
 							 {"I", "W", "N", "Z", "W", "H", "I", "T", "E", "Y"}};
 		String[] words = new String[]{"BLACK", "RED", "GREEN", "BROWN", "WHITE", "BLUE", "ORANGE"};
+		/*
 //		for(int i=0; i<words.length; i++) {
 			findWordCount(matrix, words[0]);
 			garoWordCount(matrix, words[4]);
@@ -90,14 +91,14 @@ public class array {
 		measureSimpleComparison(input3);
 		String input4 = "ATTCGG,GTAT";
 		measureSimpleComparison(input4);
-		int[][] matrix = {{5,-1,-2,-1,-3},
+		int[][] matrix2 = {{5,-1,-2,-1,-3},
 				          {-1,6,-3,-2,-4},
 				          {-2,-3,7,-1,-2},
 				          {-1,-2,-1,8,-1},
 				          {-3,-4,-2,-1,0}
 		};
-		measureSortComparison(input3, matrix);
-		measureSortComparison(input4, matrix);
+		measureSortComparison(input3, matrix2);
+		measureSortComparison(input4, matrix2);
 		int[][] input5 = {{1,2,2,5,4},
 				          {3,1,3,3,2},
 				          {5,2,3,4,4},
@@ -132,6 +133,173 @@ public class array {
 		getTopCategory(input7, categories);
 		String categoryStr = "J";
 		getNumberOfSubcategories(input7, categoryStr);
+		getProductNum(getNewStr("371B4A4"));
+		getProductNum(getNewStr("5312D6C"));
+		getLargeNumber(1234567);
+		getLargeNumber(34217869);
+		int[][] input8 = {{1099,18,0,19,15,1},
+						  {1077,19,30,0,0,0},
+						  {1044,18,45,21,11,0},
+						  {1088,19,30,20,28,0},
+						  {1044,18,15,19,19,1},
+						  {1044,18,0,0,0,1}
+		};
+		sortTableByEmpno(input8, 6);
+		for(int i=0; i<matrix.length; i++) {
+			for(int j=0; j<matrix[0].length; j++) {
+				for(int k=0; k<words.length; k++) {
+					garofound(matrix, words[k], i, j);
+					serofound(matrix, words[k], i, j);
+					diagfound(matrix, words[k], i, j);
+				}
+			}
+		}
+	}
+	
+	public static String garofound(String[][] matrix, String word, int posx, int posy) {
+		int j=0;
+		String pos = "";
+		boolean correct = true;
+		int length = matrix[0].length;
+		if(length-posy < word.length()) {
+//			System.out.println("length:"+length);
+			return pos;
+		}
+		for(j=0; j<word.length(); j++) {
+			if(matrix[posx][posy+j].equals(word.substring(j,j+1)) != true) {
+//			if(matrix[posx][posy+j].charAt(0) != word.charAt(j)) {
+//				System.out.println("matrix[posx][posy+j]:"+matrix[posx][posy+j]+", word.substring(0,1):"+word.substring(0,1));
+				correct = false;
+			}
+		}
+		if(correct == true) {
+			
+			pos = String.valueOf((char)('a'+posx)).concat(String.valueOf(posy));
+			System.out.println("garofound:"+pos+", word:"+word+", posx:"+posx+", posy:"+posy);
+		}
+		
+		return pos;
+	}
+	public static String diagfound(String[][] matrix, String word, int posx, int posy) {
+		int j=0;
+		String pos = "";
+		boolean correct = true;
+		int length = matrix[0].length;
+		if(length-posy < word.length() || length-posx < word.length()) {
+//			System.out.println("length:"+length);
+			return pos;
+		}
+		for(j=0; j<word.length(); j++) {
+			if(matrix[posx+j][posy+j].equals(word.substring(j,j+1)) != true) {
+//			if(matrix[posx][posy+j].charAt(0) != word.charAt(j)) {
+//				System.out.println("matrix[posx][posy+j]:"+matrix[posx][posy+j]+", word.substring(0,1):"+word.substring(0,1));
+				correct = false;
+			}
+		}
+		if(correct == true) {
+			
+			pos = String.valueOf((char)('a'+posx)).concat(String.valueOf(posy));
+			System.out.println("diagfound:"+pos+", word:"+word+", posx:"+posx+", posy:"+posy);
+		}
+		
+		return pos;
+	}
+	public static String serofound(String[][] matrix, String word, int posx, int posy) {
+		int j=0;
+		String pos = "";
+		boolean correct = true;
+		int length = matrix.length;
+		if(length-posx < word.length()) {
+//			System.out.println("length:"+length);
+			return pos;
+		}
+		for(j=0; j<word.length(); j++) {
+			if(matrix[posx+j][posy].equals(word.substring(j,j+1)) != true) {
+//			if(matrix[posx][posy+j].charAt(0) != word.charAt(j)) {
+//				System.out.println("matrix[posx][posy+j]:"+matrix[posx][posy+j]+", word.substring(0,1):"+word.substring(0,1));
+				correct = false;
+			}
+		}
+		if(correct == true) {
+			
+			pos = String.valueOf((char)('a'+posx)).concat(String.valueOf(posy));
+			System.out.println("serofound:"+pos+", word:"+word+", posx:"+posx+", posy:"+posy);
+		}
+		
+		return pos;
+	}
+	public static int[][] sortTableByEmpno(int otTable[][], int row) {
+		int[][] result = new int[otTable.length][otTable[0].length];
+		int[] temp = new int[otTable[0].length];
+		for(int i=0; i<otTable.length-1; i++) {
+			for(int j=i+1; j<otTable.length; j++) {
+				if(otTable[i][0] > otTable[j][0]) {
+					temp = otTable[i];
+					otTable[i] = otTable[j];
+					otTable[j] = temp;
+				}
+			}
+		}
+		for(int i=0; i<otTable.length; i++) {
+			System.out.println(Arrays.toString(otTable[i]));
+		}
+		return result;
+	}
+	public static int getLargeNumber(int input) {
+		String num = String.valueOf(input);
+		String first = "";
+		String second = "";
+		int len = num.length();
+		while(len > 1) {
+			
+			if(len % 2 == 0) {
+				
+				first = num.substring(0, len/2);
+				second = num.substring(len/2);
+				System.out.println("礎熱望檜 first:"+first+", second:"+second);
+			} else {
+				first = num.substring(0, (len-1)/2);
+				second = num.substring((len-1)/2+1);
+				System.out.println("�汝鰡磍� first:"+first+", second:"+second);
+			}
+			if(Integer.parseInt(first) > Integer.parseInt(second)) {
+				num = first;
+			} else {
+				num = second;
+			}
+			len = num.length();
+		}
+		System.out.println(num);
+		return Integer.parseInt(num);
+	}
+	public static String getNewStr(String input) {
+		char[] chStr = input.toCharArray();
+		String ch = "";
+		String num = "";
+		for(int i=0; i<input.length(); i++) {
+			if(chStr[i] >= 'A' && chStr[i] <= 'Z') {
+				ch = ch + String.valueOf(chStr[i]);
+			} else {
+				num = num + String.valueOf(chStr[i]); 
+			}
+		}
+		System.out.println(ch+num);
+		return ch+num;
+	}
+	
+	public static String getProductNum(String newStr) {
+		String num = newStr.substring(2);
+		
+		char[] chStr = num.toCharArray();
+		int idx = 9, sum=0;
+		for(int i=0; i<chStr.length; i++) {
+			sum = sum + Integer.parseInt(String.valueOf(chStr[i])) * idx;
+			idx--;
+		}
+		sum = sum%5;
+		System.out.println(newStr+String.valueOf(sum));
+		return newStr+String.valueOf(sum);
+		
 	}
 	public static String getTopCategory(String[][] input, List<String> categories) {
 		String topCategory = "";
