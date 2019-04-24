@@ -28,7 +28,7 @@ public class array {
 //		}
  
  */
-		/*
+		
 		String[][] salary = {
 				{"23561", "5600"},
 				{"37123", "4100"},
@@ -50,7 +50,7 @@ public class array {
 				{"49376", "채영", "대리"}
 		};
 		print(salary, employees);
-		*/
+		
 		/*
 		int[][] cube = {{5, 7, 8},
 					    {4, 2, 1},
@@ -58,12 +58,14 @@ public class array {
 		};
 		sum(cube);
 		*/
+		/*
 		String[][] department = {
 				{"10", "영업팀"},
 				{"20", "구매팀"},
 				{"30", "개발팀"},
 				{"40", "운영팀"}
 		};
+		
 		String[][] employee = {
 				{"59545", "최선명", "10"},
 				{"23561", "박선주", "20"},
@@ -71,46 +73,46 @@ public class array {
 				{"33777", "이기주", "30"}
 		};
 		print(department, employee);
-		
+		*/
 		String inputData = "A37D2CB5E8F";
-		getNewStr(getStrList(inputData));
+//		getNewStr(getStrList(inputData));
 		int[][] input = {{77,78,12,30},
 	             	     {33,78, 9, 7},
 	                     { 5,71,84,25},
 	                     { 9,37, 0,27}
 		};
-		getArrSum(getSortedArray(input));
+//		getArrSum(getSortedArray(input));
 		int[][] input2 = {{11,32,57,65,34},
         	     		  {53,16, 3,93,22},
         	     		  {35,22,73,64,14},
         	     		  {12,24,34,45,91},
         	     		  { 9,51,35,28,75}
 		};
-		getArrSum(getSortedArray(input2));
+//		getArrSum(getSortedArray(input2));
 		String input3 = "AGTCATG,GTTAG";
-		measureSimpleComparison(input3);
+//		measureSimpleComparison(input3);
 		String input4 = "ATTCGG,GTAT";
-		measureSimpleComparison(input4);
+//		measureSimpleComparison(input4);
 		int[][] matrix2 = {{5,-1,-2,-1,-3},
 				          {-1,6,-3,-2,-4},
 				          {-2,-3,7,-1,-2},
 				          {-1,-2,-1,8,-1},
 				          {-3,-4,-2,-1,0}
 		};
-		measureSortComparison(input3, matrix2);
-		measureSortComparison(input4, matrix2);
+//		measureSortComparison(input3, matrix2);
+//		measureSortComparison(input4, matrix2);
 		int[][] input5 = {{1,2,2,5,4},
 				          {3,1,3,3,2},
 				          {5,2,3,4,4},
 				          {2,4,4,5,1},
 				          {4,1,5,3,5}
 		};
-		rotateArray(input5);
+//		rotateArray(input5);
 		int[] input6 = new int[25];
 		for(int i=0; i<25; i++) {
 			input6[i] = i+1;
 		}
-		diagSum(printMaze(input6));
+//		diagSum(printMaze(input6));
 		String[][] input7 = {
 				{"M", "B"},
 				{"M", "C"},
@@ -130,13 +132,13 @@ public class array {
 				{"J", "Q"}
 		};
 		List<String> categories = Arrays.asList("F","N");
-		getTopCategory(input7, categories);
+//		getTopCategory(input7, categories);
 		String categoryStr = "J";
-		getNumberOfSubcategories(input7, categoryStr);
-		getProductNum(getNewStr("371B4A4"));
-		getProductNum(getNewStr("5312D6C"));
-		getLargeNumber(1234567);
-		getLargeNumber(34217869);
+//		getNumberOfSubcategories(input7, categoryStr);
+//		getProductNum(getNewStr("371B4A4"));
+//		getProductNum(getNewStr("5312D6C"));
+//		getLargeNumber(1234567);
+//		getLargeNumber(34217869);
 		int[][] input8 = {{1099,18,0,19,15,1},
 						  {1077,19,30,0,0,0},
 						  {1044,18,45,21,11,0},
@@ -144,18 +146,62 @@ public class array {
 						  {1044,18,15,19,19,1},
 						  {1044,18,0,0,0,1}
 		};
-		sortTableByEmpno(input8, 6);
+//		sortTableByEmpno(input8, 6);
 		for(int i=0; i<matrix.length; i++) {
 			for(int j=0; j<matrix[0].length; j++) {
 				for(int k=0; k<words.length; k++) {
-					garofound(matrix, words[k], i, j);
-					serofound(matrix, words[k], i, j);
-					diagfound(matrix, words[k], i, j);
+//					garofound(matrix, words[k], i, j);
+//					serofound(matrix, words[k], i, j);
+//					diagfound(matrix, words[k], i, j);
 				}
 			}
 		}
+		printSalary(salary, employees);
 	}
 	
+	public static String[][] printSalary(String[][] salary, String[][] employee) {
+		HashMap<String, Integer> gradeCnt = new HashMap<String, Integer>();
+		HashMap<String, Float> salCal = new HashMap<String, Float>();
+		int k=0;
+		for(int i=0; i<salary.length; i++) {
+			for(int j=0; j<employee.length; j++) {
+				if(salary[i][0].equals(employee[j][0])==true) {
+					if(gradeCnt.get(employee[j][2])==null) {
+						gradeCnt.put(employee[j][2], 1);
+						salCal.put(employee[j][2], Float.parseFloat(salary[i][1]));
+					} else {
+						gradeCnt.put(employee[j][2], gradeCnt.get(employee[j][2])+1);
+						salCal.put(employee[j][2], salCal.get(employee[j][2])+Float.parseFloat(salary[i][1]));
+					}
+				}
+			}
+		}
+		
+		Set<String> gradeSet = gradeCnt.keySet();
+		String[][] result = new String[gradeSet.size()][2];
+		Iterator<String> it = gradeSet.iterator();
+		while(it.hasNext()) {
+			String Ji = it.next();
+			result[k][0] = Ji;
+			result[k][1] = Integer.toString((int)Math.round(salCal.get(Ji)/gradeCnt.get(Ji)));
+			k++;
+		}
+
+		String[] temp = new String[k];
+		for(int i=0; i<k-1; i++) {
+			for(int j=i+1; j<k; j++) {
+				if(Integer.parseInt(result[i][1]) > Integer.parseInt(result[j][1])) {
+					temp = result[i];
+					result[i] = result[j];
+					result[j] = temp;
+				}
+			}
+		}
+		for(int i=0; i<k; i++) {
+			System.out.println(Arrays.toString(result[i]));
+		}
+		return result;
+	}
 	public static String garofound(String[][] matrix, String word, int posx, int posy) {
 		int j=0;
 		String pos = "";
@@ -777,6 +823,7 @@ public class array {
 		}	
 		return rotated;
 	}
+	/*
 	public static String[][] print(String[][] department, String[][] employee) {
 		String[][] table = new String[employee.length][3];
 		//HashMap<String, String> dep = new HashMap<String, String>();
@@ -817,7 +864,7 @@ public class array {
 		}
 		return table;
 	}
-	/*
+	*/
 	public static String[][] print(String[][] salary, String[][] employees) {
 		int i=0, j=0;
 		int level1=0, level2=0, level3=0, level4=0, level5=0;
@@ -845,20 +892,30 @@ public class array {
 				}
 			}
 		}
-		String[] temp=new String[2];
-		table[0][0] = "사원";
-		table[0][1] = String.valueOf(level1/cnt1);
-		table[1][0] = "대리";
-		table[1][1] = String.valueOf(level2/cnt2);
-		table[2][0] = "과장";
-		table[2][1] = String.valueOf(level3/cnt3);
-		table[3][0] = "차장";
-		table[3][1] = String.valueOf(level4/cnt4);
-		table[4][0] = "부장";
-		table[4][1] = String.valueOf(level5/cnt5);
+		String[] temp=new String[5];
+//		if(cnt1!=0 && cnt2!=0 && cnt3!=0 && cnt4!=0 && cnt5!=0) {
+			table[0][0] = "사원";
+			table[0][1] = String.valueOf(level1/cnt1);
+			table[1][0] = "대리";
+			table[1][1] = String.valueOf(level2/(cnt2));
+			table[2][0] = "과장";
+			table[2][1] = String.valueOf(level3/cnt3);
+			table[3][0] = "차장";
+			table[3][1] = String.valueOf(level4/cnt4);
+			table[4][0] = "부장";
+			table[4][1] = String.valueOf(level5/cnt5);
+//		}
+		for(i=0; i<table.length; i++) {
+			System.out.println("1.직급:"+table[i][0]+", 평균연봉:"+table[i][1]);
+		}
 		for(i=0; i<table.length-1; i++) {
 			for(j=i+1; j<table.length; j++) {
 				if(Integer.parseInt(table[i][1]) > Integer.parseInt(table[j][1])) {
+					temp = table[i];
+					System.out.println("2.직급:"+Arrays.toString(temp));
+					table[i] = table[j];
+					table[j] = temp;
+					/*
 					temp[0] = table[i][0];
 					temp[1] = table[i][1];
 					
@@ -867,6 +924,7 @@ public class array {
 					
 					table[j][0] = temp[0];
 					table[j][1] = temp[1];
+					*/
 				}
 			}
 		}
@@ -875,7 +933,7 @@ public class array {
 		}
 		return table;
 	}
-	*/
+	
 	public static String[] findWordCount(String[][] matrix, String word) {
 		String[][] matrixXY = new String[10][10];
 		String[] findXY = new String[7];
