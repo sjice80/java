@@ -457,6 +457,40 @@ public class HelloWorld {
 							  {1055, 18, 15, 19, 19, 1},
 							  {1011, 18, 0, 30, 0, 1}};
 		jugiTable(input11);
+		
+		String input12 = "we1re3hewo34ddre67com21rue";
+		String backup = "1ware4hewor5dd8eamcome3rue";
+		String[] network = {"wear","ethe","worl","ddre","amco","metr","ue"};
+		getSecondRecovery(getFirstRecovery(input12, backup), network);
+	}
+	public static String getSecondRecovery(String first, String[] network) {
+		char[] chInput = first.toCharArray();
+		String str = "";
+		for(int i=0; i<network.length; i++) {
+			str += network[i];
+		}
+		System.out.println("network:"+str);
+		char[] chNetwork = str.toCharArray();
+		for(int j=0; j<first.length(); j++) {
+			if((first.charAt(j) >= '0' && first.charAt(j) <= '9') && (str.charAt(j) >= 'a' && str.charAt(j) <= 'z')) {
+				chInput[j] = chNetwork[j];
+			}
+		}
+		String result = String.valueOf(chInput);
+		System.out.println("second result:"+result);
+		return result;		
+	}
+	public static String getFirstRecovery(String input, String backup) {
+		char[] chInput = input.toCharArray();
+		char[] chBack = backup.toCharArray();
+		for(int i=0; i<input.length(); i++) {
+			if((input.charAt(i) >= '0' && input.charAt(i) <= '9') && (backup.charAt(i) >= 'a' && backup.charAt(i) <= 'z')) {
+				chInput[i] = chBack[i];
+			}
+		}
+		String result = String.valueOf(chInput);
+		System.out.println("result:"+result);
+		return result;
 	}
 	public static int[][] jugiTable(int[][] otTable) {
 		int size = otTable.length;
