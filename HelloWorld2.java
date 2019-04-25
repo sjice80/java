@@ -47,6 +47,11 @@ public class HelloWorld {
 	static int patternCount = 0;
 	static int lineCount = 0;
 	static int pFileCount = 0;
+	static int saleNumber = 0;
+	static String[] saleKind;
+	static String[] products = {"coffee", "gimbap", "water", "ramen", "kimchi", "rice", "cigarettes",
+								"milk", "popcorn", "chocolate", "paper", "soju", "beer"};
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 	    String lineOfCurrencies = "USD JPY AUD SGD HKD CAD CHF GBP EURO INR";
@@ -347,6 +352,740 @@ public class HelloWorld {
 //		solution(numbers);
 		List<String> input2 = Arrays.asList("2234", "123", "5678", "456", "8978", "3321", "12", "345", "689");
 		getMaxNum(getSequenceList(input2));
+		List<String> input3 = Arrays.asList(
+				"KIM,CUST02,CREAM02,25,35000",
+				"KIM,CUST01,CREAM02,23,35000",
+				"LEE,CUST04,CREAM02,12,35000",
+				"LEE,CUST04,LOTION01,28,17000",
+				"LEE,CUST04,SKIN01,19,15000",
+				"LEE,CUST03,CREAM01,14,30000",
+				"KIM,CUST01,SKIN02,31,24000",
+				"LEE,CUST04,CREAM02,4,35000",
+				"KIM,CUST01,SKIN01,29,15000",
+				"KIM,CUST04,CREAM02,15,35000"
+				);
+		String name = "CUST04";
+		String term = "10-20";
+		getCosmeticsList(input3, name, term);
+		String sellerId = "KIM";
+		String periodOfSale = "20-25";
+		getPrice(input3, sellerId, periodOfSale);
+		
+		int[][] input4 = {{-1,0,7,9},
+							{-6,2,-3,5},
+							{3,-6,0,-5},
+							{7,8,-7,2}
+		};
+		getNumberOfSubArrays(input4.length);
+		getMaximumNumber(input4);
+		int[][] input5 = {{1,-3,0,2,5},
+							{-3,0,8,-3,7},
+							{9,-1,-2,6,0},
+							{-2,-5,9,7,6},
+							{3,2,4,7,-5}
+		};
+		getNumberOfSubArrays(input5.length);
+		getMaximumNumber(input5);
+		
+		String[][] input6 = {
+				{"M", "B"},
+				{"M", "C"},
+				{"M", "K"},
+				{"B", "E"},
+				{"C", "F"},
+				{"C", "G"},
+				{"C", "H"},
+				{"K", "I"},
+				{"K", "J"},
+				{"E", "D"},
+				{"F", "L"},
+				{"F", "A"},
+				{"H", "N"},
+				{"H", "O"},
+				{"J", "P"},
+				{"J", "Q"}	
+		};
+		List<String> categories = Arrays.asList("F", "N");
+		getTopCategory(input6, categories);
+		String categoryStr = "J";
+		getNumberOfSubcategories(input6, categoryStr);
+		
+		int[][] input7 = {{1099, 18, 0, 19, 15, 1},
+				{1077, 19, 30, 0, 0, 0},
+				{1044, 18, 45,21, 11, 0},
+				{1088, 19, 30, 20, 28, 0},
+				{1044, 18, 15, 19, 19, 1},
+				{1044, 18, 0, 0, 0, 1}};
+		countEmployeeNumber(sortTableByEmpno(input7, input7.length), input7.length);
+		makeTotalTable(sortTableByEmpno(input7, input7.length), input7.length);
+		
+		String data[] = {"coffee", "eeFFCo", "amenr", "Ra Men", "CO FFE E",
+				"coFfee", "c#off$ee", "cOe f%%&f*e", "bapgim", "rice", "RiCE", "*Ri&c@e",
+				"gim $bap", "BAP@gim", "*G*imba p", "water", "FFCOEE", "WATER", "TERAW", "*tW$a ER#" };
+//		makeNormalData(data, data.length);
+//		correctLetterOrder(makeNormalData(data, data.length), data.length, products);
+		makeDistinctedData(correctLetterOrder(makeNormalData(data, data.length), data.length, products), data.length);
+		
+		int[][] input8 = {
+				{1,2,2,5,4},
+				{3,1,3,3,2},
+				{5,2,3,4,4},
+				{2,4,4,5,1},
+				{4,1,5,3,5}
+		};
+		setUpArray(rotateArray(input8));
+		int[][] input9 = {
+				{77,78,12,30},
+				{33,78,9,7},
+				{5,71,84,25},
+				{9,37,0,27}
+		};
+		int[][] input10 = {
+				{11,32,57,65,34},
+				{53,16,3,93,22},
+				{35,22,73,64,14},
+				{12,24,34,45,91},
+				{9,51,35,28,75}
+		};
+		getArrSum(getSortedArray(input9));
+		getArrSum(getSortedArray(input10));
+		
+		int[][] input11 = {{1099, 18, 0, 20, 15, 1},
+							  {1077, 19, 30, 10, 0, 0},
+							  {1044, 18, 45,15, 11, 0},
+							  {1088, 19, 40, 20, 28, 0},
+							  {1055, 18, 15, 19, 19, 1},
+							  {1011, 18, 0, 30, 0, 1}};
+		jugiTable(input11);
+	}
+	public static int[][] jugiTable(int[][] otTable) {
+		int size = otTable.length;
+		int[] start_hh = new int[size];
+		int[] start_mm = new int[size];
+		int[] jugi_mm = new int[size];
+		int[][] result = new int[size][5];
+		int max = 0, time=0, cnt=0, max_idx=0, first=0, min=100;
+		
+		for(int i=0; i<size; i++) {
+			result[i][0] = otTable[i][0];
+			result[i][1] = otTable[i][1] * 60 + otTable[i][2] + otTable[i][3];
+			time = result[i][1];
+			System.out.println("time:"+time);
+			if(time>max) {
+				max = time;
+				max_idx = i;
+				System.out.println("max time:"+time);
+			}
+		}
+		System.out.println("start max:"+max+", max_idx:"+max_idx+", size"+size);
+		for(int i=0; i<size; i++) {
+//			first = 0;
+			cnt=0;
+			for(int j=0; j<=cnt; j++) {
+				if((otTable[i][1] * 60 + otTable[i][2] + otTable[i][3]*cnt) == max) {
+					System.out.println("1. start max:"+max+", i:"+i+", "+cnt+", "+(otTable[i][1] * 60 + otTable[i][2] + otTable[i][3]*cnt));				
+				} else {
+					cnt++;
+				}
+				if((otTable[i][1] * 60 + otTable[i][2] + otTable[i][3]*cnt) > max) {
+					cnt = 0;
+				} 
+				result[i][2] = cnt;
+				
+			}
+			System.out.println(Arrays.toString(result[i]));
+		}
+		for(int i=0; i<size; i++) {
+			if(i != max_idx && result[i][2] !=0 ) {
+				if(result[i][2] < min) {
+					min = result[i][2];
+				}
+			}
+		}
+		System.out.println("min:"+min);
+		return result;
+	}
+	public static int[][] getSortedArray(int[][] input) {
+		int[][] sortedArray = null;
+		int size = input.length;
+		sortedArray = new int[size][size];
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				sortedArray[i][j] = input[i][j]%10;
+			}
+			System.out.println(Arrays.toString(sortedArray[i]));
+		}
+		System.out.println();
+		for(int i=0; i<size; i++) {
+			Arrays.sort(sortedArray[i]);
+			System.out.println(Arrays.toString(sortedArray[i]));
+		}
+		System.out.println();
+		for(int i=0; i<size; i++) {
+			int[] num = new int[size];
+			for(int j=0; j<size; j++) {
+				num[j] = sortedArray[j][i];
+			}
+			Arrays.sort(num);
+			for(int j=0; j<size; j++) {
+				sortedArray[j][i] = num[j];
+			}
+		}
+		System.out.println();
+		for(int i=0; i<size; i++) {
+			System.out.println(Arrays.toString(sortedArray[i]));
+		}
+		System.out.println();
+		return sortedArray;
+	}
+	
+	public static int[][] getArrSum(int[][] input) {
+		int[][] result = null;
+		int size = input.length;
+		result = new int[size][size];
+		int sum=0;
+		for(int i=0; i<size; i++) {
+			System.arraycopy(input[i], 0, result[i], 0, input.length);
+			System.out.println(Arrays.toString(result[i]));
+		}
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				if(j != size-1) {
+					if(input[i][j] == input[i][j+1]) {
+						result[i][j] = 0;
+						result[i][j+1] = 0;
+					}
+				} 
+				if(i != size-1) {
+					if(input[i][j] == input[i+1][j]) {
+						result[i][j] = 0;
+						result[i+1][j] = 0;
+					}
+				} 
+				if(i == size-1) {
+					if(input[i][j] == input[i-1][j]) {
+						result[i][j] = 0;
+						result[i-1][j] = 0;
+					}
+				} 
+				if(j == size-1) {
+					if(input[i][j] == input[i][j-1]) {
+						result[i][j] = 0;
+						result[i][j-1] = 0;
+					}
+				}
+			}
+		}
+		System.out.println();	
+		for(int i=0; i<size; i++) {
+			System.out.println(Arrays.toString(result[i]));
+		}
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				sum += result[i][j];
+			}
+		}
+		System.out.println("sum:"+sum);
+		return result;
+	}
+	public static int[][] rotateArray(int[][] input) {
+		int[][] rotatedArray = new int[input.length][input[0].length];
+		for(int i=0; i<input.length; i++) {
+			System.arraycopy(input[i], 0, rotatedArray[i], 0, input.length);
+		}
+		for(int i=0; i<input.length; i++) {
+			for(int j=0; j<input[0].length; j++) {
+				if(i==0 || i==input.length-1 || j==0 || j==input[0].length-1) {
+					rotatedArray[j][input.length-1-i] = input[i][j];
+				}
+			}
+		}
+		for(int i=0; i<input.length; i++) {
+			for(int j=0; j<input[0].length; j++) {
+				System.out.print(rotatedArray[i][j]+" ");
+			}
+			System.out.println();
+		}
+		return rotatedArray;
+	}
+	
+	public static int[][] setUpArray(int[][] rotated) {
+		int[][] setArr = new int[rotated.length][rotated[0].length];
+		for(int i=0; i<rotated.length; i++) {
+			System.arraycopy(rotated[i], 0, setArr[i], 0, rotated.length);
+		}
+		for(int i=1; i<rotated.length-1; i++) {
+			for(int j=1; j<rotated[0].length-1; j++) {
+				if(i==1) {
+					if(setArr[i][j] == setArr[i-1][j]) {
+						setArr[i][j] = 0;
+					}
+				}
+				if(i==rotated.length-2) {
+					if(setArr[i][j] == setArr[rotated.length-1][j]) {
+						setArr[i][j] = 0;
+					}
+				}
+				if(j==1) {
+					if(setArr[i][j] == setArr[i][j-1]) {
+						setArr[i][j] = 0;
+					}
+				}
+				if(j==rotated[0].length-2) {
+					if(setArr[i][j] == setArr[i][rotated[0].length-1]) {
+						setArr[i][j] = 0;
+					}
+				}
+			}
+		}
+		for(int i=0; i<rotated.length; i++) {
+			for(int j=0; j<rotated[0].length; j++) {
+				System.out.print(setArr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		return setArr;
+	}
+	public static String[] makeNormalData(String[] data, int saleNumber) {
+		String[] result = new String[saleNumber];
+		int i=0, k=0;
+		//System.out.println("1. data.length:"+data.length);
+		for(i=0; i<saleNumber; i++) {
+			String item = data[i];
+			String newStr = "";
+			//System.out.println("2. item:"+item);
+			char[] chStr = item.toCharArray();
+			for(k=0; k<chStr.length; k++) {
+				if( (chStr[k] >= 'A' && chStr[k] <= 'Z') || (chStr[k] >= 'a' && chStr[k] <= 'z') ) {
+					//System.out.println(chStr[k]);
+					newStr = newStr + String.valueOf(chStr[k]);
+					//System.out.println("3. item:"+item);
+				}
+			}
+			newStr = newStr.toLowerCase();
+			result[i] = newStr;
+			System.out.println(result[i]);
+		}
+		return result;
+	}
+//	static String[] saleKind;
+//	static String[] products = {"coffee", "gimbap", "water", "ramen", "kimchi", "rice", "cigarettes",
+//								"milk", "popcorn", "chocolate", "paper", "soju", "beer"};	
+	public static String[] correctLetterOrder(String[] saleKind, int saleNumber, String[] products) {
+		String[] retData = new String[saleKind.length];
+		String[] sortedProducts = new String[13];
+		int i=0, n=0, k=0, t=0, cnt=0;
+		char chTemp;
+		
+		for(i=0; i<products.length; i++) {
+			sortedProducts[i] = new String(products[i]);
+			char[] chPro = sortedProducts[i].toCharArray();
+			for(n=0; n<sortedProducts[i].length()-1; n++) {
+				for(k=n+1; k<sortedProducts[i].length(); k++) {
+					if(chPro[n] > chPro[k]) {
+						chTemp = chPro[n];
+						chPro[n] = chPro[k];
+						chPro[k] = chTemp;
+					}
+				}
+			}
+			sortedProducts[i] = new String(chPro, 0, chPro.length);
+			System.out.println("1: sortedProducts[i]:"+sortedProducts[i]);
+		}
+		
+		for(i=0; i<saleKind.length; i++) {
+			char[] chPro = saleKind[i].toCharArray();
+			for(n=0; n<saleKind[i].length()-1; n++) {
+				for(k=n+1; k<saleKind[i].length(); k++) {
+					if(chPro[n] > chPro[k]) {
+						chTemp = chPro[n];
+						chPro[n] = chPro[k];
+						chPro[k] = chTemp;
+					}
+				}
+			}
+			String proImsi = new String(chPro, 0, chPro.length);
+			for(t=0; t<sortedProducts.length; t++) {
+				if(sortedProducts[t].equals(proImsi)) {
+					retData[i] = products[t];
+					System.out.println("2: retData[cnt]:"+retData[i]);
+					break;
+				}
+			}
+			
+		}
+		return retData;
+	}
+	
+	public static String[] makeDistinctedData(String[] saleKind, int saleNumber) {
+		String[] retData = new String[saleNumber];
+		char found = 'N';
+		int i=0, j=0, index=0, sw=0;
+		char chFirst, chSecond;
+//		System.out.println("5: saleKind.length:"+saleKind.length+", saleNumber:"+saleNumber);
+		for(i=0; i<saleNumber; i++) {
+			found = 'N';
+			for(j=0; j<index; j++) {
+//				System.out.println("4: retData[j]:"+retData[j]+", saleKind[i]:"+saleKind[i]);
+				if(saleKind[i].equals(retData[j]) == true) {
+					found = 'Y';
+					break;
+				}
+			}
+			if(found=='N') {
+				retData[index] = saleKind[i];
+				System.out.println("3: retData[index]:"+retData[index]);
+				index++;
+			}
+		}
+		String temp = "";
+		for(i=0; i<index-1; i++) {
+			for(j=i+1; j<index; j++) {
+				chFirst = retData[i].charAt(1);
+				chSecond = retData[j].charAt(1);
+				if(chFirst > chSecond) {
+					temp = retData[i];
+					retData[i] = retData[j];
+					retData[j] = temp;
+				} else if(chFirst == chSecond) {
+					chFirst = retData[i].charAt(0);
+					chSecond = retData[j].charAt(0);
+					if(chFirst > chSecond) {
+						temp = retData[i];
+						retData[i] = retData[j];
+						retData[j] = temp;
+					}
+				}
+			}
+		}
+		for(i=0; i<index; i++) {
+			System.out.println("4: retData[i]:"+retData[i]);
+		}
+		return retData;
+	}
+	public static int[][] sortTableByEmpno(int[][] otTable, int row) {
+		int[][] result = new int[row][otTable[0].length];
+		int time1=0, time2=0;
+		int[] temp = new int[row];
+		for(int i=0; i<otTable.length-1; i++) {
+			for(int j=i+1; j<otTable[0].length; j++) {
+				if(otTable[i][0] > otTable[j][0]) {
+					temp = otTable[i];
+					otTable[i] = otTable[j];
+					otTable[j] = temp;
+				} else if(otTable[i][0] == otTable[j][0]) {
+					time1 = otTable[i][1]*60 + otTable[i][2];
+					time2 = otTable[j][1]*60 + otTable[j][2];
+					if(time1 > time2) {
+						temp = otTable[i];
+						otTable[i] = otTable[j];
+						otTable[j] = temp;						
+					}
+				}
+			}
+		}
+		for(int i=0; i<otTable.length; i++) {
+			System.out.println(Arrays.toString(otTable[i]));
+		}		
+		result = otTable;
+		return result;
+	}
+	public static int countEmployeeNumber(int[][] otTable, int row) {
+		int empNumber = 0;
+		int time = 0;
+		int[] empList = new int[row];
+		int index = 0, i=0, j=0, cnt=0;
+		int[] empSet = new int[row];
+		
+		for(i=0; i<otTable.length; i++) {
+			time = otTable[i][3] * 60 + otTable[i][4];
+			if(time != 0) {
+				empList[index] = otTable[i][0]; 
+				index++;
+			}
+		}
+		empSet[cnt] = empList[0];
+//		for(i=0; i<otTable.length; i++) {
+			for(j=1; j<index; j++) {
+				if(empSet[cnt] != empList[j]) {
+					cnt++;
+					empSet[cnt] = empList[j];
+					System.out.println("1. cnt:"+cnt+", empSet[cnt]:"+empSet[cnt]);
+				} else {
+					System.out.println("2. cnt:"+cnt+", empSet[cnt]:"+empSet[cnt]);
+				}
+			}
+//		}
+		empNumber = cnt+1;
+		System.out.println("empNumber:"+empNumber);
+		return empNumber;
+	}
+	
+	public static int[][] makeTotalTable(int[][] otTable, int row) {
+		int retTable[][] = new int[row][2];
+		int stime, etime, tripYN=0;
+		int i, j, newRowNum=0, cnt=0;
+		int newOtTable[][] = new int[row][6];
+		int tmpTotalTable[][] = new int[row][4];
+	
+		for(i=0; i<otTable.length; i++) {
+			etime = otTable[i][3] * 60 + otTable[i][4];
+			if(etime != 0) {
+				newOtTable[newRowNum] = otTable[i]; 
+				newRowNum++;
+			}
+		}
+		stime = newOtTable[0][1]*60 + newOtTable[0][2];
+		etime = newOtTable[0][3]*60 + newOtTable[0][4];
+		
+		tmpTotalTable[0][0] = newOtTable[0][0];
+		tmpTotalTable[0][1] = stime;
+		tmpTotalTable[0][2] = etime;
+		tmpTotalTable[0][3] = newOtTable[0][5];
+		
+		for(i=1; i<newRowNum; i++) {
+			if(tmpTotalTable[cnt][0] != newOtTable[i][0]) {
+				cnt++;
+				tmpTotalTable[cnt][0] = newOtTable[i][0];
+				stime = newOtTable[i][1]*60 + newOtTable[i][2];
+				etime = newOtTable[i][3]*60 + newOtTable[i][4];		
+				tmpTotalTable[cnt][1] = stime;
+				tmpTotalTable[cnt][2] = etime;
+				tmpTotalTable[cnt][3] = newOtTable[i][5];
+			} else if(tmpTotalTable[cnt][0] == newOtTable[i][0]) {
+				stime = newOtTable[i][1]*60 + newOtTable[i][2];
+				etime = newOtTable[i][3]*60 + newOtTable[i][4];	
+				tripYN = newOtTable[i][5];
+				if(stime < tmpTotalTable[cnt][1]) {
+					tmpTotalTable[cnt][1] = stime;
+				}
+				if(etime > tmpTotalTable[cnt][2]) {
+					tmpTotalTable[cnt][2] = etime;
+				}
+				if(tripYN > tmpTotalTable[cnt][3]) {
+					tmpTotalTable[cnt][3] = newOtTable[i][5];
+				}
+			}
+			//System.out.println(Arrays.toString(newOtTable[i]));
+		}
+		cnt++;
+		for(i=0; i<cnt; i++) {
+			retTable[i][0] = tmpTotalTable[i][0];
+			retTable[i][1] = tmpTotalTable[i][2] - tmpTotalTable[i][1];
+			if(tmpTotalTable[i][3] == 1) {
+				retTable[i][1] = (int)(retTable[i][1]*1.5);
+			}
+			System.out.println(Arrays.toString(retTable[i]));
+		}
+		return retTable;
+	}
+	public static String getTopCategory(String[][] input, List<String> categories) {
+		String topCategory = "";
+		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		for(int i=0; i<input.length; i++) {
+			String parent = input[i][0];
+			String child = input[i][1];
+			if(tMap.containsKey(parent)) {
+				List<String> childs = tMap.get(parent);
+//				System.out.println("1. "+childs);
+				childs.add(child);
+//				System.out.println("1-1. "+childs);
+				tMap.put(parent, childs);
+			} else {
+				List<String> childs = new ArrayList<String>();
+//				System.out.println("2. "+childs);
+				childs.add(child);
+//				System.out.println("2-1. "+childs);
+				tMap.put(parent, childs);
+			}
+		}
+		List<String> hierarchy = new ArrayList<String>();
+		boolean bFirst = false;
+		int index = -1;
+		for(String inputCategory:categories) {
+			if(bFirst != true) {
+				for(String key:tMap.keySet()) {
+					List<String> values = tMap.get(key);
+					if(values.contains(inputCategory)) {
+						hierarchy.add(key);
+						
+						String parent = getParent(tMap, key);
+						while(!parent.isEmpty()) {
+							hierarchy.add(0, parent);
+							parent = getParent(tMap, parent);
+						}
+						break;
+					}
+				}
+				bFirst = true;
+			} else {
+				for(String key:tMap.keySet()) {
+					List<String> values = tMap.get(key);
+					if(values.contains(inputCategory)) {
+						List<String> tHierarchy = new ArrayList<String>();
+						tHierarchy.add(key);
+						
+						String parent = getParent(tMap, key);
+						while(!parent.isEmpty()) {
+							tHierarchy.add(0, parent);
+							parent = getParent(tMap, parent);
+						}
+						for(String tParent:tHierarchy) {
+							for(int i=0; i<hierarchy.size(); i++) {
+								String oParent = hierarchy.get(i);
+								if(oParent.equals(tParent)) {
+									if(index < i) {
+										index = i;
+									}
+									break;
+								}
+							}
+						}
+					}
+				}				
+			}
+		}
+		if(index > -1) {
+			topCategory = hierarchy.get(index);
+			System.out.println("topCategory:"+topCategory);
+		}
+		return topCategory;
+	}
+	
+	public static int getNumberOfSubcategories(String[][] input, String categoryStr) {
+		int numberOfCategories = 0;
+		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		for(int i=0; i<input.length; i++) {
+			String parent = input[i][0];
+			String child = input[i][1];
+			if(tMap.containsKey(parent)) {
+				List<String> childs = tMap.get(parent);
+//				System.out.println("1. "+childs);
+				childs.add(child);
+//				System.out.println("1-1. "+childs);
+				tMap.put(parent, childs);
+			} else {
+				List<String> childs = new ArrayList<String>();
+//				System.out.println("2. "+childs);
+				childs.add(child);
+//				System.out.println("2-1. "+childs);
+				tMap.put(parent, childs);
+			}
+		}	
+		for(String key:tMap.keySet()) {
+			List<String> values = tMap.get(key);
+			if(values.contains(categoryStr)) {
+				String parent = getParent(tMap, categoryStr);
+				List<String> children = new ArrayList<String>();
+				getChildren(tMap, parent, children);
+				numberOfCategories = children.size();
+				System.out.println("3. "+children+", numberOfCategories: "+numberOfCategories);
+				break;
+			}
+		}
+		return numberOfCategories;
+	}
+	public static List<String> getChilds(Map<String, List<String>> tMap, String parent) {
+		List<String> childs = new ArrayList<String>();
+		for(int i=0; i<tMap.size(); i++) {
+			if(tMap.containsKey(parent)) {
+				childs = tMap.get(parent);
+			}
+		}
+		return childs;
+	}
+	
+	public static void getChildren(Map<String, List<String>> tMap, String parent, List<String> children) {
+		List<String> tChildren = getChilds(tMap, parent);
+		if(tChildren.size() >0) {
+			children.addAll(tChildren);
+		}
+		for(String tChildParents:tChildren) {
+			getChildren(tMap, tChildParents, children);
+		}
+	}
+	public static String getParent(Map<String, List<String>> tMap, String child) {
+		String parent = "";
+		for(String key:tMap.keySet()) {
+			List<String> values = tMap.get(key);
+			if(values.contains(child)) {
+				parent = key;
+				break;
+			}
+		}
+		return parent;
+	}
+	public static int getMaximumNumber(int[][] input) {
+		int max=0, i=0, j=0, len=1, k=0, sum=0, t=0;
+		while(len <= input.length) {
+			for(i=0; i<=input.length-len; i++) {
+				for(j=0; j<=input.length-len; j++) {
+					sum = 0;
+					for(k=i; k<i+len; k++) {
+						for(t=j; t<j+len; t++) {
+							sum = sum + input[k][t];
+							System.out.println("k:"+k+", t:"+t+", sum:"+sum);
+						}				
+					}
+					if(sum > max) {
+						max = sum;
+						System.out.println("i:"+i+", j:"+j+", max:"+max+", len:"+len);
+					}	
+				}
+
+			}
+			len++;
+		}
+		System.out.println(max);
+		return max;
+	}
+	public static int getNumberOfSubArrays(int arraySize) {
+		int sum=0;
+		int i=0, j=0, len=1;
+		while(len<=arraySize) {
+			sum = sum+(len*len);
+			len++;
+		}
+		System.out.println(sum);
+		return sum;
+	}
+	public static int getPrice(List<String> input, String sellerId, String periodOfSale) {
+		int i=0, j=0, start=0, end=0, price=0, sum=0;
+		start = Integer.parseInt(periodOfSale.split("-")[0]);
+		end = Integer.parseInt(periodOfSale.split("-")[1]);
+		for(i=0; i<input.size(); i++) {
+			String[] str = input.get(i).split(",");
+			if(sellerId.equals(str[0])==true) {
+				int date = Integer.parseInt(str[3]);
+				if(date>=start && date<=end) {
+						price = Integer.parseInt(str[4]);
+						sum += price;
+						System.out.println("price: "+price+", sum: "+sum);
+					
+				}
+			}
+		}
+		System.out.println(sum);
+		return sum;
+	}
+	public static List<String> getCosmeticsList(List<String> input, String name, String term) {
+		List<String> result = new ArrayList<>();
+		int i=0, j=0, start=0, end=0;
+		start = Integer.parseInt(term.split("-")[0]);
+		end = Integer.parseInt(term.split("-")[1]);
+		for(i=0; i<input.size(); i++) {
+			String[] str = input.get(i).split(",");
+			if(name.equals(str[1])==true) {
+				int date = Integer.parseInt(str[3]);
+				if(date>=start && date<=end) {
+					if(!result.contains(str[2])) {
+						result.add(str[2]);
+						System.out.println(str[2]);
+					}
+				}
+			}
+		}
+		return result;
 	}
 	// List<String> input = Arrays.asList("2234", "123", "5678", "456", "8978", "3321", "12", "345", "689");
 	public static int getMaxNum(List<String> input) {
