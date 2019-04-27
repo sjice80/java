@@ -150,15 +150,255 @@ public class array {
 		for(int i=0; i<matrix.length; i++) {
 			for(int j=0; j<matrix[0].length; j++) {
 				for(int k=0; k<words.length; k++) {
-//					garofound(matrix, words[k], i, j);
-//					serofound(matrix, words[k], i, j);
-//					diagfound(matrix, words[k], i, j);
+					garofound(matrix, words[k], i, j);
+					serofound(matrix, words[k], i, j);
+					diagfound(matrix, words[k], i, j);
 				}
 			}
 		}
 		printSalary(salary, employees);
+		getNumber(getMoveInfo(11,8));
+		String[] input9 = {"abc.txt", "abce", "abcd.txt", "acde.txt", "bxyz.txt", "bcde", "axbz.txt", "abcxd.txt", "acxy.txt", "axzy.txt"};
+		String[] input10 = {"bcd.txt", "bce", "bcdx.txt", "axcd.txt", "axde", "axyz.txt", "cxyd.txt", "bcxa.txt", "bazy.txt"};
+		List<String> list = Arrays.asList(input9);
+		getSecondCode(getFirstCode(list));
+		
+		int[][] input11 = {
+				{-1,0,7,9},
+				{-6,2,-3,5},
+				{3,-6,0,-5},
+				{7,8,-7,2}
+		};
+		getMaximumNumber(input11);
+		makeString("AAAABBBCDDXXY");
+		String input12 = "56#70#66#71#68#66#82#88#72#91#75#74";
+		makeReverse(input12);
 	}
 	
+	public static List<List<Integer>> makeReverse(String input) {
+		List<List<Integer>> result = new ArrayList<>();
+		String[] str = input.split("#");
+		int i=0, j=0, temp=0, idx=0, max=0;
+		int[] ten = new int[str.length];
+		int[] one = new int[str.length];
+		for(i=0; i<str.length; i++) {
+			ten[i] = Integer.parseInt(str[i])/10;
+			one[i] = Integer.parseInt(str[i])%10;
+		}
+		String tempStr = "";
+		for(i=0; i<str.length-1; i++) {
+			for(j=i+1; j<str.length; j++) {
+				if(Integer.parseInt(str[i]) > Integer.parseInt(str[j])) {
+					tempStr = str[i];
+					str[i] = str[j];
+					str[j] = tempStr;
+				}
+			}
+		}
+		for(i=0; i<str.length; i++) {
+			ten[i] = Integer.parseInt(str[i])/10;
+			one[i] = Integer.parseInt(str[i])%10;
+		}
+		temp = ten[0];
+//		System.out.println("0."+temp);
+		List<Integer> list = new ArrayList<>();
+		list.add(temp);
+		for(i=0; i<str.length; i++) {
+			if(temp != ten[i]) {
+				result.add(idx, list);
+				idx++;
+				list = new ArrayList<>();
+				list.add(ten[i]);
+				list.add(one[i]);
+				temp = ten[i];
+				if(i==str.length-1) {
+					result.add(idx, list);
+				}
+//				System.out.println("1."+result);
+			} else {
+				if(i==0) {
+					list.add(one[i]);
+				} else {
+					list.add(one[i]);
+				}
+//				System.out.println("2."+result);
+			}
+		}
+		for(i=0; i<result.size(); i++) {		
+			if(result.get(i).size() > max) {
+				max = result.get(i).size();
+			}
+		}
+//		System.out.println(max);
+		for(i=0; i<result.size(); i++) {
+			for(j=result.get(i).size(); j<max; j++) {
+//				System.out.println("3.1"+result.get(i)+", "+result.get(i).size());
+				result.get(i).add(j, -1);
+			}
+//			System.out.println("3."+result.get(i));
+		}
+		for(i=0; i<result.size(); i++) {
+			Collections.reverse(result.get(i));
+			System.out.println(result.get(i));
+		}
+		return result;
+	}
+	public static String makeString(String input) {
+		String result = "";
+		int i=0, cnt=1;
+		String str1="", str2="";
+		char ch[] = new char[input.length()];
+		ch = input.toCharArray();
+		char temp = 0;
+		System.out.println(input.length());
+		for(i=0; i<input.length(); i++) {
+			if(temp != ch[i]) {
+				if(cnt%2==0) {
+					for(int k=0; k<cnt/2; k++) {
+						System.out.println("2."+i+", "+cnt+", "+temp+", "+ch[i]);
+						if(i==input.length()-1) {
+							System.out.println(temp+", "+ch[i]);
+							str2 = str2 + temp;
+							str1 = str1 + temp + ch[i];
+						} else {
+							str2 = str2 + temp;
+							str1 = str1 + temp;
+						}
+					}
+				} else {
+					System.out.println(i+", "+cnt+", "+temp+", "+ch[i]);
+					for(int k=0; k<cnt; k++) {
+						if(i==input.length()-1) {
+							System.out.println(temp+", "+ch[i]);
+							str1 = str1 + ch[i];
+						} else {
+							str1 = str1 + temp;
+							str1 = str1.trim();
+						}
+					}
+				}
+				cnt=1;
+				temp = ch[i];
+			} else {
+				cnt++;
+				temp = ch[i];
+				System.out.println("1."+i+", "+cnt+", "+temp+", "+ch[i]);
+			}
+		}
+		char ch2[] = new char[input.length()];
+		ch2 = str2.toCharArray();
+//		char temp2 = 0;
+		for(i=0; i<ch2.length/2; i++) {
+			temp = ch2[i];
+			ch2[i] = ch2[ch2.length-1-i];
+			ch2[ch2.length-1-i] = temp;
+		}
+		str2 = String.valueOf(ch2);
+		result = str1+str2;
+		System.out.println(str1+", "+str2+", "+result);
+		return result;
+	}
+	public static int getMaximumNumber(int[][] input) {
+		int i=0, j=0, k=0, t=0, num=1;
+		int len = input.length;
+		int sum=0, max=0;
+		while(num <= len) {
+			for(i=0; i<=len-num; i++) {
+				for(j=0; j<=len-num; j++) {
+					sum = 0;
+					for(k=i; k<i+num; k++) {
+						for(t=j; t<j+num; t++) {
+							sum = sum+input[k][t];
+						}
+					}
+					if(sum >max) {
+						max = sum;
+					}
+				}
+			}
+			num++;
+		}
+		System.out.println("max:"+max);
+		return max;
+	}
+	public static List<String> getFirstCode(List<String> input) {
+		List<String> firstCodeNameList = null;
+		firstCodeNameList = new ArrayList<String>();
+		for(String name:input) {
+			if(name.indexOf(".")>-1){
+//				System.out.println(name);
+				firstCodeNameList.add(name);
+			}
+		}
+		System.out.println(firstCodeNameList);
+		return firstCodeNameList;
+	}
+	public static List<String> getSecondCode(List<String> input) {
+		List<String> secondCodeNameList = null;
+		secondCodeNameList = new ArrayList<String>();
+		for(int i=0; i<input.size(); i++) {
+			String[] str = input.get(i).split("\\.");
+			System.out.println(str[0]);
+			if(str[0].indexOf("a")>-1 || str[0].indexOf("x")>-1) {
+				if(str[0].indexOf("ab")>-1 || str[0].indexOf("xy")>-1 || str[0].indexOf("ax")>-1) {
+					secondCodeNameList.add(input.get(i));
+				}
+			} else {
+				secondCodeNameList.add(input.get(i));
+			}
+		}
+		System.out.println(secondCodeNameList);
+		return secondCodeNameList;
+	}
+	public static List<Integer> getMoveInfo(int numberOfBalloon, int numberOfMove) {
+		List<Integer> moveInfo = new ArrayList<>();
+		int tmpNumberOfMove=0, index=1;
+		moveInfo.add(numberOfBalloon);
+		while(true)
+		{
+			if(moveInfo.get(index-1)>1) {
+				tmpNumberOfMove++;
+				moveInfo.set(index-1, moveInfo.get(index-1)-2);
+				if(index == moveInfo.size()-1) {
+					moveInfo.set(index, moveInfo.get(index)+1);
+					System.out.println("1. "+moveInfo);
+				} else {
+					moveInfo.add(index, 1);
+					System.out.println("2. "+moveInfo);
+				}
+
+				if(numberOfMove == tmpNumberOfMove) {
+					System.out.println("3. "+moveInfo);
+					break;
+				}
+				if(moveInfo.get(index-1)<=1 && moveInfo.get(index)<=1) {
+					System.out.println("4. "+moveInfo);
+					break;
+				}
+			} else {
+				index++;
+			}
+		}
+		return moveInfo;
+	}
+	
+	public static int getNumber(List<Integer> finalMoveList) {
+//		int number = 0;
+		int index = finalMoveList.size()-1;
+		while(true) {
+			if(finalMoveList.get(index) > 0) {
+				finalMoveList.set(index, finalMoveList.get(index)-1);
+				finalMoveList.set(index-1, finalMoveList.get(index-1)+2);
+			} else {
+				index--;
+			}
+			if(index == 0) {
+				break;
+			}
+		}
+		System.out.println(finalMoveList.get(0));
+		return finalMoveList.get(0);
+	}
 	public static String[][] printSalary(String[][] salary, String[][] employee) {
 		HashMap<String, Integer> gradeCnt = new HashMap<String, Integer>();
 		HashMap<String, Float> salCal = new HashMap<String, Float>();
@@ -214,7 +454,7 @@ public class array {
 		for(j=0; j<word.length(); j++) {
 			if(matrix[posx][posy+j].equals(word.substring(j,j+1)) != true) {
 //			if(matrix[posx][posy+j].charAt(0) != word.charAt(j)) {
-//				System.out.println("matrix[posx][posy+j]:"+matrix[posx][posy+j]+", word.substring(0,1):"+word.substring(0,1));
+//				System.out.println("matrix[posx][posy+j]:"+matrix[posx][posy+j]+", word.substring(j,j+1):"+word.substring(j,j+1));
 				correct = false;
 			}
 		}
