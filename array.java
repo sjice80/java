@@ -173,8 +173,65 @@ public class array {
 		makeString("AAAABBBCDDXXY");
 		String input12 = "56#70#66#71#68#66#82#88#72#91#75#74";
 		makeReverse(input12);
+		List<List<Integer>> input13 = new ArrayList<>();
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,1,0,0,0,0,  0,0,1,0,0,0,0,  1,0,0,0,0,0,1,  0,1,0,0,0,0,0,  0,0,0,0,0,0,1)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,1,0,0,1,0,  0,0,1,0,0,1,0,  0,0,0,1,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,1,0,0,0,0,0,  0,1,0,0,0,0,0,  0,0,1,0,0,0,0,  0,0,1,0,0,0,0,  0,0,0,0,0,1,0)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(1,0,0,0,1,0,0,  1,0,0,0,1,0,0,  0,0,0,0,1,0,0,  0,0,0,1,0,0,0,  0,0,1,0,1,0,0)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,1,0,0,0,  0,0,0,1,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  1,0,0,0,0,0,0)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,1,0,0,  0,0,0,0,1,0,0,  0,1,0,0,0,0,0)));
+		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0)));
+		System.out.println(input13);
+		makeMasking(input13);
 	}
-	
+	public static List<List<Integer>> makeMasking(List<List<Integer>> input) {
+		List<List<Integer>> result = new ArrayList<>();
+		List<Integer> list1 = new ArrayList<>();
+		List<Integer> list2 = new ArrayList<>();
+		List<Integer> list3 = new ArrayList<>();
+		List<Integer> list4 = new ArrayList<>();
+		List<Integer> list5 = new ArrayList<>();
+		int i=0, j=0;
+		for(i=0; i<input.size(); i++) {
+			for(j=0; j<input.get(i).size(); j++) {
+				if(input.get(i).get(j) == 1) {
+					if(j>=0 && j<7) {
+						System.out.print((7*i+1+(j-0))+" ");
+						list1.add(7*i+1+(j-0));
+					}
+					if(j>=7 && j<14) {
+						System.out.print((7*i+1+(j-7))+" ");
+						list2.add(7*i+1+(j-7));
+					}
+					if(j>=14 && j<21) {
+						System.out.print((7*i+1+(j-14))+" ");
+						list3.add(7*i+1+(j-14));
+					}
+					if(j>=21 && j<28) {
+						System.out.print((7*i+1+(j-21))+" ");
+						list4.add(7*i+1+(j-21));
+					}
+					if(j>=28 && j<35) {
+						System.out.print((7*i+1+(j-28))+" ");
+						list5.add(7*i+1+(j-28));
+					}
+				}
+			}
+		}
+		System.out.println();
+		System.out.println(list1);
+		System.out.println(list2);
+		System.out.println(list3);
+		System.out.println(list4);
+		System.out.println(list5);
+		result.add(list1);
+		result.add(list2);
+		result.add(list3);
+		result.add(list4);
+		result.add(list5);
+		
+		return result;
+	}
 	public static List<List<Integer>> makeReverse(String input) {
 		List<List<Integer>> result = new ArrayList<>();
 		String[] str = input.split("#");
@@ -216,11 +273,7 @@ public class array {
 				}
 //				System.out.println("1."+result);
 			} else {
-				if(i==0) {
-					list.add(one[i]);
-				} else {
-					list.add(one[i]);
-				}
+				list.add(one[i]);
 //				System.out.println("2."+result);
 			}
 		}
