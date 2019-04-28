@@ -195,8 +195,74 @@ public class array {
 							  "C,LIM,19");				
 		
 		checkReservation(input14, 17);
+		List<String> input15 = Arrays.asList(
+				"BOOK,CUP,TV,CARD",
+				"NOTEBOOK","PEN","BOOK",
+				"CARD,TV,POINTER,PEN",
+				"MOUSE","POINTER","BOOK"
+				);
+		makeGoodsList(input15);
+		makeCase(10);
 	}
-	
+	public static List<String> makeCase(int input) {
+		List<String> result = new ArrayList<>();
+		String str = "";
+		int i=0, cnt=0, sum=0, avg=0, min=100, depart=0, job=0;
+		for(i=1;i<=input;i++) {
+			if(input%i == 0) {
+				str = String.valueOf(i)+"_"+String.valueOf(input/i);
+				sum += i;
+				cnt++;
+				System.out.println(str);
+				result.add(str);
+			}
+		}
+		avg = sum/cnt;
+		for(i=0; i<result.size(); i++) {
+			String[] strArr = result.get(i).split("_");
+			if(Math.abs(Integer.parseInt(strArr[0])-avg)<min) {
+				min = Math.abs(Integer.parseInt(strArr[0])-avg);
+				depart = Integer.parseInt(strArr[0]);
+				job = Integer.parseInt(strArr[1]);
+			} else if(Math.abs(Integer.parseInt(strArr[0])-avg)==min) {
+				if(Integer.parseInt(strArr[0]) > depart) {
+					depart = Integer.parseInt(strArr[0]);
+					job = Integer.parseInt(strArr[1]);
+				}
+			}
+		}
+		String result2 = String.valueOf(depart)+"_"+String.valueOf(job);
+		System.out.println(result2);
+		
+		return result;
+	}
+	public static HashMap<String,Integer> makeGoodsList(List<String> input) {
+		HashMap<String,Integer> result = new HashMap<>();
+		int i=0, j=0, type_cnt=0, same_cnt=1;
+		String temp="";
+		for(i=0;i<input.size();i++) {
+			String[] str = input.get(i).split(",");
+			for(j=0;j<str.length;j++) {
+//				System.out.println("1."+temp+", "+str[j]);
+				if(result.containsKey(str[j]) == false) {
+					same_cnt=1;
+					result.put(str[j], 1);
+					type_cnt++;
+//					System.out.println("1."+str[j]+", "+result.get(str[j]));
+				} else {
+					same_cnt++;
+					result.replace(str[j], result.get(str[j])+1);
+//					System.out.println("2."+str[j]+", "+result.get(str[j]));
+				}
+			}
+		}
+		
+		for(String key:result.keySet()) {
+			int value = result.get(key);
+			System.out.println(key+" "+value);
+		}
+		return result;
+	}
 	public static boolean checkReservation(List<String> table, int input) {
 		boolean isAvailable = false;
 		String[][] table1 = new String[table.size()][2];
@@ -218,7 +284,7 @@ public class array {
 		}
 		for(i=0; i<table.size(); i++) {
 			String[] str = table.get(i).split(",");
-			System.out.println(str[0]+" "+str[1]+" "+str[2]);
+//			System.out.println(str[0]+" "+str[1]+" "+str[2]);
 
 			if(input == Integer.parseInt(str[2])) {
 				table1[i][0] = str[0];
@@ -230,7 +296,6 @@ public class array {
 		}
 		for(i=0; i<table.size(); i++) {
 			System.out.println(table1[i][0]+" "+table1[i][1]);
-//			cnt = 0;
 			if(table1[i][0].equals(temp2) == false) {	
 				same_cnt=0;
 				temp2 = table1[i][0];
@@ -242,13 +307,13 @@ public class array {
 					result[type_cnt][1] = "예약 가능";
 				}
 				type_cnt++;
-				System.out.println("1."+temp2+" "+type_cnt);
+//				System.out.println("1."+temp2+" "+type_cnt);
 			} else {
 				same_cnt++;
-				System.out.println("2."+temp2+" "+type_cnt+" "+same_cnt);
+//				System.out.println("2."+temp2+" "+type_cnt+" "+same_cnt);
 				if(table1[i][1].contains("예약 불가능")) {
 					for(int k=0; k<type_cnt; k++) {
-						System.out.println("3."+temp2+" "+type_cnt);
+//						System.out.println("3."+temp2+" "+type_cnt);
 						if(result[k][0].equals(temp2)) {
 							result[k][1] = "예약 불가능";	
 							break;
