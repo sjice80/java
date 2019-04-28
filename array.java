@@ -183,6 +183,84 @@ public class array {
 		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0)));
 		System.out.println(input13);
 		makeMasking(input13);
+		List<String> input14 = Arrays.asList(
+							  "A,RYU,10",
+							  "B,KIM,12",
+							  "A,PARK,9",
+							  "C,RYU,17",
+							  "B,LEE,20",
+							  "C,MIN,14",
+							  "A,CHOI,8",
+							  "B,JEON,15",
+							  "C,LIM,19");				
+		
+		checkReservation(input14, 17);
+	}
+	
+	public static boolean checkReservation(List<String> table, int input) {
+		boolean isAvailable = false;
+		String[][] table1 = new String[table.size()][2];
+		String[][] result = new String[table.size()][2];
+		int i=0, j=0, type_cnt=0, same_cnt=0;
+		String temp= "";
+		String temp2 = "";
+		for(i=0; i<table.size()-1; i++) {
+			for(j=i+1; j<table.size(); j++) {
+				if(table.get(i).compareTo(table.get(j)) > 0) {
+					temp = table.get(i);
+					table.set(i, table.get(j));
+					table.set(j, temp);
+				}
+			}
+		}
+		for(i=0; i<table.size(); i++) {
+			System.out.println(table.get(i));
+		}
+		for(i=0; i<table.size(); i++) {
+			String[] str = table.get(i).split(",");
+			System.out.println(str[0]+" "+str[1]+" "+str[2]);
+
+			if(input == Integer.parseInt(str[2])) {
+				table1[i][0] = str[0];
+				table1[i][1] = "예약 불가능";
+			} else {
+				table1[i][0] = str[0];
+				table1[i][1] = "예약 가능";
+			}
+		}
+		for(i=0; i<table.size(); i++) {
+			System.out.println(table1[i][0]+" "+table1[i][1]);
+//			cnt = 0;
+			if(table1[i][0].equals(temp2) == false) {	
+				same_cnt=0;
+				temp2 = table1[i][0];
+				if(table1[i][1].contains("예약 불가능")) {
+					result[type_cnt][0] = temp2;
+					result[type_cnt][1] = "예약 불가능";						
+				} else {
+					result[type_cnt][0] = temp2;
+					result[type_cnt][1] = "예약 가능";
+				}
+				type_cnt++;
+				System.out.println("1."+temp2+" "+type_cnt);
+			} else {
+				same_cnt++;
+				System.out.println("2."+temp2+" "+type_cnt+" "+same_cnt);
+				if(table1[i][1].contains("예약 불가능")) {
+					for(int k=0; k<type_cnt; k++) {
+						System.out.println("3."+temp2+" "+type_cnt);
+						if(result[k][0].equals(temp2)) {
+							result[k][1] = "예약 불가능";	
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(i=0; i<type_cnt; i++) {
+			System.out.println(result[i][0]+" "+result[i][1]);
+		}
+		return isAvailable;
 	}
 	public static List<List<Integer>> makeMasking(List<List<Integer>> input) {
 		List<List<Integer>> result = new ArrayList<>();
