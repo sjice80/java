@@ -460,14 +460,92 @@ public class HelloWorld {
 		
 		String input12 = "we1re3hewo34ddre67com21rue";
 		String backup = "1ware4hewor5dd8eamcome3rue";
-		String[] network = {"wear","ethe","worl","ddre","amco","metr","ue"};
+		String[] network = {"wear","ethe","worl","ddre","amco","metr","ue  "};
 		getSecondRecovery(getFirstRecovery(input12, backup), network);
+		
+		List<List<Integer>> input13 = new ArrayList<List<Integer>>();
+		int j=0, cnt=0;
+		for(int t=0; t<10; t++) {
+			List<Integer> list = new ArrayList<>();
+			for(j=5*cnt; j<5*cnt+5; j++) {
+//				Random rand = new Random();
+//				System.out.println("1:"+rand.nextInt());
+//				list.add(rand.nextInt());
+				list.add(j);
+			}
+			cnt++;
+			input13.add(list);
+			System.out.println(list);
+			System.out.println(input13);
+		}
+		System.out.println();
+		int[][] convertArr = new int[input13.size()][input13.get(0).size()];
+		for(i=0; i<input13.size(); i++) {
+			for(j=0; j<input13.get(0).size(); j++) {
+				convertArr[i][j] = input13.get(i).get(j);
+				System.out.print(convertArr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		List<String> input14 = Arrays.asList(
+				"EE#20170503210008#MESSAGE02",
+				"WW#20160303100009#MESSAGE04",
+				"SS#20170403120807#MESSAGE03",
+				"WW#20160708121400#MESSAGE04",
+				"SS#20170606110000#MESSAGE04",
+				"SS#20170505220008#MESSAGE02",
+				"SS#20170405130007#MESSAGE03");
+		countType(input14);
 	}
+	public static HashMap<String, Integer> countType(List<String> input) {
+		int i=0, j=0, type_cnt=0, same_cnt=0;
+		String temp="";
+		//int[][] result = new int[input.size()][2];
+		HashMap<String, Integer> result = new HashMap<>();
+		for(i=0; i<input.size(); i++) {
+			String[] strArr = input.get(i).split("#");
+			if(temp.equals(strArr[0]) == false) {
+				if(result.containsKey(strArr[0])) {
+					result.replace(strArr[0], result.get(strArr[0])+1);
+					same_cnt++;
+				} else {
+					same_cnt=0;
+					temp = strArr[0];
+					result.put(temp, 1);
+					type_cnt++;
+				}
+			} else {
+				result.replace(temp, result.get(temp)+1);
+				same_cnt++;			
+			}
+		}
+		for(String key:result.keySet()) {
+			int value = result.get(key);
+			System.out.println(key+" "+value);
+		}
+		return result;
+	}
+	/*
+	public static int[][] convertToArr(List<List<Integer>> input) {
+		List<List<Integer>> input2 = new ArrayList<>();
+		int i=0, j=0;
+		for(i=0; i<10; i++) {
+			List<Integer> list = new ArrayList<>();
+			for(j=0; j<5; j++) {
+				Random rand = new Random();
+				list.add(rand.nextInt());
+			}
+			input2.add(list);
+			System.out.println(list);
+		}
+		return input2;
+	}
+	*/
 	public static String getSecondRecovery(String first, String[] network) {
 		char[] chInput = first.toCharArray();
 		String str = "";
 		for(int i=0; i<network.length; i++) {
-			str += network[i];
+			str += network[i].trim();
 		}
 		System.out.println("network:"+str);
 		char[] chNetwork = str.toCharArray();
