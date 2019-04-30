@@ -496,6 +496,51 @@ public class HelloWorld {
 				"SS#20170505220008#MESSAGE02",
 				"SS#20170405130007#MESSAGE03");
 		countType(input14);
+		compress1(new File(".\\ABCE.txt"));
+	}
+	
+	public static String compress1(File file){
+		File file2 = new File("ABCE.txt");
+		StringBuilder sb = new StringBuilder();
+		String temp="";
+		int same_cnt=0;
+		if(file2!=null) {
+			try {
+				Scanner sc = new Scanner(file2);
+				while(sc.hasNextLine()) {
+					String str = sc.nextLine();
+//					System.out.println(str);
+					if(str!=null) {
+						if(str.equals(temp) == false) {
+							if(same_cnt>0) {
+								
+								str = String.valueOf(same_cnt+1)+"#"+temp;
+								sb.append(str);
+								sb.append("\n");
+								temp = str.substring(2);
+//								System.out.println("1:"+sb.toString());
+							} else {
+								temp = str;
+								sb.append(temp);
+								sb.append("\n");		
+//								System.out.println("2:"+sb.toString());
+							}
+							
+							same_cnt=0;
+						} else {
+							same_cnt++;
+						}
+					}
+					
+				}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+		}
+		System.out.println(sb.toString());
+		return sb.toString();
 	}
 	public static HashMap<String, Integer> countType(List<String> input) {
 		int i=0, j=0, type_cnt=0, same_cnt=0;
@@ -504,7 +549,7 @@ public class HelloWorld {
 		HashMap<String, Integer> result = new HashMap<>();
 		for(i=0; i<input.size(); i++) {
 			String[] strArr = input.get(i).split("#");
-			if(temp.equals(strArr[0]) == false) {
+//			if(temp.equals(strArr[0]) == false) {
 				if(result.containsKey(strArr[0])) {
 					result.replace(strArr[0], result.get(strArr[0])+1);
 					same_cnt++;
@@ -514,10 +559,10 @@ public class HelloWorld {
 					result.put(temp, 1);
 					type_cnt++;
 				}
-			} else {
-				result.replace(temp, result.get(temp)+1);
-				same_cnt++;			
-			}
+//			} else {
+//				result.replace(temp, result.get(temp)+1);
+//				same_cnt++;			
+//			}
 		}
 		for(String key:result.keySet()) {
 			int value = result.get(key);
