@@ -2,9 +2,19 @@ package array1;
 
 import java.io.*;
 import java.util.*;
+import java.security.MessageDigest;
 
 public class array {
-
+	static char MimeBase64[] = {
+			'A','B','C','D','E','F','G','H',
+			'I','J','K','L','M','N','O','P',
+			'Q','R','S','T','U','V','W','X',
+			'Y','Z','a','b','c','d','e','f',
+			'g','h','i','j','k','l','m','n',
+			'o','p','q','r','s','t','u','v',
+			'w','x','y','z','0','1','2','3',
+			'4','5','6','7','8','9','+','/'
+		};
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
@@ -203,6 +213,147 @@ public class array {
 				);
 		makeGoodsList(input15);
 		makeCase(10);
+		
+        String base = "password123";
+        
+        try{
+ 
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            System.out.println(hash.length);
+            StringBuffer hexString = new StringBuffer();
+ 
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+ 
+            //출력
+            System.out.println(hexString.toString());
+ 
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+
+    	String input16 = "WINDOW";
+    	makeMime(input16);
+    	System.out.println();
+    	compress1(new File(".\\ABCE.txt"));
+    	makeCube(4);
+    	num_thirteen(213421313, 0);
+	}
+	
+	public static int num_thirteen(int num, int count) {
+		int i=0, cnt=0;
+		String str = String.valueOf(num);
+
+		while(str.contains("13")==true) {
+			cnt++;
+			System.out.println(str+", "+str.indexOf("13"));
+			str = str.substring(str.indexOf("13")+2);
+		}
+	
+		System.out.println(cnt);
+		count = cnt;
+		return count;
+	}
+	public static int[][] makeCube(int length) {
+		int[][] result = new int[length][length];
+		int i=0, j=0, k=1, cnt=1;
+		for(i=0; i<length; i++) {
+			for(j=0; j<length-i; j++) {
+				if(j==length-1-i) {
+					k=0;
+					while(i+k<length) {
+						result[i+k][j] = cnt;
+						cnt++;
+						k++;
+					}
+				} else {
+					result[i][j] = cnt;
+					cnt++;
+				}
+			}
+		}
+		for(i=0; i<length; i++) {
+			for(j=0; j<length; j++) {
+				System.out.printf("%4d",result[i][j]);
+			}
+			System.out.println();
+		}
+		return result;
+	}
+	public static String compress1(File file){
+		File file2 = new File("ABCE.txt");
+		StringBuilder sb = new StringBuilder();
+		List<String> list = new ArrayList<>();
+		int same_cnt=0, i=0;
+		if(file2!=null) {
+			try {
+				Scanner sc = new Scanner(file2);
+				while(sc.hasNextLine()) {
+					String str = sc.nextLine();
+					list.add(str);
+				}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}			
+		}
+		for(i=0; i<list.size()-1; i++) {
+			String str1 = list.get(i);
+			String str2 = list.get(i+1);
+			if(str1.equals(str2) == false) {
+				if(same_cnt>0) {				
+					str1 = String.valueOf(same_cnt+1)+"#"+str1;
+					sb.append(str1);
+					sb.append("\n");
+//					System.out.println("1:"+sb.toString());
+				} else {					
+					sb.append(str1);
+					sb.append("\n");		
+//					System.out.println("2:"+sb.toString());
+				}		
+				if(i == list.size()-2) {
+					sb.append(str2);
+					sb.append("\n");
+				}
+				same_cnt=0;
+			} else {
+				same_cnt++;
+			}
+		}		
+		System.out.println(sb.toString());
+		return sb.toString();
+	}
+	public static String makeMime(String input) {
+		String result = "";
+		int i=0, j=0, idx=0, t=0, tt=0, cnt=0, pos=0;
+		char ch=0;
+		char[] chArr = input.toCharArray();
+		char[] chArr2 = new char[50];//{'0'};
+		for(i=0; i<input.length(); i++) {
+			ch = chArr[i];
+			for(j=7; j>=0; j--) {
+				t = (ch >> j) & 0x01;
+				if(t == 1) {
+					System.out.print("1");
+				} else {
+					System.out.print("0");
+				}
+				tt = chArr2[idx] << 1;
+				chArr2[idx] = (char)(tt|t);
+				cnt++;
+				if(cnt%5==0) {
+//					pos = Integer.parseInt(String.valueOf(chArr2[idx]));
+					System.out.print(MimeBase64[(int)chArr2[idx]]); 
+					idx++;
+				}
+			}
+
+		}
+		return result;
 	}
 	public static List<String> makeCase(int input) {
 		List<String> result = new ArrayList<>();
@@ -314,7 +465,7 @@ public class array {
 				if(table1[i][1].contains("예약 불가능")) {
 					for(int k=0; k<type_cnt; k++) {
 //						System.out.println("3."+temp2+" "+type_cnt);
-						if(result[k][0].equals(temp2)) {
+						if(result[k][0].equals(table1[i][0])) {
 							result[k][1] = "예약 불가능";	
 							break;
 						}
