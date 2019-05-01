@@ -15,7 +15,7 @@ public class array {
 			'w','x','y','z','0','1','2','3',
 			'4','5','6','7','8','9','+','/'
 		};
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
 		
@@ -242,8 +242,85 @@ public class array {
     	compress1(new File(".\\ABCE.txt"));
     	makeCube(4);
     	num_thirteen(213421313, 0);
+    	writeFile("test.csv");
+    	readFile("test.csv");
+    	writeStars(8);
 	}
 	
+	public static void writeFile(String fileName) throws IOException {
+		FileWriter fw = new FileWriter("test.csv");
+		BufferedWriter bw = new BufferedWriter(fw);
+		
+		String[] header = {"Name","Gender","Age"};
+		String[] p1 = {"Chulsoo","M","23"};
+		String[] p2 = {"Younghee","F","25"};
+		String[] p3 = {"Minsoo","M","19"};
+		
+		ArrayList<String[]> info = new ArrayList<String[]>();
+		info.add(header);
+		info.add(p1);
+		info.add(p2);
+		info.add(p3);
+		
+		for(String[] k:info) {
+			for(int i=0; i<k.length-1; i++) {
+				bw.write(k[i]);
+				bw.write(",");
+			}
+			bw.write(k[k.length-1]);
+			bw.write("\r\n");
+		}
+		bw.close();
+		fw.close();
+	}
+	
+	public static void readFile(String fileName) throws IOException {
+		FileReader fr = new FileReader("test.csv");
+		BufferedReader br = new BufferedReader(fr);
+		ArrayList<String[]> info = new ArrayList<String[]>();
+		String[] tList;
+		String temp;
+		br.readLine();
+		int sum=0, cnt=0;
+		while(true) {
+			temp = br.readLine();
+			if(temp == null) break;
+			tList = temp.split(",");
+			System.out.printf("이름: %s 성별: %s 나이: %s\n", tList[0], tList[1], tList[2]);
+			sum += Integer.parseInt(tList[2]);
+			cnt++;
+			info.add(tList);
+		}
+		System.out.printf("평균나이: %d\n", sum/cnt);
+		br.close();
+		fr.close();
+	}
+	
+	public static void writeStars(int count) throws IOException {
+		int i=0, num=1;
+		String temp="";
+		FileWriter fw = new FileWriter("stars.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		while(num<=count) {
+//			for(i=0; i<num; i++) {
+				temp += "*";			
+//			}
+			bw.write(temp);
+			bw.write("\n\r");
+			num++;
+		}
+		num=1;
+		while(num<count) {
+//			for(i=0; i<num; i++) {
+				temp = temp.substring(0, count-num);			
+//			}
+			bw.write(temp);
+			bw.write("\n\r");
+			num++;
+		}
+		bw.close();
+		fw.close();
+	}
 	public static int num_thirteen(int num, int count) {
 		int i=0, cnt=0;
 		String str = String.valueOf(num);
