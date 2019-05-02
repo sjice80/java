@@ -497,8 +497,81 @@ public class HelloWorld {
 				"SS#20170405130007#MESSAGE03");
 		countType(input14);
 		compress1(new File(".\\ABCE.txt"));
+		System.out.println();
+		compress2(new File(".\\ABCE.txt"));
+		sumThree(1);
 	}
-	
+	public static int sumThree(int input) {
+//		Scanner sc = new Scanner(System.in);
+//		String str = sc.nextLine();
+		String str = "34 15 2 64 194 7";
+		str = str.replace(" ", "");
+		int sum = 0, len=0, n=0, num=0, cnt=0;
+		len = str.length();
+		while(n<=len) {
+			if(cnt == len/3) {
+				num = Integer.parseInt(str.substring(n));
+				sum = sum+ num;
+				System.out.println("2. num:"+num+", sum:"+sum);
+				break;
+			}
+			num = Integer.parseInt(str.substring(n, n+3));
+			n = n+3;
+			cnt++;
+			sum = sum+ num;
+			System.out.println("1. num:"+num+", sum:"+sum);
+		}
+//		sc.close();
+		System.out.println("sum:"+sum);
+		return sum;
+	}
+	public static String compress2(File file) {
+		File file2 = new File("ABCE.txt");
+		String line = "";
+		String temp="";
+		int same_cnt=1, i=0;
+		try {
+			Scanner sc = new Scanner(file2);
+			
+			while(sc.hasNextLine())
+			{
+				line = sc.nextLine();
+				char[] ch = line.toCharArray();
+				same_cnt=1;
+				for(i=0; i<ch.length; i++) {
+					if(i==ch.length-1) {
+						if(same_cnt==1) {
+							temp += String.valueOf(ch[i]);
+						} else if(same_cnt==2) {
+							temp += String.valueOf(ch[i]) + String.valueOf(ch[i]);
+						} else {
+							temp += String.valueOf(same_cnt) + String.valueOf(ch[i]);
+						}
+						break;
+					} else {
+						if(ch[i] != ch[i+1]) {
+							if(same_cnt==1) {
+								temp += String.valueOf(ch[i]);
+							} else if(same_cnt==2) {
+								temp += String.valueOf(ch[i]) + String.valueOf(ch[i]);
+							} else {
+								temp += String.valueOf(same_cnt) + String.valueOf(ch[i]);
+							}
+							same_cnt=1;
+						} else {
+							same_cnt++;
+						}
+					}
+				}
+				temp += "\n\r";
+				System.out.println(temp);
+			}
+			sc.close();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		return temp;
+	}
 	public static String compress1(File file){
 		File file2 = new File("ABCE.txt");
 		StringBuilder sb = new StringBuilder();
