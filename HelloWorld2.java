@@ -500,6 +500,62 @@ public class HelloWorld {
 		System.out.println();
 		compress2(new File(".\\ABCE.txt"));
 		sumThree(1);
+		coolNumbers(1000);
+		int[] input15 = {7,13,13,5,4,8,7,4,20,8};
+		removeSame(input15);
+	}
+	
+	public static List<Integer> removeSame(int[] input) {
+		List<Integer> result = new ArrayList<>();
+		List<Integer> result2 = new ArrayList<>();
+		int[] arr = {7,13,13,5,4,8,7,4,20,8};
+		HashMap<Integer, Integer> set = new HashMap<Integer, Integer>();
+		List<Integer> temp = new ArrayList<>();
+		for(int i:arr) {
+			temp.add(i);
+		}
+		for(int i=0; i<temp.size(); i++) {
+			if(set.containsKey(temp.get(i)) == false) {
+				set.put(temp.get(i), 1);
+			} else {
+				set.replace(temp.get(i), set.get(temp.get(i))+1);
+			}
+		}
+		
+		for(int i:set.keySet()) {
+			int value = set.get(i);
+			if(value == 1) {
+				result2.add(i);
+			}
+			System.out.println(i + ", " + value);
+		}
+		System.out.println(result2);
+		for(int i=0; i<temp.size(); i++) {
+			if(result.contains(temp.get(i)) == false) {
+				result.add(temp.get(i));
+			}
+		}
+		Collections.sort(result);
+		for(int i=0; i<result.size(); i++) {
+			System.out.print(result.get(i)+" ");
+		}
+		
+		
+		return result; 
+	}
+	public static int coolNumbers(int input) {
+		int cnt=0;
+		for(int k=100; k<input-100; k++) {
+			String str = Integer.toString(k);
+			char[] ch = str.toCharArray();
+			int diff = ch[1] - ch[0];
+			for(int i=str.length()-1; i>0; i--) {
+				if(ch[i]-ch[i-1] == diff) break;
+				else cnt++;
+			}
+		}
+		System.out.println("¸ÚÁø¼ö:"+cnt);
+		return cnt;
 	}
 	public static int sumThree(int input) {
 //		Scanner sc = new Scanner(System.in);
