@@ -142,9 +142,9 @@ public class array {
 				{"J", "Q"}
 		};
 		List<String> categories = Arrays.asList("F","N");
-//		getTopCategory(input7, categories);
+		getTopCategory(input7, categories);
 		String categoryStr = "J";
-//		getNumberOfSubcategories(input7, categoryStr);
+		getNumberOfSubcategories(input7, categoryStr);
 //		getProductNum(getNewStr("371B4A4"));
 //		getProductNum(getNewStr("5312D6C"));
 //		getLargeNumber(1234567);
@@ -183,16 +183,7 @@ public class array {
 		makeString("AAAABBBCDDXXY");
 		String input12 = "56#70#66#71#68#66#82#88#72#91#75#74";
 		makeReverse(input12);
-		List<List<Integer>> input13 = new ArrayList<>();
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,1,0,0,0,0,  0,0,1,0,0,0,0,  1,0,0,0,0,0,1,  0,1,0,0,0,0,0,  0,0,0,0,0,0,1)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,1,0,0,1,0,  0,0,1,0,0,1,0,  0,0,0,1,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,1,0,0,0,0,0,  0,1,0,0,0,0,0,  0,0,1,0,0,0,0,  0,0,1,0,0,0,0,  0,0,0,0,0,1,0)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(1,0,0,0,1,0,0,  1,0,0,0,1,0,0,  0,0,0,0,1,0,0,  0,0,0,1,0,0,0,  0,0,1,0,1,0,0)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,1,0,0,0,  0,0,0,1,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  1,0,0,0,0,0,0)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,1,0,0,  0,0,0,0,1,0,0,  0,1,0,0,0,0,0)));
-		input13.add(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0)));
-		System.out.println(input13);
-		makeMasking(input13);
+
 		List<String> input14 = Arrays.asList(
 							  "A,RYU,10",
 							  "B,KIM,12",
@@ -245,8 +236,384 @@ public class array {
     	writeFile("test.csv");
     	readFile("test.csv");
     	writeStars(8);
+    	List<Integer> input17 = new ArrayList<>();
+    	input17.add(5);
+    	input17.add(8);
+    	input17.add(9);
+    	input17.add(10);
+    	makeGCDList(input17);
+    	findChain("CHAIN.TXT");
+		int[][] input18 = {{0,10,23,7,4,16},
+			       {10,0,8,5,13,10},
+			       {23,8,0,19,8,11},
+			       {7,5,19,0,15,8},
+			       {4,13,8,15,0,2},
+			       {16,10,11,8,2,0}				
+		};
+		pro348_1(input18);
+		String input19 = "OOXXOXOXOOXOOO";
+		pro345(input19);
+		coolNumbers(1000);
+		String input20 = "66#56#66#68#70#72#73#74#82#77";
+		getMaxNumber(input20);
+		getReverseArrange(input20);
+		List<List<Integer>> input13 = Arrays.asList(
+				Arrays.asList(3, 10, 13, 22, 31, 32, 29),
+				Arrays.asList(0,0,1,0,0,0,0,  1,0,0,0,1,0,0,  0,0,0,0,1,0,0,  0,0,1,0,0,0,0,  0,0,1,0,0,0,1),
+				Arrays.asList(0,0,1,0,0,1,0,  0,0,0,0,0,0,0,  0,0,1,0,0,1,0,  0,0,1,0,0,1,0,  0,0,1,0,0,1,0),
+				Arrays.asList(0,0,0,0,0,0,0,  0,0,1,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0),
+				Arrays.asList(0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  1,0,0,0,0,0,0,  1,0,0,0,0,0,0,  1,0,0,0,0,0,0),
+				Arrays.asList(0,0,0,0,0,0,1,  0,0,1,1,0,0,0,  0,0,1,0,1,1,0,  1,0,1,0,0,0,0,  0,0,1,0,0,0,0),
+				Arrays.asList(0,0,0,0,0,1,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0),
+				Arrays.asList(0,0,1,0,0,0,0,  0,0,1,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,0,0,  0,0,0,0,0,1,0)
+		);
+		System.out.println(input13);
+		getGameNumber(input13);
+		ArrayList<List<Integer>> numbers = new ArrayList<>(input13);
+		List<Integer> list13 = numbers.remove(0);
+		List<Integer> matchNumbers = new ArrayList<>(list13);
+		System.out.println();
+		System.out.println(Arrays.toString(list13.toArray()));
+		System.out.println(matchNumbers);
+		int bonusNum = matchNumbers.remove(matchNumbers.size()-1);
+		System.out.println(bonusNum);
+		matchRank(getGameNumber(input13), matchNumbers, bonusNum);
 	}
 	
+	public static List<Integer> matchRank(List<List<Integer>> lottoGame, List<Integer> lottoNum, int bonusNum) {
+		List<Integer> result = new ArrayList<Integer>();
+		for(List<Integer> game:lottoGame) {
+			int matchCount = 0;
+			boolean bonus = false;
+			boolean error = false;
+			if(game.size() != 6) {
+				result.add(-1);
+				continue;
+			}
+			for(Integer num:game) {
+				if(num>45) {
+					error = true;
+					break;
+				}
+				if(lottoNum.contains(num)) {
+					matchCount++;
+				}
+				if(num == bonusNum) {
+					bonus = true;
+				}
+			}
+			if(error) {
+				result.add(-1);
+				continue;
+			}
+			if(matchCount == 6) {
+				result.add(1);
+			} else if(matchCount == 5 && bonus) {
+				result.add(2);
+			} else if(matchCount == 5 && !bonus) {
+				result.add(3);
+			} else if(matchCount == 4) {
+				result.add(4);
+			} else if(matchCount == 3) {
+				result.add(5);
+			} else {
+				result.add(0);
+			}
+		}
+		System.out.println(result);
+		return result;
+	}
+	public static List<List<Integer>> getGameNumber(List<List<Integer>> input) {
+		List<List<Integer>> result = new ArrayList<>();
+		System.out.println(input.size());
+		for(int i=0; i<5; i++) {
+//			List<Integer> list = new ArrayList<>();
+			result.add(new ArrayList<Integer>());
+		}
+		for(int i=1; i<input.size(); i++) {
+			for(int j=0; j<35; j++) {
+				if(input.get(i).get(j) == 1) {
+					int game = j/7;
+					int num = (i-1)*7 + j%7 + 1;
+					result.get(game).add(num);
+				}
+			}
+			
+		}
+		for(int i=0; i<5; i++) {
+			System.out.println(result.get(i));
+		}
+		/*
+		List<Integer> list1 = new ArrayList<>();
+		List<Integer> list2 = new ArrayList<>();
+		List<Integer> list3 = new ArrayList<>();
+		List<Integer> list4 = new ArrayList<>();
+		List<Integer> list5 = new ArrayList<>();
+		int i=0, j=0;
+		for(i=0; i<input.size(); i++) {
+			for(j=0; j<input.get(i).size(); j++) {
+				if(input.get(i).get(j) == 1) {
+					if(j>=0 && j<7) {
+						System.out.print((7*i+1+(j-0))+" ");
+						list1.add(7*i+1+(j-0));
+					}
+					if(j>=7 && j<14) {
+						System.out.print((7*i+1+(j-7))+" ");
+						list2.add(7*i+1+(j-7));
+					}
+					if(j>=14 && j<21) {
+						System.out.print((7*i+1+(j-14))+" ");
+						list3.add(7*i+1+(j-14));
+					}
+					if(j>=21 && j<28) {
+						System.out.print((7*i+1+(j-21))+" ");
+						list4.add(7*i+1+(j-21));
+					}
+					if(j>=28 && j<35) {
+						System.out.print((7*i+1+(j-28))+" ");
+						list5.add(7*i+1+(j-28));
+					}
+				}
+			}
+		}
+		System.out.println();
+		System.out.println(list1);
+		System.out.println(list2);
+		System.out.println(list3);
+		System.out.println(list4);
+		System.out.println(list5);
+		result.add(list1);
+		result.add(list2);
+		result.add(list3);
+		result.add(list4);
+		result.add(list5);
+*/		
+		return result;
+	}
+	public static List<List<Integer>> getReverseArrange(String input) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		int max = 0, prev = 0, cnt=1;
+		String[] str = input.split("#");
+		Arrays.sort(str);
+		List<Integer> list = new ArrayList<>();
+		for(int i=0; i<str.length; i++) {
+			int k1 = Integer.parseInt(str[i].substring(0, 1));
+			int k2 = Integer.parseInt(str[i].substring(1, 2));
+			if(k1!=prev) {			
+				if(list.size() > 0) {
+					result.add(list);					
+				}
+				list = new ArrayList<>();
+				list.add(k1);
+				list.add(k2);
+				prev = k1;
+			} else {
+				list.add(k2);
+			}
+		}
+		if(list.size() > 0) {
+			result.add(list);					
+//			System.out.println("1. result:"+result);
+		}
+		for(List<Integer> r:result) {
+			max = Math.max(max, r.size());
+		}
+		for(List<Integer> r:result) {
+			while(r.size() < max) {
+				r.add(-1);
+			}
+			Collections.reverse(r);
+			System.out.println("result:"+r);
+		}
+		
+		return result;
+	}
+	public static int getMaxNumber(String input) {
+		int result = -1;
+		int max = 0, prev = 0, cnt=1;
+		String[] str = input.split("#");
+		Arrays.sort(str);
+		for(int i=0; i<str.length; i++) {
+			int k = Integer.parseInt(str[i].substring(0, 1));
+			if(k!=prev) {			
+				if(cnt > max) {
+					max = cnt;
+					result = prev;
+				}
+				prev = k;
+				cnt = 1;
+			} else {
+				cnt++;
+			}
+		}
+		if(cnt > max) {
+			max = cnt;
+			result = prev;
+			System.out.println("1. result:"+result+", max:"+max);
+		}
+		System.out.println("result:"+result+", max:"+max);
+		return result;
+	}
+	public static int coolNumbers(int input) {
+		int cnt=0;
+		/*
+		for(int k=input; k>=100; k--) {
+			String str = Integer.toString(k);
+			char[] ch = str.toCharArray();
+			int diff = ch[1] - ch[0];
+			for(int j=2; j<ch.length; j++) {
+				if(ch[j] - ch[j-1] != diff) break;
+				if(j==ch.length-1) {
+					System.out.println(ch);
+					cnt++;
+				}
+			}
+		}
+		*/
+		
+		for(int k=100; k<input; k++) {
+			String str = Integer.toString(k);
+			char[] ch = str.toCharArray();
+			int diff = ch[1] - ch[0];
+			for(int i=str.length()-1; i>0; i--) {
+				if(ch[i]-ch[i-1] != diff) break;
+				if(i==1) {
+					System.out.println(ch);
+					cnt++;
+				}
+				//else cnt++;
+			}
+		}
+		
+		System.out.println("멋진수:"+cnt);
+		return cnt;
+	}
+	
+	public static int pro345(String input) {
+		String str = "OOXXOXOXOOXOOO";
+		int result=0, cnt=0;
+		char[] ch = str.toCharArray();
+		for(int i=0; i<str.length(); i++) {
+			if(ch[i] == 'O') {
+				cnt++;
+				result += cnt;
+			} else {
+				cnt = 0;
+			}
+			
+		}
+		System.out.println("result:"+result);
+		return result;
+	}
+	public static int pro348_1(int[][] input) {
+		int[][] arr = {{0,10,23,7,4,16},
+				       {10,0,8,5,13,10},
+				       {23,8,0,19,8,11},
+				       {7,5,19,0,15,8},
+				       {4,13,8,15,0,2},
+				       {16,10,11,8,2,0}				
+		};
+		int[] visit = new int[6];
+		List<Integer> vc = new ArrayList<>();
+		int now=0, dist=0, min=100, min_idx=0;
+		vc.add(1);
+		visit[0] = 1;
+		for(int i=0; i<arr[0].length-1; i++) {
+			min=100;
+			min_idx=now;
+			for(int j=0; j<arr[0].length; j++) {
+				if(visit[j]!=1 && arr[now][j]<min) {
+					min = arr[now][j];					
+					min_idx = j;			
+				}
+			}
+			visit[min_idx] = 1;
+			now = min_idx;
+			vc.add(min_idx+1);
+			dist += min;
+			System.out.println("min_idx:"+min_idx+", min:"+min+"dist:"+dist);
+		}
+		dist += arr[now][0];
+		System.out.println("vc:"+vc);
+		System.out.println("1. min_idx:"+min_idx+", dist:"+dist);
+		return dist;		
+	}
+	public static String findChain(String file) throws IOException {
+		FileReader fr = new FileReader("./INFILE/CHAIN.TXT");
+		BufferedReader br = new BufferedReader(fr);
+		String result = "";
+		int cnt=0, max=0;
+		List<String[]> list = new ArrayList<String[]>();
+		List<String[]> sortList = new ArrayList<String[]>();
+		while(true) {
+			String temp = br.readLine();
+			if(temp != null) {
+				cnt++;
+				if(cnt%2 == 1) {
+					String[] str = temp.split("#");
+					list.add(str);
+				}
+				if(cnt%2 == 0) {
+					String[] str = temp.split(",");
+					sortList.add(str);
+				}
+			} else {
+				break;
+			}
+		}
+		boolean find = false;
+		for(int i=0; i<list.size(); i++) {
+			find = false;
+			for(int j=0; j<list.size(); j++) {
+				if(list.get(i)[0].equals(list.get(j)[1]) == true) {
+					find = true;
+					break;
+				}
+			}
+			if(find == false) {
+				result = list.get(i)[0]+"#"+list.get(i)[1]+"#"+list.get(i)[2];
+				System.out.println("마지막 블록 found:"+result);
+//				break;
+			}
+			System.out.println(Arrays.toString(list.get(i)));
+		}
+		
+		for(int i=0; i<sortList.size(); i++) {
+			if(Integer.parseInt(sortList.get(i)[2]) > max) {
+				max = Integer.parseInt(sortList.get(i)[2]);
+				result = sortList.get(i)[0]+","+sortList.get(i)[1]+","+sortList.get(i)[2];
+			}
+		}
+		System.out.println(result);
+		br.close();
+		fr.close();
+		return result;
+	}
+	public static List<Integer> makeGCDList(List<Integer> input) {
+		List<Integer> list = new ArrayList<>();
+		int i=0, j=0;
+		for(i=0; i<input.size(); i++) {
+			int num = input.get(i);
+			for(j=1; j<=num; j++) {
+				if(num%j == 0) {
+					list.add(j);
+				}
+			}
+			System.out.println(list);
+		}
+		Collections.sort(list);
+		System.out.println(list);
+		
+//		HashSet<Integer> set = new HashSet<>();
+		List<Integer> set = new ArrayList<>();
+		for(int k:list) {
+			if(set.contains(k) == false) {
+				set.add(k);
+			}
+		}
+		System.out.println(set);
+		return list;
+	}
 	public static void writeFile(String fileName) throws IOException {
 		FileWriter fw = new FileWriter("test.csv");
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -555,54 +922,7 @@ public class array {
 		}
 		return isAvailable;
 	}
-	public static List<List<Integer>> makeMasking(List<List<Integer>> input) {
-		List<List<Integer>> result = new ArrayList<>();
-		List<Integer> list1 = new ArrayList<>();
-		List<Integer> list2 = new ArrayList<>();
-		List<Integer> list3 = new ArrayList<>();
-		List<Integer> list4 = new ArrayList<>();
-		List<Integer> list5 = new ArrayList<>();
-		int i=0, j=0;
-		for(i=0; i<input.size(); i++) {
-			for(j=0; j<input.get(i).size(); j++) {
-				if(input.get(i).get(j) == 1) {
-					if(j>=0 && j<7) {
-						System.out.print((7*i+1+(j-0))+" ");
-						list1.add(7*i+1+(j-0));
-					}
-					if(j>=7 && j<14) {
-						System.out.print((7*i+1+(j-7))+" ");
-						list2.add(7*i+1+(j-7));
-					}
-					if(j>=14 && j<21) {
-						System.out.print((7*i+1+(j-14))+" ");
-						list3.add(7*i+1+(j-14));
-					}
-					if(j>=21 && j<28) {
-						System.out.print((7*i+1+(j-21))+" ");
-						list4.add(7*i+1+(j-21));
-					}
-					if(j>=28 && j<35) {
-						System.out.print((7*i+1+(j-28))+" ");
-						list5.add(7*i+1+(j-28));
-					}
-				}
-			}
-		}
-		System.out.println();
-		System.out.println(list1);
-		System.out.println(list2);
-		System.out.println(list3);
-		System.out.println(list4);
-		System.out.println(list5);
-		result.add(list1);
-		result.add(list2);
-		result.add(list3);
-		result.add(list4);
-		result.add(list5);
-		
-		return result;
-	}
+
 	public static List<List<Integer>> makeReverse(String input) {
 		List<List<Integer>> result = new ArrayList<>();
 		String[] str = input.split("#");
@@ -1014,16 +1334,19 @@ public class array {
 	public static String getTopCategory(String[][] input, List<String> categories) {
 		String topCategory = "";
 		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		List<String> childs = new ArrayList<String>();
 		for(int i=0; i<input.length; i++) {
 			String parent = input[i][0];
 			String child = input[i][1];
 			if(tMap.containsKey(parent)) {
-				List<String> childs = tMap.get(parent);
+				childs = tMap.get(parent);
 				childs.add(child);
+				System.out.println("1."+childs);
 				tMap.put(parent, childs);
 			} else {
-				List<String> childs = new ArrayList<String>();
+				childs = new ArrayList<String>();
 				childs.add(child);
+				System.out.println("2."+childs);
 				tMap.put(parent, childs);
 			}
 		}
@@ -1081,15 +1404,16 @@ public class array {
 	public static int getNumberOfSubcategories(String[][] input, String categoryStr) {
 		int numberOfSubcategories = 0;
 		Map<String, List<String>> tMap = new LinkedHashMap<String, List<String>>();
+		List<String> childs = new ArrayList<String>();
 		for(int i=0; i<input.length; i++) {
 			String parent = input[i][0];
 			String child = input[i][1];
 			if(tMap.containsKey(parent)) {
-				List<String> childs = tMap.get(parent);
+				childs = tMap.get(parent);
 				childs.add(child);
 				tMap.put(parent, childs);
 			} else {
-				List<String> childs = new ArrayList<String>();
+				childs = new ArrayList<String>();
 				childs.add(child);
 				tMap.put(parent, childs);
 			}
