@@ -228,9 +228,9 @@ public class HelloWorld {
 			System.out.println(lang +":"+price);
 		}
 		if(map.containsKey("Java Programming")) {
-			System.out.println("ÀÚ¹Ù Æ÷ÇÔ");
+			System.out.println("ìë°” í¬í•¨");
 		} else {
-			System.out.println("ÀÚ¹Ù ºÒÆ÷ÇÔ");
+			System.out.println("ìë°” ë¶ˆí¬í•¨");
 		}
 		*/
 		/*int[][] input = {{1,2,3,4}, 
@@ -377,7 +377,7 @@ public class HelloWorld {
 		daily_cnt = 1;
 
 		for(i=0; i<mg_cnt; i++) {
-//			System.out.println("½Ã°£:"+mg[i].time+", ¸¶°¨¿©ºÎ:"+mg[i].yn);
+//			System.out.println("ì‹œê°„:"+mg[i].time+", ë§ˆê°ì—¬ë¶€:"+mg[i].yn);
 			for(k=offset; k<mg_cnt-1; k++) {
 				if(mg[offset].time.equals(mg[k+1].time) == true) {
 					daily_cnt++;
@@ -387,8 +387,8 @@ public class HelloWorld {
 				}
 			}
 			if(offset == mg_cnt) {
-				System.out.println("Á¾·á");
-//				System.out.println("½Ã°£:"+mg[offset-daily_cnt].time+", ¸¶°¨¿©ºÎ:"+mg[offset-daily_cnt].yn);	
+				System.out.println("ì¢…ë£Œ");
+//				System.out.println("ì‹œê°„:"+mg[offset-daily_cnt].time+", ë§ˆê°ì—¬ë¶€:"+mg[offset-daily_cnt].yn);	
 				break;
 			}
 			
@@ -398,16 +398,16 @@ public class HelloWorld {
 			}
 			six_set++;
 			
-			System.out.println("°¹¼ö:"+daily_cnt);
-			System.out.println("½Ã°£:"+mg[offset].time+", ¸¶°¨¿©ºÎ:"+mg[offset].yn);
+			System.out.println("ê°¯ìˆ˜:"+daily_cnt);
+			System.out.println("ì‹œê°„:"+mg[offset].time+", ë§ˆê°ì—¬ë¶€:"+mg[offset].yn);
 			offset = offset + daily_cnt;
 			daily_cnt = 1;
 		}
-		System.out.println("º¯°æÀü:"+oldList.size());
+		System.out.println("ë³€ê²½ì „:"+oldList.size());
 		for(int m=0; m<oldList.size(); m++) {
 			System.out.println(oldList.get(m));
 		}
-		System.out.println("º¯°æÈÄ:"+newList.size());
+		System.out.println("ë³€ê²½í›„:"+newList.size());
 		for(int m=0; m<newList.size(); m++) {
 			System.out.println(newList.get(m));
 		}
@@ -624,29 +624,6 @@ public class HelloWorld {
 	}
 	
 	public static void parseAddress(String input) throws IOException {
-		String add = "010-5547-0368#010-234-4567#010-2345-2345";
-		String[] str = add.split("#");
-		int mid=0, mid2=0;
-		for(int i=0; i<str.length-1; i++) {
-			String[] num = str[i].split("-");
-			mid = Integer.parseInt(num[1]);
-			for(int j=i+1; j<str.length; j++) {
-				String[] num2 = str[j].split("-");
-				mid2 = Integer.parseInt(num2[1]);
-				if(mid > mid2) {
-					System.out.println("kk mid:"+mid+", mid2:"+mid2);
-					String temp = str[i];
-					str[i] = str[j];
-					str[j] = temp;
-					break;
-				}
-			}
-				
-		}
-		for(int i=0; i<str.length; i++) {
-			System.out.println(str[i]);
-		}
-		/*
 		FileReader ff = new FileReader("./INFILE/INPUT_EMAIL.txt");
 		BufferedReader br = new BufferedReader(ff);
 		String phone = "";
@@ -675,35 +652,34 @@ public class HelloWorld {
 		}
 		for(int i=0; i<phone_list.length; i++) {
 //			phone_list[i] = phone_list[i].substring(0, phone_list[i].length()-1);
-			String[] strPhone = phone_list[i].split("#");
-			System.out.println(strPhone.length);
-			for(int j=0; j<strPhone.length; j++) {
-				String[] phone_number = strPhone[j].split("-");
-				int mid = Integer.parseInt(phone_number[1]);
-				System.out.println("1:"+mid);
-				for(int k=j; k<strPhone.length; k++) {
-					String[] phone_number2 = strPhone[k].split("-");
-					int mid2 = Integer.parseInt(phone_number2[1]);
-					System.out.println("2:"+mid2);
-					if(mid > mid2) {
-						System.out.println("Á¤·ÄÀü:"+mid+","+mid2);
-						String temp = strPhone[j];
-						strPhone[j] = strPhone[k];
-						strPhone[k] = temp;
+			if(phone_list[i]!=null) {
+				String[] strPhone = phone_list[i].split("#");
+				for(int j=0; j<strPhone.length-1; j++) {
+					int min = j;
+					for(k=j+1; k<strPhone.length; k++) {
+						String[] phone_number = strPhone[min].split("-");
+						int mid = Integer.parseInt(phone_number[1]);
+						String[] phone_number2 = strPhone[k].split("-");
+						int mid2 = Integer.parseInt(phone_number2[1]);
+						if(mid > mid2) {
+							min = k;
+						}
 					}
+					String temp = strPhone[j];
+					strPhone[j] = strPhone[min];
+					strPhone[min] = temp;
 				}
+				for(int j=0; j<strPhone.length; j++) {
+					System.out.println("ì •ë ¬í›„:"+strPhone[j]+",");
+				}
+				System.out.println();
 			}
-			for(int j=0; j<strPhone.length; j++) {
-				System.out.println("Á¤·ÄÈÄ:"+strPhone[j]+",");
-			}
-			System.out.println();
 		}
 		File[] f_list = new File("./").listFiles();
 		for(int i=0; i<f_list.length; i++) {
 			System.out.println(f_list[i]);
 		}
 		br.close();
-		*/
 	}
 	public static String format(int number) {
 		String f = "0"+number;
@@ -716,9 +692,9 @@ public class HelloWorld {
 		int endMinute = info.getLastMinute();
 		int interval = info.getInterval();
 		List<Integer> timetable = new ArrayList<>();
-		System.out.println("½ÂÂ÷ ½ÃÀÛ ½Ã°£:"+beginHour+", "+beginMinute+", "+endHour+", "+endMinute+", "+interval);
+		System.out.println("ìŠ¹ì°¨ ì‹œì‘ ì‹œê°„:"+beginHour+", "+beginMinute+", "+endHour+", "+endMinute+", "+interval);
 		for(int i=(beginHour*60)+beginMinute; i<=(endHour*60)+endMinute; i+=interval) {
-			System.out.println("½ÂÂ÷½Ã°£:"+i);
+			System.out.println("ìŠ¹ì°¨ì‹œê°„:"+i);
 			timetable.add(i);
 		}
 		return timetable;
@@ -748,13 +724,13 @@ public class HelloWorld {
 		int i=0, j=0;
 		for(i=0; i<scheduleA.size(); i++) {
 			if(scheduleA.get(i) >= beginMins) {
-				System.out.println("ÃÖÃÊ A ½ÂÂ÷½Ã°£:"+scheduleA.get(j));
+				System.out.println("ìµœì´ˆ A ìŠ¹ì°¨ì‹œê°„:"+scheduleA.get(j));
 				break;
 			}
 		}
 		for(j=0; j<scheduleB.size(); j++) {
 			if(scheduleB.get(j) >= beginMins) {
-				System.out.println("ÃÖÃÊ B ½ÂÂ÷½Ã°£:"+scheduleB.get(j));
+				System.out.println("ìµœì´ˆ B ìŠ¹ì°¨ì‹œê°„:"+scheduleB.get(j));
 				break;
 			}
 		}
@@ -762,7 +738,7 @@ public class HelloWorld {
 			for(int k=j; k<scheduleB.size(); k++) {
 				if(scheduleA.get(i) == scheduleB.get(k)) {
 					startTime = format(scheduleB.get(k)/60) + ":" + format(scheduleB.get(k)%60);
-					System.out.println("ÃÖÃÊ ½ÃÀÛ ½ÂÂ÷½Ã°£:"+startTime);
+					System.out.println("ìµœì´ˆ ì‹œì‘ ìŠ¹ì°¨ì‹œê°„:"+startTime);
 				}
 			}
 		}
@@ -994,12 +970,12 @@ public class HelloWorld {
 	}
 	public static void getWeekday(int[][] arr) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("x¿ù? : ");
+		System.out.println("xì›”? : ");
 		int x = sc.nextInt();
-		System.out.println("yÀÏ? : ");
+		System.out.println("yì¼? : ");
 		int y = sc.nextInt();
 		Calendar time = Calendar.getInstance();
-		SimpleDateFormat sd = new SimpleDateFormat("E¿äÀÏ");
+		SimpleDateFormat sd = new SimpleDateFormat("Eìš”ì¼");
 		time.set(2018, x-1, y, 0, 0, 0);
 		System.out.println(sd.format(time.getTime()));
 	}
@@ -1189,8 +1165,8 @@ public class HelloWorld {
 	}
 	public static String moveStr(String input) {
 		String result = "";
-		String result1 = "";	// Â¦¼ö+È¦¼ö
-		String result2 = "";	// Â¦¼ö¸¸ ²¨²Ù·Î
+		String result1 = "";	// ì§ìˆ˜+í™€ìˆ˜
+		String result2 = "";	// ì§ìˆ˜ë§Œ êº¼ê¾¸ë¡œ
 		int cnt=0, i=0;
 		char prev = ' ';
 		for(i=0; i<input.length(); i++) {	
@@ -1275,7 +1251,7 @@ public class HelloWorld {
 				if(i==1) cnt++;
 			}
 		}
-		System.out.println("¸ÚÁø¼ö:"+cnt);
+		System.out.println("ë©‹ì§„ìˆ˜:"+cnt);
 		return cnt;
 	}
 	public static int sumThree(int input) {
@@ -2105,7 +2081,7 @@ public class HelloWorld {
 				min = Integer.parseInt(input.get(i));
 			}
 		}
-		System.out.println("ÃÖ´ë°ª:"+max+", ÃÖ¼Ò°ª:"+min);
+		System.out.println("ìµœëŒ€ê°’:"+max+", ìµœì†Œê°’:"+min);
 		StringBuilder sb = new StringBuilder();
 		sb.append(max);
 		sb.append(min);
@@ -2114,10 +2090,10 @@ public class HelloWorld {
 		sb2.append(max);
 		sb2.append(min);
 		if(Integer.parseInt(sb.toString()) > Integer.parseInt(sb2.toString())) {
-			System.out.println("ÃÖÁ¾1 :"+Integer.parseInt(sb.toString()));
+			System.out.println("ìµœì¢…1 :"+Integer.parseInt(sb.toString()));
 			return Integer.parseInt(sb.toString());
 		} else {
-			System.out.println("ÃÖÁ¾2 :"+Integer.parseInt(sb2.toString()));
+			System.out.println("ìµœì¢…2 :"+Integer.parseInt(sb2.toString()));
 			return Integer.parseInt(sb2.toString());
 		}
 		
@@ -2228,9 +2204,9 @@ public class HelloWorld {
 	}
 	public static void printResult(String inputMAC) {
 		if(validateMacAddress(inputMAC) != null) {
-			System.out.println("¿Ã¹Ù¸¥ MAC ÁÖ¼ÒÀÔ´Ï´Ù.");
+			System.out.println("ì˜¬ë°”ë¥¸ MAC ì£¼ì†Œì…ë‹ˆë‹¤.");
 		} else {
-			System.out.println("¿Ã¹Ù¸£Áö ¾ÊÀº MAC ÁÖ¼ÒÀÔ´Ï´Ù.");
+			System.out.println("ì˜¬ë°”ë¥´ì§€ ì•Šì€ MAC ì£¼ì†Œì…ë‹ˆë‹¤.");
 		}
 		System.out.println(inputMAC);
 	}
@@ -2248,7 +2224,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("´Ü¾î:"+word+", °¡·ÎÀ§Ä¡:"+pos);
+			System.out.println("ë‹¨ì–´:"+word+", ê°€ë¡œìœ„ì¹˜:"+pos);
 		}
 		return pos;
 	}
@@ -2266,7 +2242,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("´Ü¾î:"+word+", ¼¼·ÎÀ§Ä¡:"+pos);
+			System.out.println("ë‹¨ì–´:"+word+", ì„¸ë¡œìœ„ì¹˜:"+pos);
 		}
 		return pos;
 	}
@@ -2285,7 +2261,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("´Ü¾î:"+word+", ´ë°¢¼± À§Ä¡:"+pos);
+			System.out.println("ë‹¨ì–´:"+word+", ëŒ€ê°ì„  ìœ„ì¹˜:"+pos);
 		}
 		return pos;
 	}
@@ -2315,7 +2291,7 @@ public class HelloWorld {
 		char charStr[] = str.toCharArray();
 		int isPalindrome = 1;
 		if(str.length()>=10) {
-			System.out.println(str+"Àº 10ÀÚ ÀÌ»óÀÔ´Ï´Ù.");
+			System.out.println(str+"ì€ 10ì ì´ìƒì…ë‹ˆë‹¤.");
 		}
 		else {
 			for(int i=0; i<str.length()/2; i++) {
@@ -2325,13 +2301,13 @@ public class HelloWorld {
 				}
 			}
 			if(isPalindrome == 0) {
-				System.out.println(str+"Àº palindromeÀÌ ¾Æ´Õ´Ï´Ù.");
+				System.out.println(str+"ì€ palindromeì´ ì•„ë‹™ë‹ˆë‹¤.");
 			} else {
-				System.out.println(str+"Àº palindromeÀÔ´Ï´Ù.");
+				System.out.println(str+"ì€ palindromeì…ë‹ˆë‹¤.");
 			}
 		}
 	}
-	// 90µµ ¹İ½Ã°è¹æÇâÀ¸·Î È¸Àü
+	// 90ë„ ë°˜ì‹œê³„ë°©í–¥ìœ¼ë¡œ íšŒì „
 	public static int[][] rotatedArray(int[][] input) {
 		int[][] rotated = new int[4][4];
 		int i=0, j=0;
@@ -2348,7 +2324,7 @@ public class HelloWorld {
 		}
 		return rotated;
 	}
-	// 90µµ ½Ã°è¹æÇâÀ¸·Î È¸Àü
+	// 90ë„ ì‹œê³„ë°©í–¥ìœ¼ë¡œ íšŒì „
 	public static int[][] rotatedRightArray(int[][] input) {
 		int[][] rotated = new int[4][4];
 		int i=0, j=0;
