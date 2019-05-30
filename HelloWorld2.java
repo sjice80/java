@@ -5,7 +5,79 @@ import java.util.*;
 //import java.util.Set;
 //import java.util.HashSet;
 import java.io.*;
+import java.text.SimpleDateFormat;
 
+class TerminalInfo {
+	private String name;
+	private String name2;
+	private int firstHour;
+	private int firstMinute;
+	private int interval;
+	private int lastHour;
+	private int lastMinute;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getName2() {
+		return name2;
+	}
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
+	public int getFirstHour() {
+		return firstHour;
+	}
+	public void setFirstHour(int firstHour) {
+		this.firstHour = firstHour;
+	}
+	public int getFirstMinute() {
+		return firstMinute;
+	}
+	public void setFirstMinute(int firstMinute) {
+		this.firstMinute = firstMinute;
+	}
+	public int getInterval() {
+		return interval;
+	}
+	public void setInterval(int interval) {
+		this.interval = interval;
+	}
+	public int getLastHour() {
+		return lastHour;
+	}
+	public void setLastHour(int lastHour) {
+		this.lastHour = lastHour;
+	}
+	public int getLastMinute() {
+		return lastMinute;
+	}
+	public void setLastMinute(int lastMinute) {
+		this.lastMinute = lastMinute;
+	}
+	public TerminalInfo(String name, int firstHour, int firstMinute, int interval, int lastHour, int lastMinute) {
+		super();
+		this.name = name;
+		this.firstHour = firstHour;
+		this.firstMinute = firstMinute;
+		this.interval = interval;
+		this.lastHour = lastHour;
+		this.lastMinute = lastMinute;
+	}
+	public TerminalInfo(String name, String name2, int firstHour, int firstMinute) {
+		super();
+		this.name = name;
+		this.name2 = name2;
+		this.firstHour = firstHour;
+		this.firstMinute = firstMinute;
+	}
+	public TerminalInfo() {
+		
+	}
+}
 class Magam {
 	String time;
 	String yn;
@@ -51,7 +123,7 @@ public class HelloWorld {
 	static String[] saleKind;
 	static String[] products = {"coffee", "gimbap", "water", "ramen", "kimchi", "rice", "cigarettes",
 								"milk", "popcorn", "chocolate", "paper", "soju", "beer"};
-	
+	static int caseCnt=0;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 	    String lineOfCurrencies = "USD JPY AUD SGD HKD CAD CHF GBP EURO INR";
@@ -503,8 +575,630 @@ public class HelloWorld {
 		coolNumbers(1000);
 		int[] input15 = {7,13,13,5,4,8,7,4,20,8};
 		removeSame(input15);
+		System.out.println();
+		String input16 = "AAAABBBCDDEEEXXY";
+		moveStr(input16);
+		System.out.println();
+		String input17 = "66#56#66#68#70#72#73#74#82#77";
+		getMaxNumber(input17);
+		int[][] input18 = {{1,2,3},
+							  {4,5,6},
+							  {7,8,9}};
+		
+//		printMatrix(input18);
+		blindPhoneNumber("010-1234-5668");
+		checkSame(52);
+//		int[] input19 = {1,1,1,1,1,10,10,10,-1,-1};
+//		perm(input19, 0);
+//		System.out.println("caseCnt:"+caseCnt);
+		int[] input20 = {2,3,4,7};
+		lcm(input20);
+		int[] input21 = {1,5,1,23,1,44,2,19,2,86,2,102,3,8,3,26,3,51,3,66};
+		int[] input22 = {1,6,1,46,1,54,2,57,2,87,3,13,3,25,3,48,3,71};
+		searchWord(input21, input22);
+//		getWeekday(input18);
+		int[] input23 = {7,8,12};
+		divisor(input23);
+		case_step(4);
+		String input24 = "09:10~18:30#09:30~17:30#18:00~09:00#08:50~19:10#09:00~19:00#08:00~12:00";
+		getWorkday(input24);
+		getWorktime(input24);
+		String input25 = "4aaA23d67e78ap!@#$889asd#77@76678#9333!@#367882";
+		getSettingNumber(getInitialization(input25));
+		List<TerminalInfo> input26 = Arrays.asList(
+				new TerminalInfo("A", 6, 0, 15, 23, 30),
+				new TerminalInfo("B", 5, 45, 30, 23, 45),
+				new TerminalInfo("C", 7, 0, 15, 23, 45),
+				new TerminalInfo("D", 5, 40, 20, 23, 40),
+				new TerminalInfo("E", 6, 20, 10, 23, 50),
+				new TerminalInfo("F", 6, 30, 30, 23, 30),
+				new TerminalInfo("G", 7, 5, 15, 23, 35),
+				new TerminalInfo("H", 6, 35, 15, 23, 50),
+				new TerminalInfo("I", 6, 55, 25, 23, 35),
+				new TerminalInfo("J", 6, 15, 35, 23, 45)				
+				);
+		TerminalInfo busInfo = new TerminalInfo("A", "D", 07, 10);
+		getStartTime(input26, busInfo);
+		getNumberOfPlatform(input26);
+		parseAddress("./INFILE/INPUT_EMAIL.txt");
 	}
 	
+	public static void parseAddress(String input) throws IOException {
+		FileReader ff = new FileReader("./INFILE/INPUT_EMAIL.txt");
+		BufferedReader br = new BufferedReader(ff);
+		String phone = "";
+		int line_cnt=0;
+		String[] phone_list = new String[10];
+		String[] name_list = new String[10];
+		String[] email_list = new String[10];
+		while(true) {
+			String line = br.readLine();
+			phone = "";
+			if(line!=null) {
+				String[] strArr = line.split("#");
+				name_list[line_cnt] = strArr[0];
+				for(int i=0; i<strArr.length; i++) {
+					if(strArr[i].contains("010")) {
+						phone += strArr[i] + "#";
+					}
+				}
+				email_list[line_cnt] = strArr[strArr.length-1];
+				phone_list[line_cnt] = phone;
+				System.out.println(name_list[line_cnt]+", "+phone_list[line_cnt]+", "+email_list[line_cnt]);
+				line_cnt++;
+			} else {
+				break;
+			}
+		}
+		for(int i=0; i<phone_list.length; i++) {
+//			phone_list[i] = phone_list[i].substring(0, phone_list[i].length()-1);
+			String[] strPhone = phone_list[i].split("#");
+			for(int j=0; j<strPhone.length-1; j++) {
+				String[] phone_number = strPhone[j].split("-");
+				int mid = Integer.parseInt(phone_number[1]);
+				for(int k=j+1; k<strPhone.length; k++) {
+					String[] phone_number2 = strPhone[k].split("-");
+					int mid2 = Integer.parseInt(phone_number2[1]);
+					if(mid > mid2) {
+						System.out.print("정렬전:"+mid+","+mid2);
+						String temp = strPhone[j];
+						strPhone[j] = strPhone[k];
+						strPhone[k] = temp;
+					}
+				}
+			}
+			for(int j=0; j<strPhone.length; j++) {
+				System.out.print("정렬후:"+strPhone[j]+",");
+			}
+			System.out.println();
+		}
+		File[] f_list = new File("./").listFiles();
+		for(int i=0; i<f_list.length; i++) {
+			System.out.println(f_list[i]);
+		}
+		br.close();
+	}
+	public static String format(int number) {
+		String f = "0"+number;
+		return f.substring(f.length()-2);
+	}
+	public static List<Integer> getSchedules(TerminalInfo info) {
+		int beginHour = info.getFirstHour();
+		int beginMinute = info.getFirstMinute();
+		int endHour = info.getLastHour();
+		int endMinute = info.getLastMinute();
+		int interval = info.getInterval();
+		List<Integer> timetable = new ArrayList<>();
+		System.out.println("승차 시작 시간:"+beginHour+", "+beginMinute+", "+endHour+", "+endMinute+", "+interval);
+		for(int i=(beginHour*60)+beginMinute; i<=(endHour*60)+endMinute; i+=interval) {
+			System.out.println("승차시간:"+i);
+			timetable.add(i);
+		}
+		return timetable;
+	}
+	public static String getStartTime(List<TerminalInfo> input, TerminalInfo businfo) {
+		String startTime = null;
+		TerminalInfo infoA = null;
+		TerminalInfo infoB = null;
+		for(TerminalInfo info:input) {
+			if(info.getName().equals(businfo.getName())) {
+				System.out.println("1:::");
+				infoA = info;
+			}
+			if(info.getName().equals(businfo.getName2())) {
+				System.out.println("2:::");
+				infoB = info;
+			}
+		}
+		List<Integer> scheduleA = null;
+		List<Integer> scheduleB = null;
+		scheduleA = getSchedules(infoA);
+		System.out.println("3:::");
+		scheduleB = getSchedules(infoB);
+		System.out.println("4:::");
+		int beginMins = businfo.getFirstHour() * 60 + businfo.getFirstMinute();
+		System.out.println("5:::"+beginMins);
+		int i=0, j=0;
+		for(i=0; i<scheduleA.size(); i++) {
+			if(scheduleA.get(i) >= beginMins) {
+				System.out.println("최초 A 승차시간:"+scheduleA.get(j));
+				break;
+			}
+		}
+		for(j=0; j<scheduleB.size(); j++) {
+			if(scheduleB.get(j) >= beginMins) {
+				System.out.println("최초 B 승차시간:"+scheduleB.get(j));
+				break;
+			}
+		}
+		for( ; i<scheduleA.size(); i++) {
+			for(int k=j; k<scheduleB.size(); k++) {
+				if(scheduleA.get(i) == scheduleB.get(k)) {
+					startTime = format(scheduleB.get(k)/60) + ":" + format(scheduleB.get(k)%60);
+					System.out.println("최초 시작 승차시간:"+startTime);
+				}
+			}
+		}
+		return startTime;
+	}
+	public static int getNumberOfPlatform(List<TerminalInfo> input) {
+		int numberOfPlatform = 0;
+		Map<Integer, Integer> timetable = new HashMap<>();
+		List<Integer> schedule = null;
+		for(TerminalInfo info:input) {
+			schedule = getSchedules(info);
+			for(Integer time:schedule) {
+				if(timetable.containsKey(time)) {
+					timetable.put(time, timetable.get(time)+1);
+				} else {
+					timetable.put(time, 1);
+				}
+			}
+		}
+		for(Integer key:timetable.keySet()) {
+			if(numberOfPlatform < timetable.get(key)) {
+				System.out.println(key+":"+timetable.get(key));
+				numberOfPlatform = timetable.get(key);
+			}
+		}
+		System.out.println(numberOfPlatform);
+		return numberOfPlatform;
+	}
+	public static List<List<Integer>> getSettingNumber(List<List<Integer>> initialization) {
+		List<List<Integer>> result = null;
+		result = new ArrayList<>();
+		int N = initialization.size();
+		int[][] board = new int[N][N];
+		boolean[][] bool1 = new boolean[N][N];
+		boolean[][] bool2 = new boolean[N][N];
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<N; j++) {
+				board[i][j] = initialization.get(i).get(j);
+				bool1[i][j] = false;
+				bool2[i][j] = false;
+			}
+		}
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<N; j++) {
+				if(bool1[i][j] == true) {
+					if(j<N-1 && board[i][j]==board[i][j+1]) {
+						bool1[i][j+1] = true;
+					} 
+				}
+				else {
+					if(j<N-2 && board[i][j]==board[i][j+1] && board[i][j+1]==board[i][j+2]) {			
+						bool1[i][j] = true;
+						bool1[i][j+1] = true;
+						bool1[i][j+2] = true;
+					}
+				}
+				if(bool2[i][j] == true) {
+					if(i<N-1 && board[i][j]==board[i+1][j]) {
+						bool2[i+1][j] = true;
+					} 
+				}
+				else {
+					if(i<N-2 && board[i][j]==board[i+1][j] && board[i+1][j]==board[i+2][j]) {			
+						bool2[i][j] = true;
+						bool2[i+1][j] = true;
+						bool2[i+2][j] = true;
+					}
+				}
+			}
+		}
+		for(int i=0; i<N; i++) {
+			List<Integer> list = new ArrayList<>();
+			for(int j=0; j<N; j++) {
+				if(bool1[i][j]==true || bool2[i][j]==true) {
+					list.add(0);
+				} else {
+					list.add(board[i][j]);
+				}
+			}
+			System.out.println(list);
+			result.add(list);
+		}
+		return result;
+	}
+	public static List<List<Integer>> getInitialization(String input) {
+		List<List<Integer>> result = null;
+		result = new ArrayList<>();
+		String temp = "";
+		for(int i=0; i<input.length(); i++) {
+			if(input.charAt(i)>='1' && input.charAt(i)<='9') {
+				temp += input.charAt(i);
+			}
+		}
+		System.out.println("temp:"+temp);
+		int N = (int)Math.sqrt(temp.length());
+		for(int i=0; i<N; i++) {
+			List<Integer> list = new ArrayList<>();
+			for(int k=0; k<N; k++) {
+//				String tmpStr = "";
+//				tmpStr += temp.charAt(N*i+k);
+//				System.out.print(Integer.parseInt(tmpStr));
+//				list.add(Integer.parseInt(tmpStr));
+				System.out.print(Integer.parseInt(String.valueOf(temp.charAt(N*i+k)))+" ");
+				list.add(Integer.parseInt(String.valueOf(temp.charAt(N*i+k))));
+			}
+			System.out.println();
+			result.add(list);
+		}
+		return result;
+	}
+	public static List<Integer> getWorktime(String input) {
+		List<Integer> result = null;
+		result = new ArrayList<>();
+		result.add(0);
+		result.add(0);
+		String[] worktime = input.split("#");
+		for(int i=0; i<worktime.length; i++) {
+			String[] starttime = worktime[i].split("~");
+			String[] start = starttime[0].split(":");
+			String[] end = starttime[1].split(":");
+			int starthour = Integer.parseInt(start[0]);
+			int endhour = Integer.parseInt(end[0]);
+			int startm = Integer.parseInt(start[1]);
+			int endm = Integer.parseInt(end[1]);
+			if(endhour == 12) {
+				endm = 0;
+				System.out.println("1. starthour:"+starthour+", endhour:"+endhour);	
+			} 
+			if(starthour == 12) {
+				System.out.println("2. starthour:"+starthour+", endhour:"+endhour);
+				starthour = 13;
+				startm = 0;
+			}
+			if(endhour > 12) {
+				endhour -= 1;
+				System.out.println("3. starthour:"+starthour+", endhour:"+endhour);	
+			} 
+			if(starthour > 12) {
+				System.out.println("4. starthour:"+starthour+", endhour:"+endhour);
+				starthour -= 1;
+			}
+			int hour = endhour - starthour;
+			int min = endm - startm;
+		
+			if(hour>0) {
+				if(min < 0) {
+					int input_h = result.get(0) + hour-1;
+					int input_m = result.get(1) + min + 60;
+					result.set(0, input_h);
+					result.set(1, input_m);
+				} else {
+					int input_h = result.get(0) + hour;
+					int input_m = result.get(1) + min;
+					result.set(0, input_h);
+					result.set(1, input_m);					
+				}
+			} else if(hour == 0) {
+				if(min > 0) {
+					int input_m = result.get(1) + min;
+					result.set(1, input_m);
+				}
+			}
+		}
+		if(result.get(1) > 60) {
+			result.set(0, result.get(0)+result.get(1)/60);
+			result.set(1, result.get(1)%60);
+		}
+		System.out.println("result:"+result);
+		return result;
+	}
+	
+	public static int getWorkday(String input) {
+		int result = 0;
+		String[] worktime = input.split("#");
+		for(int i=0; i<worktime.length; i++) {
+			String[] starttime = worktime[i].split("~");
+			String[] start = starttime[0].split(":");
+			String[] end = starttime[1].split(":");
+			int starthour = Integer.parseInt(start[0]);
+			int endhour = Integer.parseInt(end[0]);
+			if(starthour < endhour) {
+				System.out.println("starthour:"+starthour+", endhour:"+endhour);
+				result++;
+			} else if(starthour == endhour) {
+				int startm = Integer.parseInt(start[1]);
+				int endm = Integer.parseInt(end[1]);
+				if(startm < endm) {
+					System.out.println("startm:"+startm+", endm:"+endm);
+					result++;					
+				}
+			}
+		}
+		System.out.println("result:"+result);
+		return result;
+	}
+	public static int case_step(int n) {
+		if(n==1 || n==0) {
+			System.out.println("n=1||n=0:"+n);
+			return 1;
+		}
+		else if(n==2) {
+			System.out.println("n=2:"+n);
+			return 2;
+		}
+		else {
+			int sum = 0;
+			for(int i=3; i>=1; i--) {
+				sum += case_step(n-i);
+				System.out.println("n=3?"+n+", sum:"+sum);
+			}
+			System.out.println("sum:"+sum);
+			return sum;
+		}
+	}
+	public static List<Integer> divisor(int[] input) {
+		List<Integer> list = new ArrayList<>();
+		for(int i=0; i<input.length; i++) {
+			for(int k=1; k<=input[i]; k++) {
+				if(input[i] % k == 0) {
+					if(!list.contains(k)) {
+						list.add(k);
+					}
+				}
+			}
+		}
+		Collections.sort(list);
+		System.out.println(list);
+		return list;
+	}
+	public static void getWeekday(int[][] arr) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("x월? : ");
+		int x = sc.nextInt();
+		System.out.println("y일? : ");
+		int y = sc.nextInt();
+		Calendar time = Calendar.getInstance();
+		SimpleDateFormat sd = new SimpleDateFormat("E요일");
+		time.set(2018, x-1, y, 0, 0, 0);
+		System.out.println(sd.format(time.getTime()));
+	}
+	public static List<Integer> searchWord(int[] idx1, int[] idx2) {
+		List<Integer> list = new ArrayList<>();
+		List<List<Integer>> result = new ArrayList<>();
+		int len1 = idx1.length;
+		int len2 = idx2.length;
+		for(int i=0; i<len1; i++) {
+			list = new ArrayList<>();
+			for(int k=0; k<len2; k++) {
+				if(i%2==0 && k%2==0) {
+					if(idx1[i] == idx2[k]) {
+						if(idx1[i+1]+1 == idx2[k+1]) {
+							list.add(idx1[i]);
+							list.add(idx1[i+1]);
+							list.add(idx1[i+1]+1);
+							System.out.println(list);
+						}
+					}
+					result.add(list);
+				}
+			}
+		}
+		return list;
+	}
+	public static int lcm(int[] arr) {
+		int maxNum = 0;
+		for(int i=0; i<arr.length; i++) {
+			if(arr[i] > maxNum) {
+				maxNum = arr[i];
+			}
+		}
+		int answer = maxNum;
+		
+		while(true) {
+			boolean isLcm = true;
+			for(int e:arr) {
+				if(answer % e != 0) {
+					isLcm = false;
+				}
+			}
+			if(isLcm) {
+				System.out.println("answer:"+answer);
+				break;
+			} else {
+				System.out.println("1. answer:"+answer);
+				answer++;
+			}
+		}
+		return answer;
+	}
+	public static void swap(int[] arr, int i, int j) {
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+	public static void perm(int[] arr, int pivot) {
+		//int[] arr_int = {1,1,1,1,1,10,10,10,-1,-1};
+		System.out.println("pivot:"+pivot+", arr.length:"+arr.length);
+		if(pivot == arr.length) {
+			boolean isT = true;
+			for(int i=0; i<arr.length-1; i++) {
+				System.out.print(arr[i] + "   " + arr[i+1] + "  ");
+				if(((arr[i] + arr[i+1]) == 20) ||
+						((arr[i] + arr[i+1]) == -2)) {
+					System.out.println();
+					System.out.println("arr[i] + arr[i+1]:"+(arr[i] + arr[i+1]));
+					isT = false;
+//					break;
+				}
+			}	
+			if(isT) {
+				caseCnt++;
+				System.out.println();
+				System.out.println("caseCnt:"+caseCnt);
+			}
+			
+			return;
+		}
+		for(int i=pivot; i<arr.length; i++) {
+			swap(arr, i, pivot);
+			perm(arr, pivot+1);
+			swap(arr, i, pivot);
+		}
+
+	}
+	public static int checkSame(int input) {
+		int cnt=0, sum=0;
+		input++;
+		while(true) {
+			char[] ch = Integer.toString(input).toCharArray();
+			boolean isSame = false;
+			for(int i=0; i<ch.length-1; i++) {
+				for(int j=i+1; j<ch.length; j++) {
+					if(ch[i] == ch[j]) {
+						isSame = true;
+						System.out.println("isSame true:"+isSame);
+						break;
+					} else {
+						isSame = false;
+					}
+				}
+			}
+			if(isSame == false) {
+				sum += input;
+				cnt++;
+				System.out.println("input:"+input+", sum:"+sum);
+				if(cnt==5) {
+					System.out.println("sum:"+sum);
+					return sum;
+				}
+			}
+			input++;
+		}
+
+	}
+	public static String blindPhoneNumber(String str) {
+		String[] temp = str.split("-");
+		String mid = temp[1].substring(0, 2) + "**";
+		String end = "**" + temp[2].substring(2);
+		String result = temp[0] + "-" + mid + "-" + end;
+		System.out.println(result);
+		return result;
+	}
+	public static int[][] printMatrix(int[][] input) {
+		int[][] arr = new int[3][3];
+		Scanner sc = new Scanner(System.in);
+		int cnt = 0;
+		while(cnt < 3) {
+			String in = sc.nextLine();
+			String[] str = in.split(" ");
+			for(int i=0; i<str.length; i++) {
+				arr[cnt][i] = Integer.parseInt(str[i]);
+			}
+			cnt++;
+		}
+		sc.close();
+//		for(int i=0; i<arr.length; i++) {
+		for(int j=0; j<arr[0].length; j++) {
+			System.out.print(arr[2][j]+" ");
+//				System.out.print(arr[0][j]+" ");
+//				System.out.print(arr[1][j]+" ");
+		}
+		System.out.println();
+		
+		for(int j=0; j<arr[0].length; j++) {
+			System.out.print(arr[0][j]+" ");
+//			System.out.print(arr[0][j]+" ");
+//			System.out.print(arr[1][j]+" ");
+		}
+		System.out.println();
+		
+		for(int j=0; j<arr[0].length; j++) {
+			System.out.print(arr[1][j]+" ");
+//			System.out.print(arr[0][j]+" ");
+//			System.out.print(arr[1][j]+" ");
+		}
+		System.out.println();
+//		}
+		return arr;
+	}
+	public static int getMaxNumber(String input) {
+		int result = 0, cnt=0, max=0;
+		String prev = "";
+		String[] str = input.split("#");
+		Arrays.sort(str);
+		for(int i=0; i<str.length; i++) {
+			String one = str[i].substring(0, 1);
+			if(prev.equals(one) == true) {
+				cnt++;
+			} else {
+				if(cnt > max) {
+					max = cnt;
+					result = Integer.parseInt(prev);
+				}
+				cnt=1;
+				prev = one;
+			}
+		}
+		if(cnt > max) {
+			max = cnt;
+			result = Integer.parseInt(prev);
+		}
+		System.out.println("result:"+result+", max:"+max);
+		return result;
+	}
+	public static String moveStr(String input) {
+		String result = "";
+		String result1 = "";	// 짝수+홀수
+		String result2 = "";	// 짝수만 꺼꾸로
+		int cnt=0, i=0;
+		char prev = ' ';
+		for(i=0; i<input.length(); i++) {	
+			if(input.charAt(i) != prev) {
+				if(cnt%2 == 0) {
+					for(int k=0; k<cnt/2; k++) {
+						result1 = result1 + prev;
+						result2 = prev + result2;
+					}
+				} else {
+					for(int k=0; k<cnt; k++) {
+						result1 = result1 + prev;
+					}
+				}
+				cnt = 1;
+			} else {
+				cnt++;
+			}
+			prev = input.charAt(i);
+		}
+//		System.out.println("1."+result1 + result2);
+		if(cnt%2 == 0) {
+			for(int k=0; k<cnt/2; k++) {
+				result1 = result1 + prev;
+				result2 = prev + result2;
+			}
+		} else {
+			for(int k=0; k<cnt; k++) {
+				result1 = result1 + prev;
+			}
+		}
+		result = result1 + result2;
+		System.out.println(result);
+		return result;
+	}
 	public static List<Integer> removeSame(int[] input) {
 		List<Integer> result = new ArrayList<>();
 		List<Integer> result2 = new ArrayList<>();
@@ -545,13 +1239,13 @@ public class HelloWorld {
 	}
 	public static int coolNumbers(int input) {
 		int cnt=0;
-		for(int k=100; k<input-100; k++) {
+		for(int k=100; k<input; k++) {
 			String str = Integer.toString(k);
 			char[] ch = str.toCharArray();
 			int diff = ch[1] - ch[0];
 			for(int i=str.length()-1; i>0; i--) {
-				if(ch[i]-ch[i-1] == diff) break;
-				else cnt++;
+				if(ch[i]-ch[i-1] != diff) break;
+				if(i==1) cnt++;
 			}
 		}
 		System.out.println("멋진수:"+cnt);
