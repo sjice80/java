@@ -624,6 +624,29 @@ public class HelloWorld {
 	}
 	
 	public static void parseAddress(String input) throws IOException {
+		String add = "010-5547-0368#010-234-4567#010-2345-2345";
+		String[] str = add.split("#");
+		int mid=0, mid2=0;
+		for(int i=0; i<str.length-1; i++) {
+			String[] num = str[i].split("-");
+			mid = Integer.parseInt(num[1]);
+			for(int j=i+1; j<str.length; j++) {
+				String[] num2 = str[j].split("-");
+				mid2 = Integer.parseInt(num2[1]);
+				if(mid > mid2) {
+					System.out.println("kk mid:"+mid+", mid2:"+mid2);
+					String temp = str[i];
+					str[i] = str[j];
+					str[j] = temp;
+					break;
+				}
+			}
+				
+		}
+		for(int i=0; i<str.length; i++) {
+			System.out.println(str[i]);
+		}
+		/*
 		FileReader ff = new FileReader("./INFILE/INPUT_EMAIL.txt");
 		BufferedReader br = new BufferedReader(ff);
 		String phone = "";
@@ -653,14 +676,17 @@ public class HelloWorld {
 		for(int i=0; i<phone_list.length; i++) {
 //			phone_list[i] = phone_list[i].substring(0, phone_list[i].length()-1);
 			String[] strPhone = phone_list[i].split("#");
-			for(int j=0; j<strPhone.length-1; j++) {
+			System.out.println(strPhone.length);
+			for(int j=0; j<strPhone.length; j++) {
 				String[] phone_number = strPhone[j].split("-");
 				int mid = Integer.parseInt(phone_number[1]);
-				for(int k=j+1; k<strPhone.length; k++) {
+				System.out.println("1:"+mid);
+				for(int k=j; k<strPhone.length; k++) {
 					String[] phone_number2 = strPhone[k].split("-");
 					int mid2 = Integer.parseInt(phone_number2[1]);
+					System.out.println("2:"+mid2);
 					if(mid > mid2) {
-						System.out.print("정렬전:"+mid+","+mid2);
+						System.out.println("정렬전:"+mid+","+mid2);
 						String temp = strPhone[j];
 						strPhone[j] = strPhone[k];
 						strPhone[k] = temp;
@@ -668,7 +694,7 @@ public class HelloWorld {
 				}
 			}
 			for(int j=0; j<strPhone.length; j++) {
-				System.out.print("정렬후:"+strPhone[j]+",");
+				System.out.println("정렬후:"+strPhone[j]+",");
 			}
 			System.out.println();
 		}
@@ -677,6 +703,7 @@ public class HelloWorld {
 			System.out.println(f_list[i]);
 		}
 		br.close();
+		*/
 	}
 	public static String format(int number) {
 		String f = "0"+number;
