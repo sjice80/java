@@ -228,9 +228,9 @@ public class HelloWorld {
 			System.out.println(lang +":"+price);
 		}
 		if(map.containsKey("Java Programming")) {
-			System.out.println("ìë°” í¬í•¨");
+			System.out.println("ÀÚ¹Ù Æ÷ÇÔ");
 		} else {
-			System.out.println("ìë°” ë¶ˆí¬í•¨");
+			System.out.println("ÀÚ¹Ù ºÒÆ÷ÇÔ");
 		}
 		*/
 		/*int[][] input = {{1,2,3,4}, 
@@ -377,7 +377,7 @@ public class HelloWorld {
 		daily_cnt = 1;
 
 		for(i=0; i<mg_cnt; i++) {
-//			System.out.println("ì‹œê°„:"+mg[i].time+", ë§ˆê°ì—¬ë¶€:"+mg[i].yn);
+//			System.out.println("½Ã°£:"+mg[i].time+", ¸¶°¨¿©ºÎ:"+mg[i].yn);
 			for(k=offset; k<mg_cnt-1; k++) {
 				if(mg[offset].time.equals(mg[k+1].time) == true) {
 					daily_cnt++;
@@ -387,8 +387,8 @@ public class HelloWorld {
 				}
 			}
 			if(offset == mg_cnt) {
-				System.out.println("ì¢…ë£Œ");
-//				System.out.println("ì‹œê°„:"+mg[offset-daily_cnt].time+", ë§ˆê°ì—¬ë¶€:"+mg[offset-daily_cnt].yn);	
+				System.out.println("Á¾·á");
+//				System.out.println("½Ã°£:"+mg[offset-daily_cnt].time+", ¸¶°¨¿©ºÎ:"+mg[offset-daily_cnt].yn);	
 				break;
 			}
 			
@@ -398,16 +398,16 @@ public class HelloWorld {
 			}
 			six_set++;
 			
-			System.out.println("ê°¯ìˆ˜:"+daily_cnt);
-			System.out.println("ì‹œê°„:"+mg[offset].time+", ë§ˆê°ì—¬ë¶€:"+mg[offset].yn);
+			System.out.println("°¹¼ö:"+daily_cnt);
+			System.out.println("½Ã°£:"+mg[offset].time+", ¸¶°¨¿©ºÎ:"+mg[offset].yn);
 			offset = offset + daily_cnt;
 			daily_cnt = 1;
 		}
-		System.out.println("ë³€ê²½ì „:"+oldList.size());
+		System.out.println("º¯°æÀü:"+oldList.size());
 		for(int m=0; m<oldList.size(); m++) {
 			System.out.println(oldList.get(m));
 		}
-		System.out.println("ë³€ê²½í›„:"+newList.size());
+		System.out.println("º¯°æÈÄ:"+newList.size());
 		for(int m=0; m<newList.size(); m++) {
 			System.out.println(newList.get(m));
 		}
@@ -621,13 +621,193 @@ public class HelloWorld {
 		getStartTime(input26, busInfo);
 		getNumberOfPlatform(input26);
 		parseAddress("./INFILE/INPUT_EMAIL.txt");
+		parseAddressHashMap("./INFILE/INPUT_EMAIL.txt");
+		getJarkad("FRANCE", "french");
+		getJarkad("handshake", "shake hands");
+		getJarkad("aa1+aa2", "AAAA12");
+		getJarkad("E=M*C^2", "e=m*c^2");
+		sabunSearch("./INFILE/input_gate.txt");
 	}
-	
+	public static void sabunSearch(String input) throws IOException {
+		String line = "";
+		String[] gate = new String[100];
+		String[] gate_new = new String[100];
+		int gate_cnt=0, i=0, new_cnt=0, j=0, same_flag=0;
+		while(true) {
+			Scanner sc = new Scanner(System.in);
+				while(sc.hasNextInt()) {
+					int sabun = sc.nextInt();
+					FileReader f = new FileReader("./INFILE/input_gate.txt");
+					BufferedReader br = new BufferedReader(f);
+					FileWriter fw = new FileWriter("./OUTFILE/output_gate.txt");
+					BufferedWriter bw = new BufferedWriter(fw);
+					gate = new String[100];
+					gate_new = new String[100];
+					gate_cnt=0; 
+					new_cnt=0;
+					while(true) {
+						line = br.readLine();
+						if(line!=null) {
+							String[] str = line.split("#");
+							if(Integer.parseInt(str[0])==sabun) {
+								for(i=0; i<gate_cnt; i++) {								
+									if(str[1].equals(gate[i])==false) {
+										System.out.println("2:"+sabun+","+str[1]+","+gate[i]);
+										gate[gate_cnt] = str[1];
+										gate_cnt++;
+										break;
+									} else {
+										continue;
+									}
+								}
+								if(i==gate_cnt) {
+									gate[gate_cnt] = str[1];
+									gate_cnt++;		
+									System.out.println("1:"+sabun+","+gate[i]);
+								}
+							}
+						} else {
+							break;
+						}
+					}
+					System.out.println("4:"+gate_cnt);
+		
+					for(i=0; i<gate_cnt-1; i++) {
+						same_flag = 0;
+						for(j=i+1; j<gate_cnt; j++) {
+							if(gate[i].equals(gate[j]) == true) {
+								same_flag = 1;
+								break;
+							}
+						}
+						if(same_flag == 0) {
+							gate_new[new_cnt] = gate[i];
+							new_cnt++;					
+						}
+					}
+					if(same_flag == 0) {
+						gate_new[new_cnt] = gate[i];
+						new_cnt++;					
+					}
+					System.out.println("5:"+new_cnt);
+					bw.write(String.valueOf(sabun)+",");
+					for(i=0; i<new_cnt-1; i++) {
+						System.out.println("3:"+gate_new[i]);
+						bw.write(gate_new[i]+",");
+					}
+					bw.write(gate_new[new_cnt-1]);
+					bw.newLine();
+					br.close();
+					bw.close();
+				}
+				sc.close();
+		}
+	}
+	public static int getJarkad(String str1, String str2) {
+		ArrayList<String> list1 = new ArrayList<>();
+		ArrayList<String> list2 = new ArrayList<>();
+		String temp = "";
+		for(int i=0; i<str1.length()-1; i++) {
+			temp = str1.substring(i, i+2).toUpperCase();
+			if(temp.matches("^[A-Z]+$")) {
+				list1.add(temp);
+			}
+		}
+		for(int i=0; i<str2.length()-1; i++) {
+			temp = str2.substring(i, i+2).toUpperCase();
+			if(temp.matches("^[A-Z]+$")) {
+				list2.add(temp);
+			}
+		}
+		ArrayList<String> unionList = getUnionList(list1, list2);
+		System.out.println("unionList:"+unionList);
+		ArrayList<String> intersectionList = getIntersectionList(list1, list2);
+		System.out.println("intersectionList:"+intersectionList);
+		if(intersectionList.size()==0) {
+			System.out.println(65536);
+			return 65536;
+		}
+		else {
+			System.out.println(intersectionList.size()+", "+unionList.size());
+			return (intersectionList.size()/unionList.size())*65536;
+		}
+	}
+	public static ArrayList<String> getUnionList(ArrayList<String> list1, ArrayList<String> list2) {
+		ArrayList<String> unionList = new ArrayList<>();
+		list1 = (ArrayList<String>)list1.clone();
+		System.out.println("list1:"+list1);
+		list2 = (ArrayList<String>)list2.clone();
+		System.out.println("list2:"+list2);
+		for(String str:list1) {
+			if(list2.contains(str)) {
+				list2.remove(str);
+			}
+			unionList.add(str);
+		}
+		System.out.println("list22:"+list2);
+		unionList.addAll(list2);
+		return unionList;
+	}
+	public static ArrayList<String> getIntersectionList(ArrayList<String> list1, ArrayList<String> list2) {
+		ArrayList<String> intersectionList = new ArrayList<>();
+		list1 = (ArrayList<String>)list1.clone();
+		System.out.println("list111:"+list2);
+		list2 = (ArrayList<String>)list2.clone();
+		System.out.println("list222:"+list2);
+		for(String str:list1) {
+			if(list2.contains(str)) {
+				intersectionList.add(str);
+				list2.remove(str);
+			}
+		}
+		System.out.println("list2222:"+list2);
+		return intersectionList;
+	}
+	public static List<String> sortByValue(Map map) {
+		List<String> result = new ArrayList<>();
+		result.addAll(map.keySet());
+		Collections.sort(result, new Comparator() {
+			public int compare(Object o1, Object o2) {
+				Object v1 = map.get(o1);
+				Object v2 = map.get(o2);
+				return ((Comparable)v1).compareTo(v2);
+			}
+		});
+		return result;
+	}
+	public static void parseAddressHashMap(String input) throws IOException {
+		FileReader ff = new FileReader("./INFILE/INPUT_EMAIL.txt");
+		BufferedReader br = new BufferedReader(ff);
+		String line = "";
+		Map<String,String> map = new HashMap<String,String>();
+		while(true) {
+			line = br.readLine();
+			if(line!=null) {
+				String[] str = line.split("#");
+				if(str[1].contains("010")) {
+					map.put(str[0], str[1]);
+				}
+			} else {
+				break;
+			}
+		}
+		Iterator itr = map.keySet().iterator();
+		while(itr.hasNext()) {
+			String key = (String)itr.next();
+			System.out.println("Á¤·ÄÀü:"+key+", "+map.get(key));
+		}
+		Iterator it = sortByValue(map).iterator();
+		while(it.hasNext()) {
+			String key = (String)it.next();
+			System.out.println("Á¤·ÄÈÄ:"+key+", "+map.get(key));
+		}
+		br.close();
+	}
 	public static void parseAddress(String input) throws IOException {
 		FileReader ff = new FileReader("./INFILE/INPUT_EMAIL.txt");
 		BufferedReader br = new BufferedReader(ff);
 		String phone = "";
-		int line_cnt=0;
+		int line_cnt=0, min=0, j=0;
 		String[] phone_list = new String[10];
 		String[] name_list = new String[10];
 		String[] email_list = new String[10];
@@ -652,16 +832,21 @@ public class HelloWorld {
 		}
 		for(int i=0; i<phone_list.length; i++) {
 //			phone_list[i] = phone_list[i].substring(0, phone_list[i].length()-1);
-			if(phone_list[i]!=null) {
+			if(phone_list[i] != null ) {
 				String[] strPhone = phone_list[i].split("#");
-				for(int j=0; j<strPhone.length-1; j++) {
-					int min = j;
-					for(k=j+1; k<strPhone.length; k++) {
+				
+//				System.out.println(strPhone.length);
+				for(j=0; j<strPhone.length-1; j++) {
+					min = j;
+//					System.out.println("1:"+mid);
+					for(int k=j+1; k<strPhone.length; k++) {
 						String[] phone_number = strPhone[min].split("-");
 						int mid = Integer.parseInt(phone_number[1]);
 						String[] phone_number2 = strPhone[k].split("-");
 						int mid2 = Integer.parseInt(phone_number2[1]);
+//						System.out.println("2:"+mid2);
 						if(mid > mid2) {
+//							System.out.println("Á¤·ÄÀü:"+mid+","+mid2);
 							min = k;
 						}
 					}
@@ -669,17 +854,19 @@ public class HelloWorld {
 					strPhone[j] = strPhone[min];
 					strPhone[min] = temp;
 				}
-				for(int j=0; j<strPhone.length; j++) {
-					System.out.println("ì •ë ¬í›„:"+strPhone[j]+",");
+
+				for(j=0; j<strPhone.length; j++) {
+					System.out.println("Á¤·ÄÈÄ:"+strPhone[j]+",");
 				}
-				System.out.println();
 			}
+			System.out.println();
 		}
 		File[] f_list = new File("./").listFiles();
 		for(int i=0; i<f_list.length; i++) {
 			System.out.println(f_list[i]);
 		}
 		br.close();
+		
 	}
 	public static String format(int number) {
 		String f = "0"+number;
@@ -692,9 +879,9 @@ public class HelloWorld {
 		int endMinute = info.getLastMinute();
 		int interval = info.getInterval();
 		List<Integer> timetable = new ArrayList<>();
-		System.out.println("ìŠ¹ì°¨ ì‹œì‘ ì‹œê°„:"+beginHour+", "+beginMinute+", "+endHour+", "+endMinute+", "+interval);
+		System.out.println("½ÂÂ÷ ½ÃÀÛ ½Ã°£:"+beginHour+", "+beginMinute+", "+endHour+", "+endMinute+", "+interval);
 		for(int i=(beginHour*60)+beginMinute; i<=(endHour*60)+endMinute; i+=interval) {
-			System.out.println("ìŠ¹ì°¨ì‹œê°„:"+i);
+			System.out.println("½ÂÂ÷½Ã°£:"+i);
 			timetable.add(i);
 		}
 		return timetable;
@@ -724,13 +911,13 @@ public class HelloWorld {
 		int i=0, j=0;
 		for(i=0; i<scheduleA.size(); i++) {
 			if(scheduleA.get(i) >= beginMins) {
-				System.out.println("ìµœì´ˆ A ìŠ¹ì°¨ì‹œê°„:"+scheduleA.get(j));
+				System.out.println("ÃÖÃÊ A ½ÂÂ÷½Ã°£:"+scheduleA.get(j));
 				break;
 			}
 		}
 		for(j=0; j<scheduleB.size(); j++) {
 			if(scheduleB.get(j) >= beginMins) {
-				System.out.println("ìµœì´ˆ B ìŠ¹ì°¨ì‹œê°„:"+scheduleB.get(j));
+				System.out.println("ÃÖÃÊ B ½ÂÂ÷½Ã°£:"+scheduleB.get(j));
 				break;
 			}
 		}
@@ -738,7 +925,7 @@ public class HelloWorld {
 			for(int k=j; k<scheduleB.size(); k++) {
 				if(scheduleA.get(i) == scheduleB.get(k)) {
 					startTime = format(scheduleB.get(k)/60) + ":" + format(scheduleB.get(k)%60);
-					System.out.println("ìµœì´ˆ ì‹œì‘ ìŠ¹ì°¨ì‹œê°„:"+startTime);
+					System.out.println("ÃÖÃÊ ½ÃÀÛ ½ÂÂ÷½Ã°£:"+startTime);
 				}
 			}
 		}
@@ -970,12 +1157,12 @@ public class HelloWorld {
 	}
 	public static void getWeekday(int[][] arr) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("xì›”? : ");
+		System.out.println("x¿ù? : ");
 		int x = sc.nextInt();
-		System.out.println("yì¼? : ");
+		System.out.println("yÀÏ? : ");
 		int y = sc.nextInt();
 		Calendar time = Calendar.getInstance();
-		SimpleDateFormat sd = new SimpleDateFormat("Eìš”ì¼");
+		SimpleDateFormat sd = new SimpleDateFormat("E¿äÀÏ");
 		time.set(2018, x-1, y, 0, 0, 0);
 		System.out.println(sd.format(time.getTime()));
 	}
@@ -1165,8 +1352,8 @@ public class HelloWorld {
 	}
 	public static String moveStr(String input) {
 		String result = "";
-		String result1 = "";	// ì§ìˆ˜+í™€ìˆ˜
-		String result2 = "";	// ì§ìˆ˜ë§Œ êº¼ê¾¸ë¡œ
+		String result1 = "";	// Â¦¼ö+È¦¼ö
+		String result2 = "";	// Â¦¼ö¸¸ ²¨²Ù·Î
 		int cnt=0, i=0;
 		char prev = ' ';
 		for(i=0; i<input.length(); i++) {	
@@ -1251,7 +1438,7 @@ public class HelloWorld {
 				if(i==1) cnt++;
 			}
 		}
-		System.out.println("ë©‹ì§„ìˆ˜:"+cnt);
+		System.out.println("¸ÚÁø¼ö:"+cnt);
 		return cnt;
 	}
 	public static int sumThree(int input) {
@@ -2081,7 +2268,7 @@ public class HelloWorld {
 				min = Integer.parseInt(input.get(i));
 			}
 		}
-		System.out.println("ìµœëŒ€ê°’:"+max+", ìµœì†Œê°’:"+min);
+		System.out.println("ÃÖ´ë°ª:"+max+", ÃÖ¼Ò°ª:"+min);
 		StringBuilder sb = new StringBuilder();
 		sb.append(max);
 		sb.append(min);
@@ -2090,10 +2277,10 @@ public class HelloWorld {
 		sb2.append(max);
 		sb2.append(min);
 		if(Integer.parseInt(sb.toString()) > Integer.parseInt(sb2.toString())) {
-			System.out.println("ìµœì¢…1 :"+Integer.parseInt(sb.toString()));
+			System.out.println("ÃÖÁ¾1 :"+Integer.parseInt(sb.toString()));
 			return Integer.parseInt(sb.toString());
 		} else {
-			System.out.println("ìµœì¢…2 :"+Integer.parseInt(sb2.toString()));
+			System.out.println("ÃÖÁ¾2 :"+Integer.parseInt(sb2.toString()));
 			return Integer.parseInt(sb2.toString());
 		}
 		
@@ -2204,9 +2391,9 @@ public class HelloWorld {
 	}
 	public static void printResult(String inputMAC) {
 		if(validateMacAddress(inputMAC) != null) {
-			System.out.println("ì˜¬ë°”ë¥¸ MAC ì£¼ì†Œì…ë‹ˆë‹¤.");
+			System.out.println("¿Ã¹Ù¸¥ MAC ÁÖ¼ÒÀÔ´Ï´Ù.");
 		} else {
-			System.out.println("ì˜¬ë°”ë¥´ì§€ ì•Šì€ MAC ì£¼ì†Œì…ë‹ˆë‹¤.");
+			System.out.println("¿Ã¹Ù¸£Áö ¾ÊÀº MAC ÁÖ¼ÒÀÔ´Ï´Ù.");
 		}
 		System.out.println(inputMAC);
 	}
@@ -2224,7 +2411,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("ë‹¨ì–´:"+word+", ê°€ë¡œìœ„ì¹˜:"+pos);
+			System.out.println("´Ü¾î:"+word+", °¡·ÎÀ§Ä¡:"+pos);
 		}
 		return pos;
 	}
@@ -2242,7 +2429,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("ë‹¨ì–´:"+word+", ì„¸ë¡œìœ„ì¹˜:"+pos);
+			System.out.println("´Ü¾î:"+word+", ¼¼·ÎÀ§Ä¡:"+pos);
 		}
 		return pos;
 	}
@@ -2261,7 +2448,7 @@ public class HelloWorld {
 		}
 		if(correct == true) {
 			pos = String.valueOf('a'+posx).concat(String.valueOf(posy));
-			System.out.println("ë‹¨ì–´:"+word+", ëŒ€ê°ì„  ìœ„ì¹˜:"+pos);
+			System.out.println("´Ü¾î:"+word+", ´ë°¢¼± À§Ä¡:"+pos);
 		}
 		return pos;
 	}
@@ -2291,7 +2478,7 @@ public class HelloWorld {
 		char charStr[] = str.toCharArray();
 		int isPalindrome = 1;
 		if(str.length()>=10) {
-			System.out.println(str+"ì€ 10ì ì´ìƒì…ë‹ˆë‹¤.");
+			System.out.println(str+"Àº 10ÀÚ ÀÌ»óÀÔ´Ï´Ù.");
 		}
 		else {
 			for(int i=0; i<str.length()/2; i++) {
@@ -2301,13 +2488,13 @@ public class HelloWorld {
 				}
 			}
 			if(isPalindrome == 0) {
-				System.out.println(str+"ì€ palindromeì´ ì•„ë‹™ë‹ˆë‹¤.");
+				System.out.println(str+"Àº palindromeÀÌ ¾Æ´Õ´Ï´Ù.");
 			} else {
-				System.out.println(str+"ì€ palindromeì…ë‹ˆë‹¤.");
+				System.out.println(str+"Àº palindromeÀÔ´Ï´Ù.");
 			}
 		}
 	}
-	// 90ë„ ë°˜ì‹œê³„ë°©í–¥ìœ¼ë¡œ íšŒì „
+	// 90µµ ¹İ½Ã°è¹æÇâÀ¸·Î È¸Àü
 	public static int[][] rotatedArray(int[][] input) {
 		int[][] rotated = new int[4][4];
 		int i=0, j=0;
@@ -2324,7 +2511,7 @@ public class HelloWorld {
 		}
 		return rotated;
 	}
-	// 90ë„ ì‹œê³„ë°©í–¥ìœ¼ë¡œ íšŒì „
+	// 90µµ ½Ã°è¹æÇâÀ¸·Î È¸Àü
 	public static int[][] rotatedRightArray(int[][] input) {
 		int[][] rotated = new int[4][4];
 		int i=0, j=0;
