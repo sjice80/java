@@ -672,10 +672,10 @@ public class HelloWorld {
 					}
 					System.out.println("4:"+gate_cnt);
 		
-					for(i=0; i<gate_cnt-1; i++) {
+					for(i=0; i<gate_cnt; i++) {
 						same_flag = 0;
-						for(j=i+1; j<gate_cnt; j++) {
-							if(gate[i].equals(gate[j]) == true) {
+						for(j=0; j<gate_cnt; j++) {
+							if(gate[i].equals(gate_new[j]) == true) {
 								same_flag = 1;
 								break;
 							}
@@ -685,14 +685,19 @@ public class HelloWorld {
 							new_cnt++;					
 						}
 					}
+					/*
 					if(same_flag == 0) {
 						gate_new[new_cnt] = gate[i];
 						new_cnt++;					
 					}
+					*/
+					for(i=0; i<new_cnt; i++) {
+						System.out.println("3:"+gate_new[i]);
+					}
 					System.out.println("5:"+new_cnt);
 					bw.write(String.valueOf(sabun)+",");
 					for(i=0; i<new_cnt-1; i++) {
-						System.out.println("3:"+gate_new[i]);
+//						System.out.println("3:"+gate_new[i]);
 						bw.write(gate_new[i]+",");
 					}
 					bw.write(gate_new[new_cnt-1]);
