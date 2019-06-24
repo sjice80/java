@@ -6,7 +6,159 @@ import java.util.*;
 //import java.util.HashSet;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.security.NoSuchAlgorithmException;
+import java.net.Socket;
+import java.net.ServerSocket;
 
+class ReportVo {
+	private String insId;
+	private int checkCard;
+	private int failCard;
+	public ReportVo() {
+		
+	}
+	public ReportVo(String line) {
+		insId = line.split(" ")[0];
+		checkCard = Integer.parseInt(line.split(" ")[1]);
+		failCard = Integer.parseInt(line.split(" ")[2]);
+	}
+}
+class Grade {
+	private String strName;
+	private int Korean;
+	private int English;
+	private int Math;
+	public Grade(String n, int k, int e, int m) {
+		strName = n;
+		Korean = k;
+		English = e;
+		Math = m;
+	}
+	public String getName() {
+		return strName;
+	}
+	public void setName(String n) {
+		this.strName = n;
+	}
+	public int getKorean() {
+		return Korean;
+	}
+	public void setKorean(int k) {
+		this.Korean = k;
+	}
+	public int getEnglish() {
+		return English;
+	}
+	public void setEnglish(int e) {
+		this.English = e;
+	}
+	public int getMath() {
+		return Math;
+	}
+	public void setMath(int m) {
+		this.Math = m;
+	}
+}
+class ValidatorReport {
+	private static String LINE_BREAK = System.getProperty("line.seperator");
+	public boolean reportValidator() throws IOException {
+		HashMap<String, ReportVo> map = new HashMap<String, ReportVo>();
+		final String strToday = "20190614";
+		File directory = new File("..//SERVER");
+		File[] list = directory.listFiles(new FileFilter() {
+			public boolean accept(File file) {
+				return file.isFile() && file.getName().length() == 27
+						&& file.getName().substring(9,17).equals(strToday);
+			}
+		});
+		for(File file:list) {
+//			analysisData(map, file.getPath());
+		}
+//		saveReportFile(map, strToday);
+		return true;
+	}
+	/*
+	private void analysisData(HashMap<String, ReportVo> map, String path) throws IOException {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(path));
+			String line;
+			while((line=br.readLine())!=null) {
+				ReportVo userReport = new ReportVo();
+				String key = line.substring(0, 8);
+				if(map.get(key)==null) {
+//					userReport.setInsId(line.substring(0,8));
+					
+				}
+			}
+		}
+	}
+	*/
+}
+class CardServer implements Runnable {
+	public static final int BUF_SIZE = 4096;
+	private ServerSocket serverSocket;
+	private boolean isStop;
+	public ServerSocket getServerSocket() {
+		return serverSocket;
+	}
+	public void run() {
+		serverSocket = null;
+		try {
+			serverSocket = new ServerSocket(27015);
+			byte[] buffer = new byte[BUF_SIZE];
+			int length=0;
+			while(!isStop) {
+				Socket socket = null;
+				DataInputStream is = null;
+				try {
+					socket = serverSocket.accept();
+					is = new DataInputStream(socket.getInputStream());
+					while(true) {
+						String fileName = is.readUTF();
+						int fileSize = is.readInt();
+						while(fileSize>0) {
+							length = is.read(buffer, 0, Math.min(fileSize, buffer.length));
+							fileSize -= length;
+							writeFile(fileName, buffer, 0, length);
+						}
+					}
+				} catch(EOFException e) {
+					
+				} catch(IOException e) {
+					e.printStackTrace();
+				} finally {
+					if(socket!=null) {
+						socket.close();
+					}
+				}
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(serverSocket!=null) {
+					serverSocket.close();
+				}
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	private void writeFile(String fileName, byte[] buffer, int offset, int length) throws IOException {
+		FileOutputStream fw = null;
+		try {
+			fw = new FileOutputStream("..//SERVER//"+fileName, true);
+			fw.write(buffer, offset, length);
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(fw!=null) {
+				fw.close();
+			}
+		}
+	}
+}
 class TerminalInfo {
 	private String name;
 	private String name2;
@@ -124,6 +276,9 @@ public class HelloWorld {
 	static String[] products = {"coffee", "gimbap", "water", "ramen", "kimchi", "rice", "cigarettes",
 								"milk", "popcorn", "chocolate", "paper", "soju", "beer"};
 	static int caseCnt=0;
+	static String insId = "";
+	static String onBusTime = "";
+	static String onBusId = "";
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 	    String lineOfCurrencies = "USD JPY AUD SGD HKD CAD CHF GBP EURO INR";
@@ -581,6 +736,7 @@ public class HelloWorld {
 		System.out.println();
 		String input17 = "66#56#66#68#70#72#73#74#82#77";
 		getMaxNumber(input17);
+		/*
 		int[][] input18 = {{1,2,3},
 							  {4,5,6},
 							  {7,8,9}};
@@ -626,7 +782,239 @@ public class HelloWorld {
 		getJarkad("handshake", "shake hands");
 		getJarkad("aa1+aa2", "AAAA12");
 		getJarkad("E=M*C^2", "e=m*c^2");
-		sabunSearch("./INFILE/input_gate.txt");
+		//sabunSearch("./INFILE/input_gate.txt");
+		//ex1874();
+		/*
+		Scanner sc = new Scanner(System.in);
+		String strInput, strId, strPassword;
+		while(true) {
+			strInput = sc.nextLine();
+			if(strInput.length()<10) {
+				System.out.println("Wrong ID Password");
+				continue;
+			}
+			strId = strInput.substring(0, 8);
+			strPassword = strInput.substring(9);
+			if(login(strId, strPassword)) {
+				System.out.println("LOGIN SUCCESS");
+			} else {
+				System.out.println("LOGIN FAIL");
+			}
+			
+		}
+		//sc.close();
+		 
+		 */
+		//String input16 = "AAAABBBCDDEEEXXY";
+		countChar(input16);
+		String input18="89 90 50 87 89 66 89 77 89 50";
+		guessWhat(input18);
+	}
+	public static void guessWhat(String input) {
+		int max=0, max_cnt=0;
+		String[] str = input.split(" "); 
+		int[] arr = new int[str.length];
+		for(int i=0; i<str.length; i++) {
+			arr[i] = Integer.parseInt(str[i]);
+		}
+		HashMap<Integer, Integer> data = new HashMap<Integer, Integer>();
+		for(int i=0; i<str.length; i++) {
+			if(data.containsKey(arr[i])) {
+				data.put(arr[i], data.get(arr[i])+1);
+			} else {
+				data.put(arr[i], 1);
+			}
+		}
+		ArrayList<Integer> list = new ArrayList<Integer>(data.keySet());
+		Collections.sort(list);
+		System.out.println(list);
+		for(int key:list) {
+			System.out.println("key:"+key+", value:"+data.get(key));
+			if(data.get(key) >= max_cnt) {
+				max = key;
+				max_cnt = data.get(key);
+			}
+		}
+		System.out.println("max value:"+max+", max cnt:"+max_cnt);
+	}
+	public static String countChar(String input) {
+		String result="", str="";
+		for(int i=0; i<input.length(); i++) {
+			str += input.charAt(i);
+			if(i>=input.length()-1) {
+				result += input.charAt(i)+""+str.length();
+				break;
+			}
+			if(input.charAt(i)!=input.charAt(i+1)) {
+				result += input.charAt(i)+""+str.length();
+				str="";
+			}
+		}
+		System.out.println("countChar result:"+result);
+		return result;
+	}
+	public static List<List<Integer>> checkValue(List<List<Integer>> sample) {
+		List<List<Integer>> check = new ArrayList<List<Integer>>();
+		for(List<Integer> list:sample) {
+			List<Integer> tmp = new ArrayList<>(list);
+			check.add(tmp);
+		}
+		int[] di = {-1,1,0,0};
+		int[] dj = {0,0,-1,1};
+		for(int i=0; i<sample.size(); i++) {
+			for(int j=0; j<sample.get(i).size(); j++) {
+				for(int d=0; d<4; d++) {
+					int x = i+di[d];
+					int y = j+dj[d];
+					if(x>=0 && x<sample.size() && y>=0 && y<sample.get(i).size()) {
+						if(sample.get(i).get(j)==sample.get(x).get(y)) {
+							check.get(i).set(j, 0);
+							break;
+						}
+					}
+				}
+			}
+		}
+		return check;
+	}
+	public static void gradeSorting() throws IOException {
+		ArrayList<Grade> al = new ArrayList<Grade>();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("DS_sample.txt"));
+			String str="";
+			while((str = br.readLine())!=null) {
+				String[] words = str.split(" ");
+				Grade g = new Grade(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3]));
+				al.add(g);
+			}
+			br.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void sendToServer() throws IOException {
+		Socket socket = null;
+		DataOutputStream os = null;
+		try {
+			socket = new Socket("127.0.0.1", 27015);
+			os = new DataOutputStream(socket.getOutputStream());
+			byte[] buffer = new byte[4096];
+			int length=0;
+			File directory = new File("..//"+insId);
+			File[] fList = directory.listFiles();
+			for(File file:fList) {
+				if(file.isFile()) {
+					os.writeUTF(file.getName());
+					os.writeInt((int)file.length());
+					FileInputStream is = null;
+					try {
+						is = new FileInputStream(file.getPath());
+						while((length = is.read(buffer))!=-1) {
+							os.write(buffer, 0, length);
+						}
+					} finally {
+						if(is!=null) {
+							is.close();
+						}
+					}
+					moveFileToBackup(file.getPath(), file.getName());
+				}
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(socket!=null) {
+				socket.close();
+			}
+			if(os!=null) {
+				os.close();
+			}
+		}
+	}
+	public static void moveFileToBackup(String path, String name) {
+		File fileFrom = new File(path);
+		File fileTo = new File("..//BACKUP//"+name);
+		fileTo.delete();
+		fileFrom.renameTo(fileTo);
+	}
+	public static void saveToFile(String cardInfo, String validateCode, String inspectTime) throws IOException {
+		File destFolder = new File("..//"+insId);
+		if(!destFolder.exists()) {
+			destFolder.mkdirs();
+		}
+		String strFilename = destFolder + "//" + insId + "_" + onBusTime + ".TXT";
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(strFilename, true);
+			fw.write(insId+"#"+onBusId+"#"+cardInfo+"#"+validateCode+"#"+inspectTime+"\r\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(fw!=null) {
+				fw.close();
+			}
+		}
+	}
+	public static boolean login(String id, String psw) throws /*NoSuchAlgorithmException,*/ IOException {
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new FileReader("..//CLIENT//INSPECTION.TXT"));
+			String line = in.readLine();
+			//String encPsw = passwordEncryption(psw);
+			if(line!=null) {
+				String fileId = line.substring(0, 8);
+				String filePwd = line.substring(9);
+				if(id.equals(fileId) && psw.equals(filePwd)) {
+					return true;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(in != null) {
+				in.close();
+			}
+		}
+		return false;
+	}
+	public static void ex1874() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int n = Integer.parseInt(br.readLine());
+		int[] stack = new int[n];
+		int top=0, i=0, max=0;
+		while(n-->0) {
+			int temp = Integer.parseInt(br.readLine());
+			if(temp>max) {
+				for(i=max+1; i<=temp; i++) {
+					stack[top++] = i;
+					sb.append("+\n");
+				} 
+				max = temp;
+			} else 	if(stack[top-1]!=temp) {
+					System.out.println("NO");
+					return;
+			}
+			top--;
+			sb.append("-\n");
+		}
+		System.out.println(sb);
+	}
+	public static void ex9012() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		int i=0;
+		while(n-->0) {
+			boolean isVPS = true;
+			String input = br.readLine();
+			Stack<Character> stack = new Stack<Character>();
+			for(i=0; i<input.length(); i++) {
+				char ch = input.charAt(i);
+				if(ch=='(') {
+					stack.push(ch);
+				}
+			}
+		}
 	}
 	public static void sabunSearch(String input) throws IOException {
 		String line = "";
