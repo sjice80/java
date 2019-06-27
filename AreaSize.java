@@ -835,6 +835,80 @@ public class HelloWorld {
 				              {0,0,0,0,0,1,1,1,0,0},
 				              {0,0,0,0,0,0,0,0,0,0}};
 		areaSize(input21);
+		mazeStack();
+	}
+	public static void mazeStack() {
+		int[][] maze = {{0,0,1,1,1,1,1,1},
+				           {1,0,0,0,0,0,0,1},
+				           {1,1,1,1,1,1,0,1},
+				           {1,1,0,1,0,0,0,1},
+				           {1,0,0,0,0,1,1,1},
+				           {1,0,1,1,1,1,1,1},
+				           {1,0,0,0,0,0,0,0},
+				           {1,1,1,1,1,1,1,0}
+		};
+		boolean[][] isVisited = new boolean[8][8];
+		boolean answer = false;
+		Stack<String> stack = new Stack<String>();
+		for(int i=0; i<8; i++) {
+			for(int j=0; j<8; j++) {
+				isVisited[i][j] = false;
+			}
+		}
+		stack.push(0+" "+0);
+		String peek="";
+		
+		while(true) {
+			boolean wayExisted = false;
+			if(!stack.isEmpty()) {
+				peek = stack.peek();
+			} else {
+				answer = false;
+				break;
+			}
+			int X = Integer.parseInt(peek.split(" ")[0]);
+			int Y = Integer.parseInt(peek.split(" ")[1]);
+			if(X==7 && Y==7) {
+				answer = true;
+				break;
+			}
+			for(int ways=0; ways<4; ways++) {
+				int nowX=X;
+				int nowY=Y;
+				switch(ways) {
+				case 0:
+					nowX--;
+					break;
+				case 1:
+					nowX++;
+					break;
+				case 2:
+					nowY--;
+					break;
+				case 3:
+					nowY++;
+					break;
+				}
+				if(nowY<0 || nowX<0 || nowX>=8 || nowY >=8) {
+					continue;
+				}
+				if(maze[nowX][nowY]==0 && isVisited[nowX][nowY]==false) {
+					isVisited[nowX][nowY] = true;
+					stack.push(nowX+" "+nowY);
+					System.out.println(stack);
+					wayExisted = true;
+					break;
+				}
+			}
+			if(wayExisted==false) {
+				stack.pop();
+			}
+		}
+		if(answer==true) {
+			System.out.println("길 존재함");
+		} else {
+			System.out.println("길 없음");
+		}
 	}
 	public static void areaSize(int[][] sample) {
 		List<List<String>> result = new ArrayList<List<String>>();
