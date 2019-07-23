@@ -90,12 +90,12 @@ public class FileControl {
 		}
 		*/
 //		System.out.print("hello mac!");
-		/*
+		
 		String source = ".//input.txt";
 		String destination = ".//dest//";
 		FileReader fr = new FileReader(source);
-		*/
-		/*
+		
+		
 		BufferedReader br = new BufferedReader(fr);
 		HashSet<String> folder = new HashSet<String>();
 		while(true) {
@@ -108,8 +108,8 @@ public class FileControl {
 		}
 		System.out.println(folder);
 		br.close();
-		*/
-		/*
+		
+		
 		BufferedReader br2 = new BufferedReader(fr);
 		HashMap<String,String> map = new HashMap<String,String>();
 		while(true) {
@@ -129,12 +129,12 @@ public class FileControl {
 			System.out.println(s+"#"+map.get(s));
 		}
 		br2.close();
-		*/
-		/*
+		
+		
 		ArrayList<String> sort = new ArrayList<String>(folder);
 		Collections.sort(sort);
 		System.out.println(sort);
-		for(i=0; i<sort.size(); i++) {
+		for(int i=0; i<sort.size(); i++) {
 			String mkFolder = destination+sort.get(i);
 			File dest = new File(mkFolder);
 			if(!dest.exists()) {
@@ -145,17 +145,17 @@ public class FileControl {
 			}
 			
 		}
-		*/
-/*		
+		
+
 		File[] f_list = new File(source).listFiles();
 		System.out.println("총 "+f_list.length+"개의 폴더가 존재합니다.");
-		for(int folder=0; folder<f_list.length; folder++) {
-			System.out.println(folder+"번째 디렉토리를 분석중입니다.");
+		for(int folder2=0; folder2<f_list.length; folder2++) {
+			System.out.println(folder2+"번째 디렉토리를 분석중입니다.");
 			String chk = destination.substring(destination.length()-2, destination.length());
 			if(!chk.equals("//")) {
 				destination += "//";			
 			}
-			String mkFolder = destination+f_list[folder].getName();
+			String mkFolder = destination+f_list[folder2].getName();
 			File[] fileList = f_list[3].listFiles();
 			File desti = new File(mkFolder);
 			if(!desti.exists()) {
@@ -172,7 +172,7 @@ public class FileControl {
 				
 //			}
 		}
-		*/
+		
 		/*
 		System.out.println(getLastTime(1, 1, 5, new String[]{"08:00", "08:01", "08:02", "08:03"}));
         System.out.println(getLastTime(2, 10, 2, new String[]{"09:10", "09:09", "08:00"}));
