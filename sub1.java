@@ -47,6 +47,22 @@ public class sub1 {
 				cmd = line;
 			}
 		}
+		
+		FileReader fr2 = new FileReader("./INFILE/STATION.TXT");
+		BufferedReader br2 = new BufferedReader(fr2);
+		FileWriter fw2 = new FileWriter("./OUTFILE/ARRIVAL.TXT");
+		ArrayList<Station> statList = new ArrayList<Station>();
+		while(true) {
+			line = br2.readLine();
+			if(line==null) {
+				break;
+			} else {
+				Station s = new Station(line);
+				statList.add(s);
+				System.out.println(s.getStatId()+","+s.getStatLoc());
+			}
+		}
+		
 		String result="";
 		FileWriter fw = new FileWriter("./OUTFILE/PREPOST.TXT");
 		ArrayList<Bus> busList = new ArrayList<Bus>();
@@ -59,7 +75,56 @@ public class sub1 {
 		int flag = 0;
 		int diff_min=10000;
 		int cnt=0;
-		
+		HashMap<String, String> stop = new HashMap<String, String>();
+		for(j=0; j<statList.size()-1; j++) {
+			result = statList.get(j).getStatId();
+			flag = 0;
+			diff_min=10000;
+			cnt=0;
+			for(k=0; k<busList.size(); k++) {
+				if(busList.get(k).getBusLoc() >= statList.get(j).getStatLoc() &&
+						busList.get(k).getBusLoc() <= statList.get(j+1).getStatLoc()) {
+					flag = 1;
+					cnt++;
+					int diff = statList.get(j+1).getStatLoc() - busList.get(k).getBusLoc();
+
+					if(cnt>=2) {
+						if(diff<diff_min) {				
+							diff_min = diff;
+							String diff_str = String.format("%05d", diff_min);
+							stop.replace(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
+							result = str[0] + "#" + busList.get(j).getBusId() + "#" + busList.get(k).getBusId() + "," + diff_str;
+							break;
+						}
+					} else {
+						diff_min = diff;
+						String diff_str = String.format("%05d", diff_min);
+						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
+						result = result + "#" + busList.get(k).getBusId() + "," + diff_str;
+					}
+	
+				}
+			}
+			if(flag == 0) {
+				for(k=0; k<busList.size(); k++) {
+					
+					if(busList.get(k).getBusLoc() >= statList.get(j-1).getStatLoc() &&
+							busList.get(k).getBusLoc() <= statList.get(j+1).getStatLoc()) {
+						flag = 1;
+						cnt++;
+						int diff = statList.get(j+1).getStatLoc() - busList.get(k).getBusLoc();
+						diff_min = diff;
+						String diff_str = String.format("%05d", diff_min);
+						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
+						result = result + "#" + busList.get(k).getBusId() + "," + diff_str;		
+					}
+				}
+			}
+		}
+		for(i=0; i<stop.size(); i++) {
+			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
+			System.out.println(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId()));
+		}
 		HashMap<String, String> post = new HashMap<String, String>();
 		for(j=0; j<busList.size(); j++) {
 			result = str[0] + "#" + busList.get(j).getBusId();
@@ -117,7 +182,6 @@ public class sub1 {
 						String diff_str = String.format("%05d", diff_min);
 						back.put(busList.get(j).getBusId(), busList.get(k).getBusId() + "," + diff_str);
 					}
-
 				}
 			}
 			if(flag == 0) {
@@ -132,6 +196,7 @@ public class sub1 {
 
 		br.close();
 		fw.close();
+		br2.close();
+		fw2.close();
 	}
 }
-
