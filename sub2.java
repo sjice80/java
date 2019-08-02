@@ -60,8 +60,8 @@ public class sub2 {
 			line = br.readLine();
 			line2 = br.readLine();
 			if(!line.contains("#")) {
-				System.out.println(pre);
-				System.out.println(pre2);
+				System.out.println(pre+","+line);
+				System.out.println(pre2+","+line2);
 				break;
 			} else {
 				pre = line;
@@ -81,7 +81,8 @@ public class sub2 {
 			System.out.println(b2.getBusId()+","+b2.getBusLoc()+", "+velocity);
 		}
 		br.close();
-		
+		int interval = Integer.parseInt(line2.split(":")[2]) - Integer.parseInt(str2[0].split(":")[2]);
+		System.out.println("interval:"+interval);
 		j=0;
 		FileReader fr2 = new FileReader("./INFILE/STATION.TXT");
 		BufferedReader br2 = new BufferedReader(fr2);
@@ -98,6 +99,16 @@ public class sub2 {
 				statList.get(j).setStatVel(velocity);
 				j++;
 				System.out.println(s.getStatId()+","+s.getStatLoc()+","+s.getStatVel());
+			}
+		}
+		for(i=0; i<busList.size(); i++) {
+			for(j=0; j<statList.size()-1; j++) {
+				if(busList.get(i).getBusLoc() >= statList.get(j).getStatLoc() &&
+						busList.get(i).getBusLoc() <= statList.get(j+1).getStatLoc()) {
+					int diff = Math.min(busList.get(i).getBusVel(), statList.get(j+1).getStatVel()) * interval;
+					String newLoc = String.format("%05d", diff+busList.get(i).getBusLoc());
+					System.out.println(line2+"#"+busList.get(i).getBusId()+"#"+newLoc);
+				}
 			}
 		}
 	}
