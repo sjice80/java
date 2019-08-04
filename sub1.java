@@ -50,7 +50,7 @@ public class sub1 {
 		
 		FileReader fr2 = new FileReader("./INFILE/STATION2.TXT");
 		BufferedReader br2 = new BufferedReader(fr2);
-		FileWriter fw2 = new FileWriter("./OUTFILE/ARRIVAL.TXT");
+		FileWriter fw2 = new FileWriter("./OUTFILE/PREPOST.TXT");
 		ArrayList<Station> statList = new ArrayList<Station>();
 		while(true) {
 			line = br2.readLine();
@@ -64,7 +64,7 @@ public class sub1 {
 		}
 		
 		String result="";
-		FileWriter fw = new FileWriter("./OUTFILE/PREPOST.TXT");
+		FileWriter fw = new FileWriter("./OUTFILE/ARRIVAL.TXT");
 		ArrayList<Bus> busList = new ArrayList<Bus>();
 		String[] str = cmd.split("#");
 		for(i=1; i<str.length; i++) {
@@ -77,7 +77,7 @@ public class sub1 {
 		int min=10000, diff=0;
 		int cnt=0;
 		HashMap<String, String> stop = new HashMap<String, String>();
-		HashMap<String, String> stop2 = new HashMap<String, String>();
+		
 		for(j=0; j<statList.size(); j++) {
 			cnt=0;
 			flag=0;
@@ -89,11 +89,11 @@ public class sub1 {
 //					System.out.println("1."+statList.get(j).getStatId()+"#"+busList.get(k).getBusId()+","+String.format("%05d", diff));
 					if(diff < min) {
 						min = diff;
-						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", diff));
+//						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", min));
 						String str2 = String.format("%05d", min);
 						result = statList.get(j).getStatId()+"#"+busList.get(k).getBusId()+","+str2;
 //						System.out.println(result);
-						stop.replace(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", min));
+						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", min));
 					}
 				} 
 			}
@@ -105,14 +105,10 @@ public class sub1 {
 //				System.out.println(result);
 			}
 		}
-	
+		
 		for(i=0; i<stop.size(); i++) {
 			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
 			System.out.println(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId()));
-		}
-		for(i=0; i<stop2.size(); i++) {
-//			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
-			System.out.println(statList.get(i).getStatId()+"#"+stop2.get(statList.get(i).getStatId()));
 		}
 		HashMap<String, String> post = new HashMap<String, String>();
 		for(j=0; j<busList.size(); j++) {
@@ -177,7 +173,7 @@ public class sub1 {
 				back.put(busList.get(j).getBusId(),"NOBUS,00000");
 			}
 		}
-		System.out.println(post.size());
+		System.out.println(stop.size());
 		for(i=0; i<post.size(); i++) {
 			fw.write(str[0] + "#" + busList.get(i).getBusId()+"#"+post.get(busList.get(i).getBusId())+"#"+back.get(busList.get(i).getBusId())+"\r\n");
 			System.out.println(str[0] + "#" + busList.get(i).getBusId()+"#"+post.get(busList.get(i).getBusId())+"#"+back.get(busList.get(i).getBusId()));
