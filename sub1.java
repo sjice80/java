@@ -105,52 +105,7 @@ public class sub1 {
 //				System.out.println(result);
 			}
 		}
-		/*
-		for(j=0; j<statList.size()-1; j++) {
-			result = statList.get(j).getStatId();
-			flag = 0;
-			diff_min=10000;
-			cnt=0;
-			for(k=0; k<busList.size(); k++) {
-				if(busList.get(k).getBusLoc() >= statList.get(j).getStatLoc() &&
-						busList.get(k).getBusLoc() <= statList.get(j+1).getStatLoc()) {
-					flag = 1;
-					cnt++;
-					int diff = statList.get(j+1).getStatLoc() - busList.get(k).getBusLoc();
-
-					if(cnt>=2) {
-						if(diff<diff_min) {				
-							diff_min = diff;
-							String diff_str = String.format("%05d", diff_min);
-							stop.replace(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
-							result = str[0] + "#" + busList.get(j).getBusId() + "#" + busList.get(k).getBusId() + "," + diff_str;
-							break;
-						}
-					} else {
-						diff_min = diff;
-						String diff_str = String.format("%05d", diff_min);
-						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
-						result = result + "#" + busList.get(k).getBusId() + "," + diff_str;
-					}
 	
-				}
-			}
-			if(flag == 0) {
-				for(k=0; k<busList.size(); k++) {
-					
-					if(busList.get(k).getBusLoc() >= statList.get(j-1).getStatLoc() &&
-							busList.get(k).getBusLoc() <= statList.get(j+1).getStatLoc()) {
-						flag = 1;
-						cnt++;
-						int diff = statList.get(j+1).getStatLoc() - busList.get(k).getBusLoc();
-						diff_min = diff;
-						String diff_str = String.format("%05d", diff_min);
-						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId() + "," + diff_str);
-						result = result + "#" + busList.get(k).getBusId() + "," + diff_str;		
-					}
-				}
-			}
-		}*/
 		for(i=0; i<stop.size(); i++) {
 			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
 			System.out.println(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId()));
