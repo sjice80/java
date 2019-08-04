@@ -35,7 +35,7 @@ public class sub1 {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		FileReader fr = new FileReader("./INFILE/LOCATION.TXT");
+		FileReader fr = new FileReader("./INFILE/LOCATION2.TXT");
 		BufferedReader br = new BufferedReader(fr);
 		String line="", cmd="";
 		int i=0, j=0, k=0;
@@ -48,7 +48,7 @@ public class sub1 {
 			}
 		}
 		
-		FileReader fr2 = new FileReader("./INFILE/STATION.TXT");
+		FileReader fr2 = new FileReader("./INFILE/STATION2.TXT");
 		BufferedReader br2 = new BufferedReader(fr2);
 		FileWriter fw2 = new FileWriter("./OUTFILE/ARRIVAL.TXT");
 		ArrayList<Station> statList = new ArrayList<Station>();
@@ -72,10 +72,40 @@ public class sub1 {
 			busList.add(b);
 			System.out.println(b.getBusId()+","+b.getBusLoc());
 		}
-		int flag = 0;
 		int diff_min=10000;
+		int flag = 0;
+		int min=10000, diff=0;
 		int cnt=0;
 		HashMap<String, String> stop = new HashMap<String, String>();
+		HashMap<String, String> stop2 = new HashMap<String, String>();
+		for(j=0; j<statList.size(); j++) {
+			cnt=0;
+			flag=0;
+			min=10000;
+			for(k=0; k<busList.size(); k++) {
+				if(busList.get(k).getBusLoc() <= statList.get(j).getStatLoc()) {
+					flag=1;
+					diff = statList.get(j).getStatLoc() - busList.get(k).getBusLoc();					
+//					System.out.println("1."+statList.get(j).getStatId()+"#"+busList.get(k).getBusId()+","+String.format("%05d", diff));
+					if(diff < min) {
+						min = diff;
+						stop.put(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", diff));
+						String str2 = String.format("%05d", min);
+						result = statList.get(j).getStatId()+"#"+busList.get(k).getBusId()+","+str2;
+//						System.out.println(result);
+						stop.replace(statList.get(j).getStatId(), busList.get(k).getBusId()+","+String.format("%05d", min));
+					}
+				} 
+			}
+			if(flag==0) {
+				diff = statList.get(j).getStatLoc();
+				String str2 = String.format("%05d", diff);
+				stop.put(statList.get(j).getStatId(), "NOBUS,"+str2);
+				result = statList.get(j).getStatId()+"#NOBUS,"+str2;
+//				System.out.println(result);
+			}
+		}
+		/*
 		for(j=0; j<statList.size()-1; j++) {
 			result = statList.get(j).getStatId();
 			flag = 0;
@@ -120,10 +150,14 @@ public class sub1 {
 					}
 				}
 			}
-		}
+		}*/
 		for(i=0; i<stop.size(); i++) {
 			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
 			System.out.println(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId()));
+		}
+		for(i=0; i<stop2.size(); i++) {
+//			fw2.write(statList.get(i).getStatId()+"#"+stop.get(statList.get(i).getStatId())+"\r\n");
+			System.out.println(statList.get(i).getStatId()+"#"+stop2.get(statList.get(i).getStatId()));
 		}
 		HashMap<String, String> post = new HashMap<String, String>();
 		for(j=0; j<busList.size(); j++) {
@@ -135,7 +169,7 @@ public class sub1 {
 				if(busList.get(j).getBusLoc() < busList.get(k).getBusLoc()) {
 					flag = 1;
 					cnt++;
-					int diff = busList.get(k).getBusLoc() - busList.get(j).getBusLoc();
+					diff = busList.get(k).getBusLoc() - busList.get(j).getBusLoc();
 
 					if(cnt>=2) {
 						if(diff<diff_min) {				
@@ -169,7 +203,7 @@ public class sub1 {
 				if(busList.get(j).getBusLoc() > busList.get(k).getBusLoc()) {
 					flag = 1;
 					cnt++;
-					int diff = busList.get(j).getBusLoc() - busList.get(k).getBusLoc();
+					diff = busList.get(j).getBusLoc() - busList.get(k).getBusLoc();
 					if(cnt>=2) {
 						if(diff<diff_min) {				
 							diff_min = diff;
