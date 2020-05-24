@@ -38,7 +38,15 @@ class SoccerPlayer implements Comparable<SoccerPlayer> {
 		return this.age;
 	}
 	public int compareTo(SoccerPlayer p) {
-		return this.name.compareTo(p.getName());
+		if(!this.name.equals(p.getName())) {
+			return this.name.compareTo(p.getName());
+		}
+		if(this.age>p.getAge())
+			return 1;
+		else if(this.age<p.getAge())
+			return -1;
+		 
+		return this.position.compareTo(p.getPosition());
 	}
 	public void toString(SoccerPlayer p) {
 		System.out.println(p.getName()+","+p.getPosition()+","+p.getAge());
