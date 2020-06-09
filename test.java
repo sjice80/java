@@ -35,6 +35,22 @@ public class test {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
 		// TODO Auto-generated method stub
+		try {
+			String cmd = "./SIGNAGE.EXE";
+			Process p = Runtime.getRuntime().exec(cmd);
+			String file = "./text.txt";
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String s = br.readLine();
+			while(s!=null) {
+				bw.write(s);
+				s = br.readLine();
+			}
+			bw.flush();
+		} catch(IOException ioe) {
+			System.out.println(ioe);
+		}
+		
 		CardServer cardServer = new CardServer();
 		Thread thread = new Thread(cardServer);
 		thread.start();
