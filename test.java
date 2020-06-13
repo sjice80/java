@@ -35,6 +35,21 @@ public class test {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, ParseException {
 		// TODO Auto-generated method stub
+		ArrayList<String> cmd = new ArrayList<>();
+		cmd.add("cmd.exe");
+		cmd.add("/c");
+		cmd.add("ping google.com");
+//		ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "ping google.com");
+		ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "echo hello");
+		
+//		ProcessBuilder pb = new ProcessBuilder(cmd);
+		Process p = pb.start();
+		BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String line = "";
+		while((line = br.readLine())!=null) {
+			System.out.println(line);
+		}
+		
 		try {
 			String cmd = "./SIGNAGE.EXE";
 			Process p = Runtime.getRuntime().exec(cmd);
