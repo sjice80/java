@@ -109,21 +109,21 @@ public class sub1 {
 //		cmd.add(".//EXTRACTOR//EXTRACTOR_A.EXE");
 		File[] fileList = new File(".//EXTRACTOR//").listFiles();
 		int max = 0;
-		while((line = verbr.readLine())!=null) {
-			for(int i=0; i<fileList.length; i++) {
-				File file = fileList[i];
-				verlist = new ArrayList<>();
-				cmd = new ArrayList<String>();
-				cmd.add(".//EXTRACTOR//"+file.getName());
+//		while((line = verbr.readLine())!=null) {
+		for(int i=0; i<fileList.length; i++) {
+			verlist = new ArrayList<>();
+			cmd = new ArrayList<String>();
+			cmd.add(fileList[i].toString());
+			while((line = verbr.readLine())!=null) {				
 				cmd.add(line.substring(9, line.length()-2));
 				ProcessBuilder bld = new ProcessBuilder(cmd);
-//				bld.directory(new File("d:/workspace/some project"));	// change directory
+	//				bld.directory(new File("d:/workspace/some project"));	// change directory
 				Process process = bld.start();
-
+	
 		        try {
 		            BufferedReader reader =
 		                    new BufferedReader(new InputStreamReader(process.getInputStream()));
-
+	
 		            while ((result = reader.readLine()) != null) {
 		                System.out.println(result);
 		                Base b = new Base(line.substring(0, 8), result.split(" ")[0], result.split(" ")[1], 
@@ -133,18 +133,19 @@ public class sub1 {
 		        } catch (IOException e) {
 		            e.printStackTrace();
 		        } 
-		        int corrRate = correctRate();
-		        if(corrRate > max) {
-		        	FileWriter reqfw = new FileWriter("./OUTFILE/REPORT.TXT");
-		        	max = corrRate;
-		    		for(Base b:verlist) {
-		    			reqfw.write(b.toString2());
-		    			System.out.print(b.toString2());
-		    		}
-		        }
 			}
-
+	        int corrRate = correctRate();
+	        if(corrRate > max) {
+	        	FileWriter reqfw = new FileWriter("./OUTFILE/REPORT.TXT");
+	        	max = corrRate;
+	    		for(Base b:verlist) {
+	    			reqfw.write(b.toString2());
+	    			System.out.print(b.toString2());
+	    		}
+	        }
 		}
+
+//		}
 		for(Base b:verlist) {
 //			reqfw.write(b.toString2());
 			System.out.print(b.toString2());
