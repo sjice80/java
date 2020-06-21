@@ -101,23 +101,26 @@ public class sub1 {
 		reqfw.close();
 	}
 	public static void execProcess() throws IOException {
-		String line="", result="";
+		String line="", result="", cmdline="";
 		FileReader verfr = new FileReader("./SAMPLE/VERIFY.TXT");
 		BufferedReader verbr = new BufferedReader(verfr);
 		
-		List<String> cmd = null; //new ArrayList<String>();
+//		List<String> cmd = null; //new ArrayList<String>();
 //		cmd.add(".//EXTRACTOR//EXTRACTOR_A.EXE");
 		File[] fileList = new File(".//EXTRACTOR//").listFiles();
 		int max = 0;
 //		while((line = verbr.readLine())!=null) {
 		for(int i=0; i<fileList.length; i++) {
 			verlist = new ArrayList<>();
-			cmd = new ArrayList<String>();
-			cmd.add(fileList[i].toString());
-			while((line = verbr.readLine())!=null) {				
-				cmd.add(line.substring(9, line.length()-2));
-				ProcessBuilder bld = new ProcessBuilder(cmd);
-	//				bld.directory(new File("d:/workspace/some project"));	// change directory
+			
+			while((line = verbr.readLine())!=null) {
+//				cmd = new ArrayList<String>();
+//				cmd.add(fileList[i].toString());
+//				cmd.add(line.substring(9, line.length()-2));
+				cmdline = fileList[i] + " " + line.substring(9, line.length()-2);
+				ProcessBuilder bld = new ProcessBuilder(cmdline);
+//				ProcessBuilder bld = new ProcessBuilder(cmd);
+//				bld.directory(new File("d:/workspace/some project"));	// change directory
 				Process process = bld.start();
 	
 		        try {
