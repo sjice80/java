@@ -541,4 +541,29 @@ public class Main {
 		arr[i] = arr[j];
 		arr[j] = temp;
 	}
+	public static int[] numsSameConsecDiff(int N, int K) {
+		int[] ans = new int[10];
+		int c = 0, t = 0;
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i <=9 ; i++) {	
+			for (int j = 0; j <=9 ; j++) {
+				c = 0;
+				if(Math.abs(i-j)==K) {					
+					sb = new StringBuilder();
+					while(c<N) {
+						sb.append(i);
+						c++;
+						if(c<N) 
+							sb.append(j);
+						c++;
+					}
+//					System.out.println(sb.toString());
+					if(sb.toString().charAt(0) != '0')
+						ans[t++] = Integer.parseInt(sb.toString());	
+				}
+			}
+		}
+		System.out.println(Arrays.toString(ans));
+		return ans;
+	}
 }
