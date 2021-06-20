@@ -20,27 +20,28 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.internal.LinkedTreeMap;
 
-public class MyServer {
+public class MyServer2 {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		new MyServer().start();		
+		new MyServer2().start();		
 	}
 
 	public void start() throws Exception {
-		Server server = new Server();
-		ServerConnector http = new ServerConnector(server);
+
+		Server server2 = new Server();
+		ServerConnector http2 = new ServerConnector(server2);
 		
-		http.setHost("127.0.0.1");
+		http2.setHost("127.0.0.1");
 		
-		http.setPort(8080);
-		server.addConnector(http);
-		ServletHandler servletHandler = new ServletHandler();
-		servletHandler.addServletWithMapping(MyServlet.class, "/");///mypath");//new MyServlet().serialParam);
-		server.setHandler(servletHandler);
+		http2.setPort(8081);
+		server2.addConnector(http2);
+		ServletHandler servletHandler2 = new ServletHandler();
+		servletHandler2.addServletWithMapping(MyServlet2.class, "/");///mypath");//new MyServlet().serialParam);
+		server2.setHandler(servletHandler2);
 		
-		server.start();
-		server.join();
+		server2.start();
+		server2.join();
 	}
 	
 }
